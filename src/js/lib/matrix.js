@@ -27,4 +27,8 @@ export default class {
   get slides() {
     return this._slides;
   }
+
+  get stage() {
+    return this._raw.stage;
+  }
 }

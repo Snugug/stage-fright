@@ -40,7 +40,7 @@ export default function(matrix) {
         }
       }
     }
-    else if (e.keyCode === 40 || e.keyCode === 34) {
+    else if (e.keyCode === 40 || e.keyCode === 34 || e.keyCode === 32) {
       // Down
       slide += 1;
       if (slide > lastSlide(section, matrix)) {

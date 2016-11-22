@@ -1,4 +1,4 @@
-import {idleRun, getActiveSlide} from './helpers';
+import {idleRun, getActiveSlide, nodeMap} from './helpers';
 import translate from './translate';
 
 export default function(nav) {
@@ -22,7 +22,7 @@ export default function(nav) {
         const sld = document.createElement('a');
         sld.href = `#/${sections}/${slides}`;
         sld.classList.add('progress--slide');
-        sld.setAttribute('data-page', slides);
+        sld.setAttribute('data-slide', slides);
         sld.setAttribute('data-section', sections);
         sld.setAttribute('tabindex', '-1');
         sld.textContent = `Slide ${sections}/${slides}`;
@@ -32,6 +32,21 @@ export default function(nav) {
         }
 
         sec.appendChild(sld);
+
+        if (Array.isArray(slide)) {
+          slide[0].setAttribute('data-slide', slides);
+          slide[0].setAttribute('data-section', sections);
+          if (active.section === sections && active.slide === slides) {
+            slide[0].setAttribute('data-active', true);
+          }
+        }
+        else {
+          slide.setAttribute('data-slide', slides);
+          slide.setAttribute('data-section', sections);
+          if (active.section === sections && active.slide === slides) {
+            slide.setAttribute('data-active', true);
+          }
+        }
 
         slides++;
       });
@@ -54,8 +69,14 @@ export default function(nav) {
 }
 
 export function updateProgress(section, slide) {
-  const current = document.querySelector('.progress--slide[data-active]');
-  const next = document.querySelector(`[data-section="${section}"][data-page="${slide}"`);
-  current.removeAttribute('data-active');
-  next.setAttribute('data-active', 'true');
+  const current = document.querySelectorAll('[data-active]');
+  const next = document.querySelectorAll(`[data-section="${section}"][data-slide="${slide}"`);
+
+  nodeMap(current, node => {
+    node.removeAttribute('data-active');
+  });
+
+  nodeMap(next, node => {
+    node.setAttribute('data-active', 'true');
+  });
 }

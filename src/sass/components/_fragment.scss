@@ -1,0 +1,9 @@
+.fragment {
+  .stage-fright & {
+    // opacity: 0;
+
+    &[data-active] {
+      opacity: 1;
+    }
+  }
+}

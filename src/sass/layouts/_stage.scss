@@ -1,4 +1,4 @@
-body {
+.stage-fright {
   overflow: hidden;
 }
 
@@ -21,11 +21,6 @@ body {
   //   scroll-snap-points-y: repeat(100%);
   //   scroll-snap-destination: 50% 50%;
   // }
-
-
-  .stage-fright & {
-    // overflow: hidden;
-  }
 
   &--group {
     width: 100vw;
