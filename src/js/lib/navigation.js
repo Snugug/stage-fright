@@ -10,7 +10,9 @@ export default function(matrix) {
     let section = active.section;
     let slide = active.slide;
 
-    console.log(e.keyCode);
+    if (matrix.stage.hasAttribute('data-overlay')) {
+      return;
+    }
 
     if (e.keyCode === 37) {
       // Left

@@ -18,6 +18,7 @@ export default function(matrix) {
 
       // Translate back to active
       if (open === false) {
+        matrix.stage.removeAttribute('data-overlay');
         removeClick(slides);
         translate();
         return;
@@ -44,16 +45,20 @@ export default function(matrix) {
         matrix.stage.style.transformOrigin = `${width * hratio / 2 - 32}px 32px`;
       }
 
+      matrix.stage.setAttribute('data-overlay', 'true');
+
       // Make slides clickable
       nodeMap(slides, slide => {
         slide.addEventListener('click', addClick);
       });
 
       function addClick(e) {
-        const target = e.target;
-        const section = target.getAttribute('data-section');
-        const slide = target.getAttribute('data-slide');
+        const target = e.target.closest('[data-section][data-slide]');
+        let section = target.getAttribute('data-section');
+        let slide = target.getAttribute('data-slide');
+
         removeClick(slides);
+        matrix.stage.removeAttribute('data-overlay');
         history.pushState(null, null, `#/${section}/${slide}`);
         updateProgress(section, slide);
         translate(section, slide);
