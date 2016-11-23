@@ -34,6 +34,17 @@
     width: 100%;
     height: 100vh;
 
+    [data-overlay] & {
+      filter: blur(20px);
+      transition: $transition;
+
+      &:hover,
+      &:focus {
+        filter: none;
+        cursor: pointer;
+      }
+    }
+
     // @supports (scroll-snap-coordinate: 50% 50%) {
     //   width: 100%;
     //   scroll-snap-coordinate: 50% 50%;
