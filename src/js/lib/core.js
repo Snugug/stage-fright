@@ -1,7 +1,7 @@
 import Matrix from './matrix';
 import init from './init';
 import progress from './progress';
-import nav from './navigation';
+import keys from './keys';
 import overview from './overview';
 
 export default function () {
@@ -9,7 +9,7 @@ export default function () {
 
   init();
   progress(matrix);
-  nav(matrix);
+  keys(matrix);
   overview(matrix);
 
   document.body.classList.add('stage-fright');
