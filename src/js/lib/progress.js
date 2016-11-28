@@ -27,6 +27,11 @@ export default function(nav) {
         sld.setAttribute('tabindex', '-1');
         sld.textContent = `Slide ${sections}/${slides}`;
 
+        if (Array.isArray(slide)) {
+          sld.style.opacity = .5;
+          sld.setAttribute('data-fragments', slide.length - 1);
+        }
+
         if (active.section === sections && active.slide === slides) {
           sld.setAttribute('data-active', 'true');
         }
@@ -68,15 +73,27 @@ export default function(nav) {
   });
 }
 
-export function updateProgress(section, slide) {
+export function updateProgress(section, slide, fragment) {
   const current = document.querySelectorAll('[data-active]:not(.fragment)');
   const next = document.querySelectorAll(`[data-section="${section}"][data-slide="${slide}"`);
+  const progress = document.querySelector('.progress--slide[data-active]');
 
-  nodeMap(current, node => {
-    node.removeAttribute('data-active');
-  });
+  if (fragment) {
+    const fragments = parseInt(progress.getAttribute('data-fragments'));
+    if (fragment === fragments) {
+      progress.style.transitionProperty = 'none';
+      progress.style.opacity = 1;
 
-  nodeMap(next, node => {
-    node.setAttribute('data-active', 'true');
-  });
+    }
+  }
+  else {
+    progress.style.transitionProperty = 'all';
+    nodeMap(current, node => {
+      node.removeAttribute('data-active');
+    });
+
+    nodeMap(next, node => {
+      node.setAttribute('data-active', 'true');
+    });
+  }
 }
