@@ -19,8 +19,8 @@
   }
 
   &--slide {
-    background-color: red;
-    border: 1px solid red;
+    background-color: map-get($accent, 'neutral');
+    border: 1px solid map-get($accent, 'neutral');
     width: 1rem;
     height: .7rem;
     // margin: 1px;
@@ -28,14 +28,17 @@
     margin-bottom: 1px;
     transition: all .5s cubic-bezier(.77, .1, .22, 1);
     color: transparent;
+    text-shadow: none;
 
     &:hover,
     &:focus {
-      background-color: mix(white, red, 85%);
+      background-color: map-get($accent, 'light');
+      color: transparent;
+      text-shadow: none;
     }
 
     &[data-active] {
-      background-color: mix(black, red, 60%);
+      background-color: map-get($accent, 'dark');
     }
   }
 }

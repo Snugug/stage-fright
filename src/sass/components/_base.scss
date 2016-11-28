@@ -1,0 +1,163 @@
+$link-color: map-get($accent, 'neutral');
+
+a {
+  color: $link-color;
+  @include underline($background, $link-color, $distance: .95);
+
+  &:hover {
+    color: mix($link-color, $color, 60%);
+    @include underline($background, mix($link-color, $color, 60%), $distance: .95);
+  }
+}
+
+
+%header {
+  line-height: 1;
+  hyphens: auto;
+  word-wrap: break-word;
+}
+
+h2,
+&--h2 {
+  @extend %header;
+  // border-bottom: .05em solid $color;
+  text-shadow: 2px 2px $background, -2px -2px $background;
+  // @include underline($background, $color, $distance: .8);
+}
+
+h3 {
+  @extend %header;
+}
+
+@for $i from 1 through length($font-sizes) {
+  h#{$i + 1} {
+    font-size: nth($font-sizes, 1);
+    line-height: 1;
+    hyphens: auto;
+    word-wrap: break-word;
+  }
+}
+
+p > img,
+p ~ video {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  list-style: disc;
+  margin-left: 1em;
+
+  ul,
+  ol {
+    margin-top: 0;
+    margin-left: 1em;
+  }
+}
+
+ul ul {
+  list-style: square;
+}
+
+ol {
+  ul,
+  ol {
+    margin-top: 0;
+    margin-left: 1em;
+  }
+}
+
+li {
+  @include half-rhythm;
+  // margin-top: 0;
+  line-height: 1.25rem;
+}
+
+blockquote {
+  position: relative;
+  font-style: italic;
+  text-align: left;
+  font-size: 1.25em;
+  line-height: 1.25em;
+  padding: 0em 1.5rem;
+
+  strong {
+    font-style: normal;
+  }
+
+  footer {
+    margin-top: 1em;
+    font-size: .75em;
+  }
+
+
+  @include breakpoint(465px) {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  @include breakpoint(535px) {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  &:before {
+    position: absolute;
+    left: .5rem;
+    width: .25rem;
+    height: 100%;
+    @include checkerboard(map-get($accent, 'dark'), map-get($accent, 'neutral'), 'bottom right');
+    content: '';
+    display: block;
+  }
+
+  * + * {
+    @include half-rhythm;
+  }
+}
+
+pre,
+code {
+  font-family: 'source-code-pro', 'Source Code Pro', 'Lucida Console', 'Lucida Sans Typewriter', 'monaco', 'Bitstream Vera Sans Mono', monospace;
+}
+
+p code,
+ul code {
+  hyphens: none;
+  word-spacing: normal;
+  text-align: left;
+  word-break: normal;
+  white-space: pre;
+  word-wrap: normal;
+  direction: ltr;
+  tab-size: 2;
+  overflow-y: overlay;
+  padding: .05rem .5rem;
+  font-size: .85em;
+  outline: 0;
+  background: rgba(gray, .1);
+}
+
+sup {
+  font-size: .6em;
+  transform: translateY(-.65rem);
+  display: inline-block;
+}
+
+
+.small {
+  font-size: .75rem;
+  line-height: 1;
+}
+
+.line {
+  display: block;
+  color: rgb(50, 50, 50);
+}
+
+
+.embed {
+  width: 100%;
+  height: 75vh;
+}

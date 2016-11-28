@@ -1,0 +1,135 @@
+@mixin progress($style: 'horizontal') {
+  @if ($style == 'vertical') {
+    .progress {
+      display: block;
+
+      &--section {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    }
+  }
+  @else {
+    .progress {
+      display: flex;
+      flex-direction: row;
+
+      &--section {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@mixin double-rhythm {
+  margin-top: 2rem;
+}
+
+@mixin rhythm {
+  margin-top: 1rem;
+}
+
+@mixin half-rhythm {
+  margin-top: .5rem;
+}
+
+
+@function _awesome-header--gradient($color, $steps) {
+  $gradient: ();
+
+  //////////////////////////////
+  // Max Params
+  //////////////////////////////
+  $max-alpha: 1 - ((1 / $steps) * 2);
+  $max-half: round(($steps - 2) / 2);
+
+  //////////////////////////////
+  // Steps
+  //////////////////////////////
+  $full-step: 1 / $steps;
+  $half-step: $full-step / 2;
+  $loc-step: 100% / $steps;
+
+  //////////////////////////////
+  // Initialize
+  //////////////////////////////
+  $alpha: 0;
+  $location: $loc-step;
+
+  $gradient: append($gradient, rgba($color, $alpha) $location);
+
+  //////////////////////////////
+  // Loop
+  //////////////////////////////
+  @for $i from 1 through $steps - 2 {
+    @if $i <= $max-half {
+      $alpha: $alpha + $half-step;
+    }
+    @else {
+      $alpha: $alpha + $full-step;
+    }
+
+
+    $gradient: append($gradient, rgba($color, $alpha) $location, 'comma');
+
+    $location: $location + $loc-step;
+
+    $gradient: append($gradient, rgba($color, $alpha) $location, 'comma');
+  }
+
+  $gradient: append($gradient, rgba($color, $max-alpha) $location);
+
+  @return $gradient;
+}
+
+@function shift-gradient($gradient) {
+  $old: $gradient;
+  $new: $gradient;
+
+
+}
+
+@mixin checkerboard($primary, $secondary: null, $to: 'bottom right', $steps: 10) {
+  $secondary: if($secondary, $secondary, hsl(hue($primary) - 309, saturation($primary), lightness($primary)));
+
+  $lr: 0deg;
+  $tb: -90deg;
+
+  @if $to == 'bottom left' {
+    $tb: 90deg;
+  }
+  @else if $to == 'top right' {
+    $lr: 180deg;
+  }
+  @else if $to == 'top left' {
+    $lr: 180deg;
+    $tb: 90deg;
+  }
+  @else if type-of($to) == 'list' {
+    @if length($to) == 1 {
+      $lr: nth($to, 1);
+      $tb: nth($to, 1);
+    }
+    @else {
+      $lr: nth($to, 1);
+      $tb: nth($to, 2);
+    }
+  }
+  @else if type-of($to) == 'number' {
+    $tb: $to;
+  }
+
+  $gradient: _awesome-header--gradient($primary, $steps);
+
+
+  background-color: $primary;
+  background:
+    linear-gradient($lr,
+      $gradient
+    ),
+    linear-gradient($tb,
+      $gradient
+    ),
+    $secondary;
+}
