@@ -16,5 +16,10 @@ export default function(s, p, f) {
     }
   }
 
+  const fragments = document.querySelector(`[data-slide="${slide}"][data-section="${section}"]`).querySelectorAll('.fragment');
+  for (let i = 0; i < fragment; i++) {
+    fragments[i].setAttribute('data-active', true);
+  }
+
   stage.style.transform = `translateX(${-100 * section}vw) translateY(${-100 * slide}vh)`;
 }

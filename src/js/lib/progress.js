@@ -58,18 +58,18 @@ export default function(nav) {
 
     document.body.appendChild(progress);
 
-    translate(active.section, active.slide);
+    translate(active.section, active.slide, active.fragment);
   });
 
   window.addEventListener('hashchange', e => {
     const active = getActiveSlide();
-    updateProgress(active.section, active.slide);
-    translate(active.section, active.slide);
+    updateProgress(active.section, active.slide, active.fragment);
+    translate(active.section, active.slide, active.fragment);
   });
 }
 
 export function updateProgress(section, slide) {
-  const current = document.querySelectorAll('[data-active]');
+  const current = document.querySelectorAll('[data-active]:not(.fragment)');
   const next = document.querySelectorAll(`[data-section="${section}"][data-slide="${slide}"`);
 
   nodeMap(current, node => {

@@ -1,6 +1,8 @@
 .fragment {
   .stage-fright & {
-    // opacity: 0;
+    opacity: 0;
+    transition: $transition;
+    transition-duration: .25s;
 
     &[data-active] {
       opacity: 1;

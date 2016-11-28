@@ -26,5 +26,6 @@ export function getActiveSlide() {
   return {
     section: parseInt(hash[0]),
     slide: parseInt(hash[1]),
+    fragment: parseInt(hash[2]),
   };
 };

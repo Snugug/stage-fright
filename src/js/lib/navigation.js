@@ -44,6 +44,17 @@ export default function(matrix) {
     }
     else if (e.keyCode === 40 || e.keyCode === 34 || e.keyCode === 32) {
       // Down
+      if (Array.isArray(matrix.slides[section][slide])) {
+        let fragment = matrix.slides[section][slide][0].querySelector('.fragment:not([data-active])');
+        if (fragment) {
+          let fragments = matrix.slides[section][slide][0].querySelectorAll('.fragment[data-active]').length + 1;
+          console.log(fragments);
+          fragment.setAttribute('data-active', true);
+          history.pushState(null, null, `#/${section}/${slide}/${fragments}`);
+          return;
+        }
+      }
+
       slide += 1;
       if (slide > lastSlide(section, matrix)) {
         section = nextSection(section, matrix);
