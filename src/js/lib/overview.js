@@ -7,7 +7,6 @@ export default function(matrix) {
   const slides = matrix._raw.slides;
 
   document.addEventListener('keydown', e => {
-    console.log(open);
     if (e.keyCode === 27) {
       if (open) {
         open = false;
