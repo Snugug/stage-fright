@@ -5,6 +5,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass');
 const prefix = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
+const babel = require('gulp-babel');
 const eyeglass = require('eyeglass');
 const browserSync = require('browser-sync');
 
@@ -51,10 +52,16 @@ gulp.task('js', () => {
       nodeResolve(),
     ],
   })
-    .pipe(source('stage-fright.js', './srcjs/'))
+    .pipe(source('stage-fright.js', './src/js/'))
     .pipe(buffer())
     .pipe(sourcemaps.init({
       loadMaps: true,
+    }))
+    .pipe(babel({
+      presets: ['babili'],
+      comments: false,
+      minified: true,
+      compact: true,
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dest/js'))
