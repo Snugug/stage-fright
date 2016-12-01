@@ -1,7 +1,26 @@
 import {nodeMap} from './helpers';
 
 export default class {
-  constructor(options) {
+  constructor() {
+    const script = document.currentScript.src.split('?');
+    const path = script[0];
+    let options = {};
+
+    // Script Options
+    if (script.length > 1) {
+      options = buildOptions(script[1]);
+    }
+
+    // Window Options
+    if (document.location.search) {
+      options = buildOptions(document.location.search.substr(1));
+    }
+
+    // console.log(options);
+
+    this._script = path;
+    this._options = options;
+    this._notes = false;
 
     this._raw = {
       stage: document.querySelector('._stage'),
@@ -31,4 +50,47 @@ export default class {
   get stage() {
     return this._raw.stage;
   }
+
+  get script() {
+    return this._script;
+  }
+
+  get options() {
+    return this._options;
+  }
+
+  get notes() {
+    return this._notes;
+  }
+
+  set notes(note) {
+    this._notes = note;
+    return note;
+  }
+}
+
+function buildOptions(opt, existing) {
+  let options = existing || {};
+  if (opt) {
+    const obj = `{"${decodeURI(opt).replace(/&/g, '","').replace(/=/g, '":"')}"}`;
+    const opts = JSON.parse(obj, (key, value) => {
+      if (parseFloat(value).toString() === value) {
+        return parseFloat(value);
+      }
+
+      try {
+        return JSON.parse(value);
+      }
+      catch(e) {
+        return value;
+      }
+
+      return value;
+    });
+
+    options = Object.assign(opts, options);
+  }
+
+
+  return options;
 }

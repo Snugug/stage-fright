@@ -1,4 +1,5 @@
 import nav from './navigation';
+import {openNotes, sendMessage} from './notes';
 
 export default function(matrix) {
   document.addEventListener('keydown', (e) => {
@@ -10,20 +11,27 @@ export default function(matrix) {
     if (e.keyCode === 37) {
       return nav.left(matrix);
     }
+
     // Right Arrow
-    else if (e.keyCode === 39) {
+    if (e.keyCode === 39) {
       return nav.right(matrix);
     }
+
     // Up Arrow, Page Up
-    else if (e.keyCode === 38 || e.keyCode === 33) {
+    if (e.keyCode === 38 || e.keyCode === 33) {
       return nav.previous(matrix);
     }
+
     // Down Arrow, Page Down, Spacebar
-    else if (e.keyCode === 40 || e.keyCode === 34 || e.keyCode === 32) {
+    if (e.keyCode === 40 || e.keyCode === 34 || e.keyCode === 32) {
       return nav.next(matrix);
     }
-    else {
-      return;
+
+    if (e.keyCode === 83) {
+      matrix.notes = openNotes();
+      return matrix;
     }
+
+    return;
   });
 }

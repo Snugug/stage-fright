@@ -1,9 +1,10 @@
 import {getActiveSlide} from './helpers';
 import {updateProgress} from './progress';
 import translate from './translate';
+import {sendMessage, sendNotes} from './notes';
 
 export default class {
-  static next(matrix) {
+  static next(matrix, notes) {
     const active = getActiveSlide();
     let section = active.section;
     let slide = active.slide;
@@ -12,7 +13,7 @@ export default class {
     return next(section, slide, fragment, matrix);
   }
 
-  static previous(matrix) {
+  static previous(matrix, notes) {
     const active = getActiveSlide();
     let section = active.section;
     let slide = active.slide;
@@ -21,7 +22,7 @@ export default class {
     return previous(section, slide, fragment, matrix);
   }
 
-  static left(matrix) {
+  static left(matrix, notes) {
     const active = getActiveSlide();
     let section = active.section;
     let slide = active.slide;
@@ -30,7 +31,7 @@ export default class {
     return left(section, slide, fragment, matrix);
   }
 
-  static right(matrix) {
+  static right(matrix, notes) {
     const active = getActiveSlide();
     let section = active.section;
     let slide = active.slide;
@@ -38,30 +39,39 @@ export default class {
 
     return right(section, slide, fragment, matrix);
   }
+
+  static move(section, slide, fragment) {
+    // console.log(section);
+    // console.log(slide);
+    // console.log(fragment);
+    // updateProgress(section, slide, fragment);
+    return translate(section, slide, fragment);
+  }
 }
 
-function move(section, slide, fragment) {
-  let path = `#/${section}/${slide}`;
-  const fragments = document.querySelector(`[data-slide="${slide}"][data-section="${section}"]`).querySelectorAll('.fragment[data-active]').length;
+function move(mv) {
+  let path = `#/${mv.section}/${mv.slide}`;
+  const fragments = document.querySelector(`[data-slide="${mv.slide}"][data-section="${mv.section}"]`).querySelectorAll('.fragment[data-active]').length;
 
-  if (isNaN(fragment)) {
-    updateProgress(section, slide);
-    translate(section, slide);
+  if (isNaN(mv.fragment)) {
+    updateProgress(mv.section, mv.slide);
+    translate(mv.section, mv.slide);
     if (fragments !== 0) {
       path += `/${fragments}`;
     }
   }
   else {
-    updateProgress(section, slide, fragment);
-    path += `/${fragment}`;
+    updateProgress(mv.section, mv.slide, mv.fragment);
+    path += `/${mv.fragment}`;
   }
 
   history.pushState(null, null, path);
+  sendNotes(mv.section, mv.slide, mv.matrix);
 
   return {
-    section,
-    slide,
-    fragment,
+    section: mv.section,
+    slide: mv.slide,
+    fragment: mv.fragment,
   };
 }
 
@@ -70,12 +80,16 @@ function right(sec, sld, frag, matrix) {
   let slide = sld;
   let fragment = frag;
 
+  sendMessage(matrix.notes, {
+    move: 'right',
+  });
+
   section = nextSection(section, matrix);
   if (slide > lastSlide(section, matrix)) {
     slide = 0;
   }
 
-  return move(section, slide);
+  return move({section, slide, matrix});
 }
 
 function left(sec, sld, frag, matrix) {
@@ -83,18 +97,26 @@ function left(sec, sld, frag, matrix) {
   let slide = sld;
   let fragment = frag;
 
+  sendMessage(matrix.notes, {
+    move: 'left',
+  });
+
   section = previousSection(section);
   if (slide > lastSlide(section, matrix)) {
     slide = 0;
   }
 
-  return move(section, slide);
+  return move({section, slide, matrix});
 }
 
 function previous(sec, sld, frag, matrix) {
   let section = sec;
   let slide = sld;
   let fragment = frag;
+
+  sendMessage(matrix.notes, {
+    move: 'previous',
+  });
 
   slide -= 1;
   if (slide < 0) {
@@ -108,7 +130,7 @@ function previous(sec, sld, frag, matrix) {
     }
   }
 
-  return move(section, slide);
+  return move({section, slide, matrix});
 }
 
 function next(sec, sld, frag, matrix) {
@@ -117,13 +139,17 @@ function next(sec, sld, frag, matrix) {
   let fragment = frag;
   const sectionLength = matrix.slides.length;
 
+  sendMessage(matrix.notes, {
+    move: 'next',
+  });
+
   if (Array.isArray(matrix.slides[section][slide])) {
     let inactiveFragment = matrix.slides[section][slide][0].querySelector('.fragment:not([data-active])');
     if (inactiveFragment) {
       const fragments = matrix.slides[section][slide][0].querySelectorAll('.fragment[data-active]').length + 1;
       inactiveFragment.setAttribute('data-active', true);
 
-      return move(section, slide, fragments);
+      return move({section, slide, fragments, matrix});
     }
   }
 
@@ -141,7 +167,7 @@ function next(sec, sld, frag, matrix) {
     }
   }
 
-  return move(section, slide, fragment);
+  return move({section, slide, fragment, matrix});
 }
 
 function previousSection(sec) {

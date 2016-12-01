@@ -1,7 +1,8 @@
 import {idleRun, getActiveSlide, nodeMap} from './helpers';
 import translate from './translate';
+import {sendMessage} from './notes';
 
-export default function(nav) {
+export default function(matrix) {
   idleRun(() => {
     // Create Progress
     const progress = document.createElement('nav');
@@ -12,7 +13,7 @@ export default function(nav) {
 
     // Build Sections
     let sections = 0;
-    nav.slides.forEach(section => {
+    matrix.slides.forEach(section => {
       const sec = document.createElement('div');
       sec.setAttribute('data-section', sections);
       sec.classList.add('progress--section');
@@ -25,7 +26,7 @@ export default function(nav) {
         sld.setAttribute('data-slide', slides);
         sld.setAttribute('data-section', sections);
         sld.setAttribute('tabindex', '-1');
-        sld.textContent = `Slide ${sections}/${slides}`;
+        sld.textContent = `Section ${sections}, Slide ${slides}`;
 
         if (Array.isArray(slide)) {
           sld.style.opacity = .5;
@@ -61,15 +62,21 @@ export default function(nav) {
       sections++;
     });
 
-    document.body.appendChild(progress);
+    if (matrix.options.progress !== false) {
+      document.body.appendChild(progress);
+    }
 
     translate(active.section, active.slide, active.fragment);
+    updateProgress(active.section, active.slide, active.fragment);
   });
 
   window.addEventListener('hashchange', e => {
     const active = getActiveSlide();
     updateProgress(active.section, active.slide, active.fragment);
     translate(active.section, active.slide, active.fragment);
+    sendMessage(matrix.notes, {
+      go: active,
+    });
   });
 }
 
@@ -78,22 +85,24 @@ export function updateProgress(section, slide, fragment) {
   const next = document.querySelectorAll(`[data-section="${section}"][data-slide="${slide}"`);
   const progress = document.querySelector('.progress--slide[data-active]');
 
-  if (fragment) {
-    const fragments = parseInt(progress.getAttribute('data-fragments'));
-    if (fragment === fragments) {
-      progress.style.transitionProperty = 'none';
-      progress.style.opacity = 1;
+  if (progress) {
+    if (fragment) {
+      const fragments = parseInt(progress.getAttribute('data-fragments'));
+      if (fragment === fragments) {
+        progress.style.transitionProperty = 'none';
+        progress.style.opacity = 1;
 
+      }
     }
-  }
-  else {
-    progress.style.transitionProperty = 'all';
-    nodeMap(current, node => {
-      node.removeAttribute('data-active');
-    });
+    else {
+      progress.style.transitionProperty = 'all';
+      nodeMap(current, node => {
+        node.removeAttribute('data-active');
+      });
 
-    nodeMap(next, node => {
-      node.setAttribute('data-active', 'true');
-    });
+      nodeMap(next, node => {
+        node.setAttribute('data-active', 'true');
+      });
+    }
   }
 }
