@@ -46,6 +46,7 @@ gulp.task('js', () => {
     entry: 'src/js/stage-fright.js',
     sourceMap: true,
     preferConst: true,
+    // format: 'iife',
     plugins: [
       nodeResolve(),
     ],
