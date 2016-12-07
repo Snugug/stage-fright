@@ -119,6 +119,18 @@ function previous(sec, sld, frag, matrix) {
     move: 'previous',
   });
 
+  if (Array.isArray(matrix.slides[section][slide])) {
+    let activeFragments = matrix.slides[section][slide][0].querySelectorAll('.fragment[data-active]');
+    if (activeFragments) {
+
+      const fragments = activeFragments.length - 1;
+      if (fragments >= 0) {
+        activeFragments[fragments].removeAttribute('data-active');
+        return move({section, slide, fragments, matrix});
+      }
+    }
+  }
+
   slide -= 1;
   if (slide < 0) {
     section = previousSection(section);

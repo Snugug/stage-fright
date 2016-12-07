@@ -91,7 +91,10 @@ export function updateProgress(section, slide, fragment) {
       if (fragment === fragments) {
         progress.style.transitionProperty = 'none';
         progress.style.opacity = 1;
-
+      }
+      else {
+        progress.style.transitionProperty = 'none';
+        progress.style.opacity = .5;
       }
     }
     else {
