@@ -57,6 +57,7 @@ function move(mv) {
     updateProgress(mv.section, mv.slide);
     translate(mv.section, mv.slide);
     if (fragments !== 0) {
+      updateProgress(mv.section, mv.slide, fragments);
       path += `/${fragments}`;
     }
   }
