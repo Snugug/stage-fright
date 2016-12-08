@@ -131,7 +131,7 @@ export function body() {
 <div class="current">
     <div class="slide">
       <div class="slide--holder">
-        <iframe src="${locale.origin}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
+        <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
       </div>
     </div>
   </div>
@@ -139,7 +139,7 @@ export function body() {
     <div class="slide">
       <span class="slide--label">Upcoming:</span>
       <div class="slide--holder">
-        <iframe src="${locale.origin}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
+        <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
       </div>
     </div>
     <div class="controls">
