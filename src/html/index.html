@@ -16,10 +16,67 @@
         </div>
       </section>
     </article>
+
+    <!-- Basics -->
     <article class="_stage--group">
       <section class="_stage--slide">
         <div class="_stage--content">
           <p>Stage Fright is a JavaScript powered presentation framework</p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Stage Fright takes inspiration from <a href="https://github.com/marcolago/flowtime.js">Flowtime.js</a> and <a href="https://github.com/hakimel/reveal.js/">reveal.js</a></p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>It's tiny, about <strong>13KB minified</strong> and around <strong>4KB gzipped</strong></p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>It supports fragments <span class="fragment">and comes with a nifty minimap</span><span class="fragment"> that shows presentation progress</span></p>
+          <p class="fragment">If there are fragments remaining on a slide, <span class="fragment">the slide in the minimap will be greyed out <span class="fragment">until all fragments are shown</span></span></p>
+          <p class="fragment">This is the last fragment on the slide</p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>It even supports Speaker Notes (press <code>s</code> to start them up)</p>
+        </div>
+        <aside class="_stage--notes">
+          <p>I'm a speaker note!</p>
+        </aside>
+      </section>
+    </article>
+
+    <!-- HTML -->
+    <article class="_stage--group">
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>The markup is designed to be semantic</p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>A vertical grouping of slides is a <code>._stage--group</code></p>
+          <pre class="fragment"><code>&lt;article class="_stage--group"&gt;
+  &lt;!-- Slides Will Go Here --&gt;
+&lt;/article&gt;</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Each slide is a <code>section</code> inside the article, with a <code>._stage--content</code> class. Inside is the content wrapper, <code>._stage--content</code>. <span class="span fragment">Notes can be added by including an <code>aside</code> with the <code>._stage--notes</code> class as a sibling of the content</span></p>
+          <pre class="fragment"><code>&lt;section class="_stage--slide"&gt;
+  &lt;div class="_stage--content"&gt;
+    &lt;!-- Slides Content Goes Here --&gt;
+  &lt;/div&gt;
+  &lt;aside class="_stage--notes"&gt;
+    &lt;!-- Slide Notes Go Here --&gt;
+  &lt;/aside&gt;
+&lt;/section&gt;</code></pre>
         </div>
       </section>
     </article>
