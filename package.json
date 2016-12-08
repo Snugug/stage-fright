@@ -2,7 +2,7 @@
   "name": "stage-fright",
   "version": "0.1.0",
   "description": "Yet Another HTML5 Presentation Framework",
-  "main": "index.js",
+  "main": "src/js/lib/core.js",
   "repository": {
     "url": "git@github.com:Snugug/stage-fright.git",
     "type": "git"
