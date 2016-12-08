@@ -1,5 +1,6 @@
 [data-state='intro'] {
   @include heading(map-get($accent, 'neutral'), map-get($accent, 'dark'));
+  text-align: right;
 };
 
 [data-state='outro'] {

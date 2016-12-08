@@ -1,7 +1,7 @@
 import nav from './navigation';
 import {getActiveSlide} from './helpers';
 
-export function openNotes() {
+export function openNotes(matrix) {
   const active = {
     go: getActiveSlide(),
   };
@@ -11,6 +11,7 @@ export function openNotes() {
 
   setTimeout(() => {
     sendMessage(notes, active);
+    sendNotes(active.go.section, active.go.slide, matrix);
   }, 1000);
 
   return notes;
@@ -76,7 +77,8 @@ export function body() {
     background: black;
     opacity: .5;
     width: 100%;
-    padding: .25em;
+    padding: .25rem;
+    font-size: .5em;
   }
 
   .current {
@@ -105,6 +107,7 @@ export function body() {
     margin: 0;
     flex-shrink: 0;
     width: 100%;
+    font-size: .75em;
   }
 
   .controls--reset {
@@ -112,12 +115,12 @@ export function body() {
     font-size: 1px;
   }
 
-  .notes {
+  .slide-notes {
     font-family: sans-serif;
     margin-top: 1rem;
   }
 
-  .notes--label {
+  .slide-notes--label {
     font-size: 1px;
     color: transparent;
   }
@@ -149,9 +152,9 @@ export function body() {
         <div class="controls--clear"></div>
       </div>
     </div>
-    <div class="notes">
-      <h4 class="notes--label">Notes</h4>
-      <div class="notes--content"></div>
+    <div class="slide-notes">
+      <h4 class="slide-notes--label">Notes</h4>
+      <div class="slide-notes--content"></div>
     </div>
   </div>
 `;
@@ -160,7 +163,7 @@ export function body() {
 }
 
 export function sendNotes(section, slide, matrix) {
-  let notes = document.querySelector(`[data-slide="${slide}"][data-section="${section}"] .notes`);
+  let notes = document.querySelector(`[data-slide="${slide}"][data-section="${section}"] ._stage--notes`);
   if (notes) {
     notes = notes.innerHTML;
   }
@@ -247,7 +250,7 @@ export function slideMessage(matrix) {
 export function notesMessage() {
   const current = document.querySelector('.slide--current');
   const upcoming = document.querySelector('.slide--upcoming');
-  const notes = document.querySelector('.notes--content');
+  const notes = document.querySelector('.slide-notes--content');
 
 
   window.addEventListener('message', e => {

@@ -28,7 +28,7 @@ export default function(matrix) {
     }
 
     if (e.keyCode === 83) {
-      matrix.notes = openNotes();
+      matrix.notes = openNotes(matrix);
       return matrix;
     }
 
