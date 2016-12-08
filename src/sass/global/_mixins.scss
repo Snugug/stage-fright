@@ -34,62 +34,6 @@
   margin-top: .5rem;
 }
 
-
-@function _awesome-header--gradient($color, $steps) {
-  $gradient: ();
-
-  //////////////////////////////
-  // Max Params
-  //////////////////////////////
-  $max-alpha: 1 - ((1 / $steps) * 2);
-  $max-half: round(($steps - 2) / 2);
-
-  //////////////////////////////
-  // Steps
-  //////////////////////////////
-  $full-step: 1 / $steps;
-  $half-step: $full-step / 2;
-  $loc-step: 100% / $steps;
-
-  //////////////////////////////
-  // Initialize
-  //////////////////////////////
-  $alpha: 0;
-  $location: $loc-step;
-
-  $gradient: append($gradient, rgba($color, $alpha) $location);
-
-  //////////////////////////////
-  // Loop
-  //////////////////////////////
-  @for $i from 1 through $steps - 2 {
-    @if $i <= $max-half {
-      $alpha: $alpha + $half-step;
-    }
-    @else {
-      $alpha: $alpha + $full-step;
-    }
-
-
-    $gradient: append($gradient, rgba($color, $alpha) $location, 'comma');
-
-    $location: $location + $loc-step;
-
-    $gradient: append($gradient, rgba($color, $alpha) $location, 'comma');
-  }
-
-  $gradient: append($gradient, rgba($color, $max-alpha) $location);
-
-  @return $gradient;
-}
-
-@function shift-gradient($gradient) {
-  $old: $gradient;
-  $new: $gradient;
-
-
-}
-
 @mixin checkerboard($primary, $secondary: null, $to: 'bottom right', $steps: 10) {
   $secondary: if($secondary, $secondary, hsl(hue($primary) - 309, saturation($primary), lightness($primary)));
 
@@ -132,4 +76,20 @@
       $gradient
     ),
     $secondary;
+}
+
+
+@mixin heading($color, $secondary: false, $text: white) {
+  @if ($secondary == false) {
+    $secondary: mix(black, $color, 50%);
+  }
+
+  @include checkerboard(mix(black, $color, 50%), $color);
+
+  h1 {
+    font-size: 3em;
+    color: $text;
+    @include close-shade(mix($color, black, 16%), #111, 'bottom right', 15);
+  }
+
 }

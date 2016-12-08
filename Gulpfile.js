@@ -17,7 +17,7 @@ const buffer = require('vinyl-buffer');
 gulp.task('server', function () {
   browserSync.init({
     server: {
-      baseDir: './dest',
+      baseDir: './docs',
     },
   });
 });
@@ -31,7 +31,7 @@ gulp.task('sass', () => {
     .pipe(sass(eyeglass()))
     .pipe(prefix())
     .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./dest/css'))
+    .pipe(gulp.dest('./docs/css'))
     .pipe(browserSync.stream());
 });
 
@@ -64,7 +64,7 @@ gulp.task('js', () => {
       compact: true,
     }))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dest/js'))
+    .pipe(gulp.dest('./docs/js'))
     .pipe(browserSync.stream());
 });
 
@@ -76,13 +76,13 @@ gulp.task('js:watch', ['js'], () => {
  * HTML
  */
 gulp.task('html', () => {
-  return gulp.src(['src/html/**/*.html', '!node_modules/**/*', '!dest/**/*'])
-    .pipe(gulp.dest('./dest'))
+  return gulp.src(['src/html/**/*.html', '!node_modules/**/*', '!docs/**/*'])
+    .pipe(gulp.dest('./docs'))
     .pipe(browserSync.stream());
 })
 
 gulp.task('html:watch', ['html'], () => {
-  return gulp.watch(['src/html/**/*.html', '!node_modules/**/*', '!dest/**/*'], ['html'])
+  return gulp.watch(['src/html/**/*.html', '!node_modules/**/*', '!docs/**/*'], ['html'])
 });
 
 gulp.task('watch', ['js:watch', 'html:watch', 'sass:watch']);

@@ -1,0 +1,17 @@
+[data-state='intro'] {
+  @include heading(map-get($accent, 'neutral'), map-get($accent, 'dark'));
+};
+
+[data-state='outro'] {
+  @include heading(grey);
+
+  a,
+  a:hover {
+    color: mix(map-get($accent, 'neutral'), white, 15%);
+    text-shadow: none;
+  }
+
+  a:hover {
+    color: mix(map-get($accent, 'neutral'), white, 50%)
+  }
+};

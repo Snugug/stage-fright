@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "breakpoint-sass": "^2.7.0",
+    "letterform-shades": "^1.0.0",
     "sass-toolkit": "^2.10.0"
   }
 }
