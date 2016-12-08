@@ -7,7 +7,9 @@ export function openNotes(matrix) {
   };
   const locale = window.location;
 
-  const notes = window.open(`${locale.origin}?notes=true`, 'Stage Fright - Notes', 'width=1100,height=700');
+  console.log(locale);
+
+  const notes = window.open(`${locale.origin}${locale.pathname}?notes=true`, 'Stage Fright - Notes', 'width=1100,height=700');
 
   setTimeout(() => {
     sendMessage(notes, active);
