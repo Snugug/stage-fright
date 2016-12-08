@@ -108,7 +108,7 @@ function nodeMap(a,b){return Array.prototype.map.call(a,b)}function idleRun(a){i
 <div class="current">
     <div class="slide">
       <div class="slide--holder">
-        <iframe src="${a.origin}?progress=false&responsive=true&listen=true${a.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
+        <iframe src="${a.origin}${a.pathname}?progress=false&responsive=true&listen=true${a.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
       </div>
     </div>
   </div>
@@ -116,7 +116,7 @@ function nodeMap(a,b){return Array.prototype.map.call(a,b)}function idleRun(a){i
     <div class="slide">
       <span class="slide--label">Upcoming:</span>
       <div class="slide--holder">
-        <iframe src="${a.origin}?progress=false&responsive=true&listen=true${a.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
+        <iframe src="${a.origin}${a.pathname}?progress=false&responsive=true&listen=true${a.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
       </div>
     </div>
     <div class="controls">
