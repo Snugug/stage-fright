@@ -3,10 +3,19 @@
   "version": "0.2.0",
   "description": "Yet Another HTML5 Presentation Framework",
   "main": "src/js/lib/core.js",
+  "eyeglass": {
+    "needs": "^1.0.0",
+    "exports": "eyeglass-exports.js",
+    "name": "stage-fright"
+  },
   "repository": {
     "url": "git@github.com:Snugug/stage-fright.git",
     "type": "git"
   },
+  "keywords": [
+    "eyeglass-module",
+    "presentation"
+  ],
   "author": "Sam Richard <sam@snug.ug>",
   "license": "MIT",
   "devDependencies": {
