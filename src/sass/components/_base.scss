@@ -23,8 +23,7 @@ a {
   word-wrap: break-word;
 }
 
-h2,
-&--h2 {
+h2 {
   @extend %header;
   // border-bottom: .05em solid $color;
   text-shadow: 2px 2px $background, -2px -2px $background;
