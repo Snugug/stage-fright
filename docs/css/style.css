@@ -274,7 +274,6 @@ a {
   color: #008571;
   text-decoration: none;
   background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(bottom, #fdfdfd 75%, #008571 75%);
   background-image: linear-gradient(to top, #fdfdfd 75%, #008571 75%);
   background-size: 0.125em 0.1875em;
   background-position: 0 1.075em;
@@ -283,7 +282,6 @@ a {
     color: #146458;
     text-decoration: none;
     background-repeat: repeat-x;
-    background-image: -webkit-linear-gradient(bottom, #fdfdfd 75%, #146458 75%);
     background-image: linear-gradient(to top, #fdfdfd 75%, #146458 75%);
     background-size: 0.125em 0.1875em;
     background-position: 0 1.075em;
@@ -377,7 +375,6 @@ blockquote {
     width: .25rem;
     height: 100%;
     background-color: #003c32;
-    background: -webkit-linear-gradient(bottom, rgba(0, 60, 50, 0) 10%, rgba(0, 60, 50, 0.05) 10%, rgba(0, 60, 50, 0.05) 20%, rgba(0, 60, 50, 0.1) 20%, rgba(0, 60, 50, 0.1) 30%, rgba(0, 60, 50, 0.15) 30%, rgba(0, 60, 50, 0.15) 40%, rgba(0, 60, 50, 0.2) 40%, rgba(0, 60, 50, 0.2) 50%, rgba(0, 60, 50, 0.3) 50%, rgba(0, 60, 50, 0.3) 60%, rgba(0, 60, 50, 0.4) 60%, rgba(0, 60, 50, 0.4) 70%, rgba(0, 60, 50, 0.5) 70%, rgba(0, 60, 50, 0.5) 80%, rgba(0, 60, 50, 0.6) 80%, rgba(0, 60, 50, 0.6) 90%, rgba(0, 60, 50, 0.8) 90%), -webkit-linear-gradient(right, rgba(0, 60, 50, 0) 10%, rgba(0, 60, 50, 0.05) 10%, rgba(0, 60, 50, 0.05) 20%, rgba(0, 60, 50, 0.1) 20%, rgba(0, 60, 50, 0.1) 30%, rgba(0, 60, 50, 0.15) 30%, rgba(0, 60, 50, 0.15) 40%, rgba(0, 60, 50, 0.2) 40%, rgba(0, 60, 50, 0.2) 50%, rgba(0, 60, 50, 0.3) 50%, rgba(0, 60, 50, 0.3) 60%, rgba(0, 60, 50, 0.4) 60%, rgba(0, 60, 50, 0.4) 70%, rgba(0, 60, 50, 0.5) 70%, rgba(0, 60, 50, 0.5) 80%, rgba(0, 60, 50, 0.6) 80%, rgba(0, 60, 50, 0.6) 90%, rgba(0, 60, 50, 0.8) 90%), #008571;
     background: linear-gradient(0deg, rgba(0, 60, 50, 0) 10%, rgba(0, 60, 50, 0.05) 10%, rgba(0, 60, 50, 0.05) 20%, rgba(0, 60, 50, 0.1) 20%, rgba(0, 60, 50, 0.1) 30%, rgba(0, 60, 50, 0.15) 30%, rgba(0, 60, 50, 0.15) 40%, rgba(0, 60, 50, 0.2) 40%, rgba(0, 60, 50, 0.2) 50%, rgba(0, 60, 50, 0.3) 50%, rgba(0, 60, 50, 0.3) 60%, rgba(0, 60, 50, 0.4) 60%, rgba(0, 60, 50, 0.4) 70%, rgba(0, 60, 50, 0.5) 70%, rgba(0, 60, 50, 0.5) 80%, rgba(0, 60, 50, 0.6) 80%, rgba(0, 60, 50, 0.6) 90%, rgba(0, 60, 50, 0.8) 90%), linear-gradient(-90deg, rgba(0, 60, 50, 0) 10%, rgba(0, 60, 50, 0.05) 10%, rgba(0, 60, 50, 0.05) 20%, rgba(0, 60, 50, 0.1) 20%, rgba(0, 60, 50, 0.1) 30%, rgba(0, 60, 50, 0.15) 30%, rgba(0, 60, 50, 0.15) 40%, rgba(0, 60, 50, 0.2) 40%, rgba(0, 60, 50, 0.2) 50%, rgba(0, 60, 50, 0.3) 50%, rgba(0, 60, 50, 0.3) 60%, rgba(0, 60, 50, 0.4) 60%, rgba(0, 60, 50, 0.4) 70%, rgba(0, 60, 50, 0.5) 70%, rgba(0, 60, 50, 0.5) 80%, rgba(0, 60, 50, 0.6) 80%, rgba(0, 60, 50, 0.6) 90%, rgba(0, 60, 50, 0.8) 90%), #008571;
     content: '';
     display: block; }
@@ -439,7 +436,6 @@ sup {
       -ms-flex-direction: row;
           flex-direction: row;
   opacity: .3;
-  -webkit-transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
   transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1); }
   .progress:hover, .progress:focus {
     opacity: 1; }
@@ -456,7 +452,6 @@ sup {
     border: 1px solid #008571;
     width: 1.25rem;
     height: .95rem;
-    -webkit-transition: all 0.5s cubic-bezier(0.77, 0.1, 0.22, 1);
     transition: all 0.5s cubic-bezier(0.77, 0.1, 0.22, 1);
     color: transparent;
     text-shadow: none;
@@ -471,16 +466,13 @@ sup {
 
 .stage-fright .fragment {
   opacity: 0;
-  -webkit-transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
   transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
-  -webkit-transition-duration: .25s;
-          transition-duration: .25s; }
+  transition-duration: .25s; }
   .stage-fright .fragment[data-active] {
     opacity: 1; }
 
 [data-state='intro'] {
   background-color: #004339;
-  background: -webkit-linear-gradient(bottom, rgba(0, 67, 57, 0) 10%, rgba(0, 67, 57, 0.05) 10%, rgba(0, 67, 57, 0.05) 20%, rgba(0, 67, 57, 0.1) 20%, rgba(0, 67, 57, 0.1) 30%, rgba(0, 67, 57, 0.15) 30%, rgba(0, 67, 57, 0.15) 40%, rgba(0, 67, 57, 0.2) 40%, rgba(0, 67, 57, 0.2) 50%, rgba(0, 67, 57, 0.3) 50%, rgba(0, 67, 57, 0.3) 60%, rgba(0, 67, 57, 0.4) 60%, rgba(0, 67, 57, 0.4) 70%, rgba(0, 67, 57, 0.5) 70%, rgba(0, 67, 57, 0.5) 80%, rgba(0, 67, 57, 0.6) 80%, rgba(0, 67, 57, 0.6) 90%, rgba(0, 67, 57, 0.8) 90%), -webkit-linear-gradient(right, rgba(0, 67, 57, 0) 10%, rgba(0, 67, 57, 0.05) 10%, rgba(0, 67, 57, 0.05) 20%, rgba(0, 67, 57, 0.1) 20%, rgba(0, 67, 57, 0.1) 30%, rgba(0, 67, 57, 0.15) 30%, rgba(0, 67, 57, 0.15) 40%, rgba(0, 67, 57, 0.2) 40%, rgba(0, 67, 57, 0.2) 50%, rgba(0, 67, 57, 0.3) 50%, rgba(0, 67, 57, 0.3) 60%, rgba(0, 67, 57, 0.4) 60%, rgba(0, 67, 57, 0.4) 70%, rgba(0, 67, 57, 0.5) 70%, rgba(0, 67, 57, 0.5) 80%, rgba(0, 67, 57, 0.6) 80%, rgba(0, 67, 57, 0.6) 90%, rgba(0, 67, 57, 0.8) 90%), #008571;
   background: linear-gradient(0deg, rgba(0, 67, 57, 0) 10%, rgba(0, 67, 57, 0.05) 10%, rgba(0, 67, 57, 0.05) 20%, rgba(0, 67, 57, 0.1) 20%, rgba(0, 67, 57, 0.1) 30%, rgba(0, 67, 57, 0.15) 30%, rgba(0, 67, 57, 0.15) 40%, rgba(0, 67, 57, 0.2) 40%, rgba(0, 67, 57, 0.2) 50%, rgba(0, 67, 57, 0.3) 50%, rgba(0, 67, 57, 0.3) 60%, rgba(0, 67, 57, 0.4) 60%, rgba(0, 67, 57, 0.4) 70%, rgba(0, 67, 57, 0.5) 70%, rgba(0, 67, 57, 0.5) 80%, rgba(0, 67, 57, 0.6) 80%, rgba(0, 67, 57, 0.6) 90%, rgba(0, 67, 57, 0.8) 90%), linear-gradient(-90deg, rgba(0, 67, 57, 0) 10%, rgba(0, 67, 57, 0.05) 10%, rgba(0, 67, 57, 0.05) 20%, rgba(0, 67, 57, 0.1) 20%, rgba(0, 67, 57, 0.1) 30%, rgba(0, 67, 57, 0.15) 30%, rgba(0, 67, 57, 0.15) 40%, rgba(0, 67, 57, 0.2) 40%, rgba(0, 67, 57, 0.2) 50%, rgba(0, 67, 57, 0.3) 50%, rgba(0, 67, 57, 0.3) 60%, rgba(0, 67, 57, 0.4) 60%, rgba(0, 67, 57, 0.4) 70%, rgba(0, 67, 57, 0.5) 70%, rgba(0, 67, 57, 0.5) 80%, rgba(0, 67, 57, 0.6) 80%, rgba(0, 67, 57, 0.6) 90%, rgba(0, 67, 57, 0.8) 90%), #008571;
   text-align: right; }
   [data-state='intro'] h1 {
@@ -490,7 +482,6 @@ sup {
 
 [data-state='outro'] {
   background-color: #404040;
-  background: -webkit-linear-gradient(bottom, rgba(64, 64, 64, 0) 10%, rgba(64, 64, 64, 0.05) 10%, rgba(64, 64, 64, 0.05) 20%, rgba(64, 64, 64, 0.1) 20%, rgba(64, 64, 64, 0.1) 30%, rgba(64, 64, 64, 0.15) 30%, rgba(64, 64, 64, 0.15) 40%, rgba(64, 64, 64, 0.2) 40%, rgba(64, 64, 64, 0.2) 50%, rgba(64, 64, 64, 0.3) 50%, rgba(64, 64, 64, 0.3) 60%, rgba(64, 64, 64, 0.4) 60%, rgba(64, 64, 64, 0.4) 70%, rgba(64, 64, 64, 0.5) 70%, rgba(64, 64, 64, 0.5) 80%, rgba(64, 64, 64, 0.6) 80%, rgba(64, 64, 64, 0.6) 90%, rgba(64, 64, 64, 0.8) 90%), -webkit-linear-gradient(right, rgba(64, 64, 64, 0) 10%, rgba(64, 64, 64, 0.05) 10%, rgba(64, 64, 64, 0.05) 20%, rgba(64, 64, 64, 0.1) 20%, rgba(64, 64, 64, 0.1) 30%, rgba(64, 64, 64, 0.15) 30%, rgba(64, 64, 64, 0.15) 40%, rgba(64, 64, 64, 0.2) 40%, rgba(64, 64, 64, 0.2) 50%, rgba(64, 64, 64, 0.3) 50%, rgba(64, 64, 64, 0.3) 60%, rgba(64, 64, 64, 0.4) 60%, rgba(64, 64, 64, 0.4) 70%, rgba(64, 64, 64, 0.5) 70%, rgba(64, 64, 64, 0.5) 80%, rgba(64, 64, 64, 0.6) 80%, rgba(64, 64, 64, 0.6) 90%, rgba(64, 64, 64, 0.8) 90%), grey;
   background: linear-gradient(0deg, rgba(64, 64, 64, 0) 10%, rgba(64, 64, 64, 0.05) 10%, rgba(64, 64, 64, 0.05) 20%, rgba(64, 64, 64, 0.1) 20%, rgba(64, 64, 64, 0.1) 30%, rgba(64, 64, 64, 0.15) 30%, rgba(64, 64, 64, 0.15) 40%, rgba(64, 64, 64, 0.2) 40%, rgba(64, 64, 64, 0.2) 50%, rgba(64, 64, 64, 0.3) 50%, rgba(64, 64, 64, 0.3) 60%, rgba(64, 64, 64, 0.4) 60%, rgba(64, 64, 64, 0.4) 70%, rgba(64, 64, 64, 0.5) 70%, rgba(64, 64, 64, 0.5) 80%, rgba(64, 64, 64, 0.6) 80%, rgba(64, 64, 64, 0.6) 90%, rgba(64, 64, 64, 0.8) 90%), linear-gradient(-90deg, rgba(64, 64, 64, 0) 10%, rgba(64, 64, 64, 0.05) 10%, rgba(64, 64, 64, 0.05) 20%, rgba(64, 64, 64, 0.1) 20%, rgba(64, 64, 64, 0.1) 30%, rgba(64, 64, 64, 0.15) 30%, rgba(64, 64, 64, 0.15) 40%, rgba(64, 64, 64, 0.2) 40%, rgba(64, 64, 64, 0.2) 50%, rgba(64, 64, 64, 0.3) 50%, rgba(64, 64, 64, 0.3) 60%, rgba(64, 64, 64, 0.4) 60%, rgba(64, 64, 64, 0.4) 70%, rgba(64, 64, 64, 0.5) 70%, rgba(64, 64, 64, 0.5) 80%, rgba(64, 64, 64, 0.6) 80%, rgba(64, 64, 64, 0.6) 90%, rgba(64, 64, 64, 0.8) 90%), grey; }
   [data-state='outro'] h1 {
     font-size: 3em;
@@ -512,7 +503,6 @@ sup {
   width: 100vw;
   height: 100vh;
   will-change: transform;
-  -webkit-transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
   transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -528,7 +518,6 @@ sup {
     [data-overlay] ._stage--slide {
       -webkit-filter: blur(20px);
               filter: blur(20px);
-      -webkit-transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
       transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1); }
       [data-overlay] ._stage--slide:hover, [data-overlay] ._stage--slide:focus {
         -webkit-filter: none;
