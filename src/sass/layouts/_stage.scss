@@ -17,6 +17,11 @@
   }
 
   &--slide {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    display: flex;
+    justify-content: center;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -34,13 +39,8 @@
   }
 
   &--content {
-    position: relative;
-    top: 50%;
-    transform: translateY(calc(-50% - 1.5rem));
-    padding: 2rem;
     max-width: 67vw;
     max-height: 100vh;
-    margin: 0 auto;
     width: 100%;
   }
 
