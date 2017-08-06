@@ -26,124 +26,33 @@ export function body() {
   body {
     margin: 0;
     padding: 0;
-    display: flex;
-    overflow: hidden;
-    font-size: 100%;
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .clock,
-  .timer {
-    flex: 1;
-    font-family: sans-serif;
-    font-size: 2em;
-  }
-  .timer {
-    text-align: left;
-  }
-  .clock {
-    text-align: right;
-  }
-
-
-  [data-mute] {
-    opacity: .5;
-  }
-
-  .slide {
-    position: relative;
-  }
-
-  .slide--current {
-    width: calc(60vw - 1em);
-    height: calc(100vh - 1em);
-    padding: .25em;
-  }
-
-  .slide--upcoming {
-    width: calc(40vw - 1em);
-    height: calc(40vh - 1em);
-  }
-
-  .slide--frame {
-    // border: 1px solid black;
-  }
-
-  .slide--label {
-    text-transform: uppercase;
-    position: absolute;
-    color: white;
-    background: black;
-    opacity: .5;
-    width: 100%;
-    padding: .25rem;
-    font-size: .5em;
-  }
-
-  .current {
-    width: 60vw;
-    padding: .5em;
-  }
-
-  .speaker-notes {
-    width: 40vw;
-    padding: .5em;
-  }
-
-  .controls {
-    font-size: .8em;
-  }
-
-  .controls--time {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .controls--label {
-    font-family: sans-serif;
-    opacity: .5;
-    text-transform: lowercase;
-    margin: 0;
-    flex-shrink: 0;
-    width: 100%;
-    font-size: .75em;
-  }
-
-  .controls--reset {
-    color: transparent;
-    font-size: 1px;
-  }
-
-  .slide-notes {
-    font-family: sans-serif;
-    margin-top: 1rem;
-  }
-
-  .slide-notes--label {
-    font-size: 1px;
-    color: transparent;
-  }
-
 </style>
-<div class="current">
-    <div class="slide">
-      <div class="slide--holder">
+<div class="_speaker-notes">
+  <!-- Slide Preview -->
+  <!-- Current Slide -->
+  <div class="_speaker-notes--current">
+    <div class="_speaker-notes--slide">
+      <div class="_speaker-notes--holder">
         <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
       </div>
     </div>
   </div>
-  <div class="speaker-notes">
-    <div class="slide">
-      <span class="slide--label">Upcoming:</span>
-      <div class="slide--holder">
+
+  <!-- Upcoming Slide Slide -->
+  <div class="_speaker-notes--upcoming">
+    <div class="_speaker-notes--slide">
+      <span class="_speaker-notes--label">Upcoming:</span>
+      <div class="_speaker-notes--holder">
         <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
       </div>
     </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="_speaker-notes--controls">
     <div class="controls">
-        <div class="controls--time">
+      <div class="controls--time">
         <h4 class="controls--label">Time <span class="controls--reset">Click to Reset</span></h4>
         <div class="timer">
           <span class="timer--hours">00</span><span class="timer--minutes">:00</span><span class="timer--seconds">:00</span>
@@ -154,11 +63,16 @@ export function body() {
         <div class="controls--clear"></div>
       </div>
     </div>
+  </div>
+
+  <article class="_speaker-notes--notes">
     <div class="slide-notes">
       <h4 class="slide-notes--label">Notes</h4>
       <div class="slide-notes--content"></div>
     </div>
-  </div>
+  </article>
+
+</div>
 `;
   document.body.innerHTML = html;
   return html;

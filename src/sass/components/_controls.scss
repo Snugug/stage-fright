@@ -1,0 +1,23 @@
+.controls {
+  font-size: .8em;
+
+  &--time {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &--label {
+    font-family: sans-serif;
+    opacity: .5;
+    text-transform: lowercase;
+    margin: 0;
+    flex-shrink: 0;
+    width: 100%;
+    font-size: .75em;
+  }
+
+  &--reset {
+    color: transparent;
+    font-size: 1px;
+  }
+}
