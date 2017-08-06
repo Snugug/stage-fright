@@ -3,8 +3,8 @@
 @import 'breakpoint';
 @import 'letterform-shades';
 
-$background: #fdfdfd;
-$color: #323232;
+$background: #fdfdfd !default;
+$color: #323232 !default;
 $accent: (
   light: #6eedd8,
   neutral: #008571,
