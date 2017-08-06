@@ -5,14 +5,34 @@ export function openNotes(matrix) {
   const active = {
     go: getActiveSlide(),
   };
+
+  const fragmentTotal = matrix.slides[active.go.section][active.go.slide].length - 1;
+  let currentFragment = active.go.fragment;
+  if (Number.isInteger(fragmentTotal) && isNaN(active.go.fragment)) {
+    currentFragment = 0;
+  }
+
+  const position = {
+    position: {
+      section: active.go.section + 1,
+      slide: active.go.slide + 1,
+      fragment: currentFragment,
+      fragmentTotal: fragmentTotal,
+      sectionTotal: matrix.slides.length,
+      slideTotal: matrix.slides[active.go.section].length,
+    }
+  };
   const locale = window.location;
 
-  console.log(locale);
+  // console.log(locale);
 
   const notes = window.open(`${locale.origin}${locale.pathname}?notes=true`, 'Stage Fright - Notes', 'width=1100,height=700');
 
+  console.log(position);
+
   setTimeout(() => {
     sendMessage(notes, active);
+    sendMessage(notes, position);
     sendNotes(active.go.section, active.go.slide, matrix);
   }, 1000);
 
@@ -61,6 +81,14 @@ export function body() {
           <span class="clock--value">0:00 AM</span>
         </div>
         <div class="controls--clear"></div>
+      </div>
+      <div class="controls--position">
+        <p class="controls--fragment">Fragment <span class="controls--fragment-current"></span>/<span class="controls--fragment-total"></span></p>
+
+        <p class="controls--slide">Slide <span class="controls--slide-current"></span>/<span class="controls--slide-total"></span></p>
+
+        <p class="controls--section">Section <span class="controls--section-current"></span>/<span class="controls--section-total"></span></p>
+
       </div>
     </div>
   </div>
@@ -113,7 +141,7 @@ export function timing() {
     const seconds = Math.floor((diff / (1000)) % 60);
 
     clock.textContent = now.toLocaleTimeString('en-US', {
-      hour12: true,
+      hour12: false,
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -166,6 +194,19 @@ export function slideMessage(matrix) {
 export function notesMessage() {
   const current = document.querySelector('.slide--current');
   const upcoming = document.querySelector('.slide--upcoming');
+
+
+  const fragments = document.querySelector('.controls--fragment');
+  const fragmentCurrent = document.querySelector('.controls--fragment-current');
+  const fragmentTotal = document.querySelector('.controls--fragment-total');
+
+  const slideCurrent = document.querySelector('.controls--slide-current');
+  const slideTotal = document.querySelector('.controls--slide-total');
+
+  const sectionCurrent = document.querySelector('.controls--section-current');
+  const sectionTotal = document.querySelector('.controls--section-total');
+
+
   const notes = document.querySelector('.slide-notes--content');
 
 
@@ -175,7 +216,28 @@ export function notesMessage() {
       return;
     }
 
-    // console.log(e);
+    if (e.data.position) {
+
+      slideCurrent.textContent = e.data.position.slide;
+      slideTotal.textContent = e.data.position.slideTotal;
+
+      sectionCurrent.textContent = e.data.position.section;
+      sectionTotal.textContent = e.data.position.sectionTotal;
+
+      if (Number.isInteger(e.data.position.fragmentTotal)) {
+        fragments.setAttribute('data-active', true);
+
+        let frag = e.data.position.fragment;
+
+        fragmentCurrent.textContent = e.data.position.fragment;
+        fragmentTotal.textContent = e.data.position.fragmentTotal;
+      }
+      else {
+        fragments.removeAttribute('data-active');
+        fragmentCurrent.textContent = 1;
+        fragmentTotal.textContent = 1;
+      }
+    }
 
     if (e.data.move) {
       sendMessage(current.contentWindow, {move: e.data.move});

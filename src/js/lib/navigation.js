@@ -58,15 +58,36 @@ function move(mv) {
     translate(mv.section, mv.slide);
     if (fragments !== 0) {
       updateProgress(mv.section, mv.slide, fragments);
+      mv.fragment = fragments;
       path += `/${fragments}`;
     }
   }
   else {
     updateProgress(mv.section, mv.slide, mv.fragment);
-    path += `/${mv.fragment}`;
+    if (mv.fragment !== 0) {
+      path += `/${mv.fragment}`;
+    }
+  }
+
+  const fragmentTotal = mv.matrix.slides[mv.section][mv.slide].length - 1;
+  if (Number.isInteger(fragmentTotal) && isNaN(mv.fragment)) {
+    mv.fragment = 0;
   }
 
   history.pushState(null, null, path);
+  sendMessage(mv.matrix.notes, {
+    position: {
+      section: mv.section + 1,
+      slide: mv.slide + 1,
+      fragment: mv.fragment,
+      fragmentTotal: fragmentTotal,
+      sectionTotal: mv.matrix.slides.length,
+      slideTotal: mv.matrix.slides[mv.section].length,
+    }
+  });
+
+  // controls--current-section
+  // controls--total-sections
   sendNotes(mv.section, mv.slide, mv.matrix);
 
   return {
@@ -126,7 +147,7 @@ function previous(sec, sld, frag, matrix) {
       const fragments = activeFragments.length - 1;
       if (fragments >= 0) {
         activeFragments[fragments].removeAttribute('data-active');
-        return move({section, slide, fragments, matrix});
+        return move({section, slide, fragment: fragments, matrix});
       }
     }
   }
@@ -162,7 +183,7 @@ function next(sec, sld, frag, matrix) {
       const fragments = matrix.slides[section][slide][0].querySelectorAll('.fragment[data-active]').length + 1;
       inactiveFragment.setAttribute('data-active', true);
 
-      return move({section, slide, fragments, matrix});
+      return move({section, slide, fragment: fragments, matrix});
     }
   }
 

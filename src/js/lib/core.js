@@ -9,6 +9,8 @@ import {body, timing, notesMessage, slideMessage} from './notes';
 export default function () {
   const matrix = new Matrix();
 
+  console.log(matrix);
+
   if (!matrix.options.notes) {
     init();
     progress(matrix);

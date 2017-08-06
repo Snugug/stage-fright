@@ -20,4 +20,34 @@
     color: transparent;
     font-size: 1px;
   }
+
+  &--position {
+    text-transform: lowercase;
+    font-size: .75em;
+    padding: .5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  &--fragment {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    opacity: 0;
+    &[data-active] {
+      opacity: 1;
+    }
+  }
+
+  &--slide {
+    text-align: right;
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  &--section {
+    text-align: right;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+  }
 }
