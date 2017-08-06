@@ -16,6 +16,8 @@
     "eyeglass-module",
     "presentation"
   ],
+  "module": "src/js/stage-fright.js",
+  "modules.root": "src/js",
   "author": "Sam Richard <sam@snug.ug>",
   "license": "MIT",
   "devDependencies": {
