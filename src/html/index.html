@@ -5,7 +5,7 @@
   <title>Stage Fright</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/stage-fright.js" defer></script>
+  <script src="js/demo.js" defer></script>
 </head>
 <body>
   <main class="_stage">
@@ -46,8 +46,13 @@
           <p>It even supports Speaker Notes (press <code>s</code> to start them up)</p>
         </div>
         <aside class="_stage--notes">
-          <p>These are speaker notes!</p>
-          <p>You can write lots of speaker notes, and speaker notes will arrange themselves in to two columns so you can get more in</p>
+          <h2>These are Speaker Notes!</h2>
+          <p>You can write lots of speaker notes, and speaker notes will arrange themselves in to two columns so you can get more in.</p>
+          <p>Speaker notes show you the current state of the current slide. <em>Upcoming</em> reveals the next fragment, if one exists, otherwise shows the next slide.</p>
+          <p>You have a running timer of how long the notes have been open (which you can reset by clicking it) and the current time in a 24 hour clock.</p>
+          <p>Progress is shown by showing you what number slide you are in what section you are in, with total slides and sections. If there are fragments, the first is fragment 0, then it shows your progress towards all fragments</p>
+          <p>You can navigate your slides from the speaker notes! Press <code>up arrow</code> or <code>page down</code> to navigate to the previous slide, or <code>down arrow</code>, <code>page down</code>, or <code>spacebar</code> to navigate to the next slide.</p>
+          <p><em>Try it now!</em> Go to the next slide to see progress change, fragment progress update, and speaker notes change</p>
         </aside>
       </section>
     </article>
@@ -58,11 +63,15 @@
         <div class="_stage--content">
           <p>The markup is designed to be semantic</p>
         </div>
+        <aside class="_stage--notes">
+          <p>Even the notes use semantic markup!</p>
+        </aside>
       </section>
+
       <section class="_stage--slide">
         <div class="_stage--content">
-          <p>A vertical grouping of slides is a <code>._stage--group</code></p>
-          <pre class="fragment"><code>&lt;article class="_stage--group"&gt;
+          <p>A vertical grouping of slides is a <code>._stage--group</code>. While marked up with an <code>article</code>, they are referred to as your presentation's <em>Sections</em></p>
+          <pre class="fragment"><code class="language-markup">&lt;article class="_stage--group"&gt;
   &lt;!-- Slides Will Go Here --&gt;
 &lt;/article&gt;</code></pre>
         </div>
@@ -70,7 +79,7 @@
       <section class="_stage--slide">
         <div class="_stage--content">
           <p>Each slide is a <code>section</code> inside the article, with a <code>._stage--content</code> class. Inside is the content wrapper, <code>._stage--content</code>. <span class="span fragment">Notes can be added by including an <code>aside</code> with the <code>._stage--notes</code> class as a sibling of the content</span></p>
-          <pre class="fragment"><code>&lt;section class="_stage--slide"&gt;
+          <pre class="fragment"><code class="language-markup">&lt;section class="_stage--slide"&gt;
   &lt;div class="_stage--content"&gt;
     &lt;!-- Slides Content Goes Here --&gt;
   &lt;/div&gt;
@@ -82,28 +91,48 @@
       </section>
     </article>
 
-
-
-
     <article class="_stage--group">
-      <section class="_stage--slide" data-state="outro">
+      <section class="_stage--slide">
         <div class="_stage--content">
-          <strong><a href="https://github.com/snugug/stage-fright">https://github.com/snugug/stage-fright</a></strong>
+          <p>Installing and using is fairly straight-forward using modern tooling</p>
+          <pre class="fragment"><code class="language-bash">$ npm install stage-fright</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Stage Fright is written using ES Module syntax, and therefore can be imported using your favorite bundler as follows:</p>
+          <pre class="fragment"><code class="language-javascript">import 'stage-fright';</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Styling is distributed as an <a href="https://github.com/sass-eyeglass/eyeglass">Eyeglass module</a> for <a href="https://github.com/sass/node-sass">Sass</a>. Presuming that is all set up, you can import Stage Fright's styling in to your project as follows:</p>
+          <pre class="fragment"><code class="language-scss">@import 'stage-fright';</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>There are five Sass variables you can set before importing Stage Fright that will automatically style your deck:</p>
+          <ul class="fragment">
+            <li><code>$background</code> - Background color</li>
+            <li><code>$color</code> - Text color</li>
+            <li><code>$accent</code> - Accent colors to use for minimap and checkerboard. This is a Sass <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Maps">map</a> that has three properties: <code>light</code>, <code>neutral</code>, <code>dark</code></li>
+            <li><code>$transition</code> - Default transition to apply to slide deck</li>
+            <li><code>$font-sizes</code> - Header font sizes as a Sass <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Lists">list</a></li>
+          </ul>
         </div>
       </section>
     </article>
-<!--    <article class="_stage--group">
-      <section class="_stage--slide"><div class="_stage--content"><p>I Have Notes</p><aside class="notes"><ul>
-        <li>This is a set of notes!</li>
-        <li>This is another set of notes!</li>
-      </ul></aside></div></section>
-      <section class="_stage--slide"><div class="_stage--content"><p>I Have Content</p>
-        <p class="fragment">I Am A Fragment</p>
-        <p class="fragment">I Am A Fragment</p>
-        <p class="fragment">I Am A Fragment</p>
-        <p class="fragment">I Am A Fragment</p>
-      </div></section>
-    </article> -->
+
+    <!-- End -->
+    <article class="_stage--group">
+      <section class="_stage--slide" data-state="outro">
+        <div class="_stage--content">
+          <h1>Code, Issues, License, etc…</h1>
+          <h2><strong><a href="https://github.com/snugug/stage-fright">https://github.com/snugug/stage-fright</a></strong></h2>
+        </div>
+      </section>
+    </article>
 
   </main>
 </body>
