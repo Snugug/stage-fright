@@ -26,10 +26,6 @@
     grid-row: 3 / span 1;
   }
 
-  &--slide {
-    border: 1px solid black;
-  }
-
   &--label {
     text-transform: uppercase;
     position: absolute;
@@ -42,18 +38,15 @@
     z-index: 100;
   }
 
-  &--holder {
-    iframe {
-      width: 100%;
+  &--current-slide {
+    width: 100%;
+    border: 1px solid black;
+    height: calc((100vh - 2rem) / 7 * 3 + 1rem);
+  }
 
-      ._speaker-notes--current & {
-        height: calc((100vh - 2rem) / 7 * 3 + 1rem);
-      }
-
-      ._speaker-notes--upcoming & {
-        height: calc((100vh - 2rem) / 7 * 2);
-      }
-    }
-
+  &--upcoming-slide {
+    width: 100%;
+    border: 1px solid black;
+    height: calc((100vh - 2rem) / 7 * 2);
   }
 }

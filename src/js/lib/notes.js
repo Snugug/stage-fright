@@ -51,21 +51,13 @@ export function body() {
   <!-- Slide Preview -->
   <!-- Current Slide -->
   <div class="_speaker-notes--current">
-    <div class="_speaker-notes--slide">
-      <div class="_speaker-notes--holder">
-        <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
-      </div>
-    </div>
+    <iframe class="_speaker-notes--current-slide" src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" height="1024" width="1280"></iframe>
   </div>
 
   <!-- Upcoming Slide Slide -->
   <div class="_speaker-notes--upcoming">
-    <div class="_speaker-notes--slide">
-      <span class="_speaker-notes--label">Upcoming:</span>
-      <div class="_speaker-notes--holder">
-        <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
-      </div>
-    </div>
+    <span class="_speaker-notes--label">Upcoming:</span>
+    <iframe class="_speaker-notes--upcoming-slide" src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" height="1024" width="1280"></iframe>
   </div>
 
   <!-- Controls -->
@@ -203,8 +195,8 @@ export function slideMessage(matrix) {
 }
 
 export function notesMessage() {
-  const current = document.querySelector('.slide--current');
-  const upcoming = document.querySelector('.slide--upcoming');
+  const current = document.querySelector('._speaker-notes--current-slide');
+  const upcoming = document.querySelector('._speaker-notes--upcoming-slide');
 
   // Position
   const fragments = document.querySelector('.controls--fragment');
