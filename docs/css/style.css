@@ -675,8 +675,6 @@ sup {
     -ms-grid-row-span: 1;
     -ms-grid-row: 3;
         grid-row: 3 / span 1; }
-  ._speaker-notes--slide {
-    border: 1px solid black; }
   ._speaker-notes--label {
     text-transform: uppercase;
     position: absolute;
@@ -687,12 +685,14 @@ sup {
     padding: .25rem;
     font-size: .5em;
     z-index: 100; }
-  ._speaker-notes--holder iframe {
-    width: 100%; }
-    ._speaker-notes--current ._speaker-notes--holder iframe {
-      height: calc((100vh - 2rem) / 7 * 3 + 1rem); }
-    ._speaker-notes--upcoming ._speaker-notes--holder iframe {
-      height: calc((100vh - 2rem) / 7 * 2); }
+  ._speaker-notes--current-slide {
+    width: 100%;
+    border: 1px solid black;
+    height: calc((100vh - 2rem) / 7 * 3 + 1rem); }
+  ._speaker-notes--upcoming-slide {
+    width: 100%;
+    border: 1px solid black;
+    height: calc((100vh - 2rem) / 7 * 2); }
 
 /**
  * prism.js default theme for JavaScript, CSS and HTML
