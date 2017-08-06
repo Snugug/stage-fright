@@ -5,14 +5,34 @@ export function openNotes(matrix) {
   const active = {
     go: getActiveSlide(),
   };
+
+  const fragmentTotal = matrix.slides[active.go.section][active.go.slide].length - 1;
+  let currentFragment = active.go.fragment;
+  if (Number.isInteger(fragmentTotal) && isNaN(active.go.fragment)) {
+    currentFragment = 0;
+  }
+
+  const position = {
+    position: {
+      section: active.go.section + 1,
+      slide: active.go.slide + 1,
+      fragment: currentFragment,
+      fragmentTotal: fragmentTotal,
+      sectionTotal: matrix.slides.length,
+      slideTotal: matrix.slides[active.go.section].length,
+    }
+  };
   const locale = window.location;
 
-  console.log(locale);
+  // console.log(locale);
 
   const notes = window.open(`${locale.origin}${locale.pathname}?notes=true`, 'Stage Fright - Notes', 'width=1100,height=700');
 
+  console.log(position);
+
   setTimeout(() => {
     sendMessage(notes, active);
+    sendMessage(notes, position);
     sendNotes(active.go.section, active.go.slide, matrix);
   }, 1000);
 
@@ -26,124 +46,33 @@ export function body() {
   body {
     margin: 0;
     padding: 0;
-    display: flex;
-    overflow: hidden;
-    font-size: 100%;
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .clock,
-  .timer {
-    flex: 1;
-    font-family: sans-serif;
-    font-size: 2em;
-  }
-  .timer {
-    text-align: left;
-  }
-  .clock {
-    text-align: right;
-  }
-
-
-  [data-mute] {
-    opacity: .5;
-  }
-
-  .slide {
-    position: relative;
-  }
-
-  .slide--current {
-    width: calc(60vw - 1em);
-    height: calc(100vh - 1em);
-    padding: .25em;
-  }
-
-  .slide--upcoming {
-    width: calc(40vw - 1em);
-    height: calc(40vh - 1em);
-  }
-
-  .slide--frame {
-    // border: 1px solid black;
-  }
-
-  .slide--label {
-    text-transform: uppercase;
-    position: absolute;
-    color: white;
-    background: black;
-    opacity: .5;
-    width: 100%;
-    padding: .25rem;
-    font-size: .5em;
-  }
-
-  .current {
-    width: 60vw;
-    padding: .5em;
-  }
-
-  .speaker-notes {
-    width: 40vw;
-    padding: .5em;
-  }
-
-  .controls {
-    font-size: .8em;
-  }
-
-  .controls--time {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .controls--label {
-    font-family: sans-serif;
-    opacity: .5;
-    text-transform: lowercase;
-    margin: 0;
-    flex-shrink: 0;
-    width: 100%;
-    font-size: .75em;
-  }
-
-  .controls--reset {
-    color: transparent;
-    font-size: 1px;
-  }
-
-  .slide-notes {
-    font-family: sans-serif;
-    margin-top: 1rem;
-  }
-
-  .slide-notes--label {
-    font-size: 1px;
-    color: transparent;
-  }
-
 </style>
-<div class="current">
-    <div class="slide">
-      <div class="slide--holder">
+<div class="_speaker-notes">
+  <!-- Slide Preview -->
+  <!-- Current Slide -->
+  <div class="_speaker-notes--current">
+    <div class="_speaker-notes--slide">
+      <div class="_speaker-notes--holder">
         <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--current" height="1024" width="1280"></iframe>
       </div>
     </div>
   </div>
-  <div class="speaker-notes">
-    <div class="slide">
-      <span class="slide--label">Upcoming:</span>
-      <div class="slide--holder">
+
+  <!-- Upcoming Slide Slide -->
+  <div class="_speaker-notes--upcoming">
+    <div class="_speaker-notes--slide">
+      <span class="_speaker-notes--label">Upcoming:</span>
+      <div class="_speaker-notes--holder">
         <iframe src="${locale.origin}${locale.pathname}?progress=false&responsive=true&listen=true${locale.hash}" frameborder="0" class="slide--upcoming" height="1024" width="1280"></iframe>
       </div>
     </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="_speaker-notes--controls">
     <div class="controls">
-        <div class="controls--time">
+      <div class="controls--time">
         <h4 class="controls--label">Time <span class="controls--reset">Click to Reset</span></h4>
         <div class="timer">
           <span class="timer--hours">00</span><span class="timer--minutes">:00</span><span class="timer--seconds">:00</span>
@@ -153,12 +82,25 @@ export function body() {
         </div>
         <div class="controls--clear"></div>
       </div>
+      <div class="controls--position">
+        <p class="controls--fragment">Fragment <span class="controls--fragment-current"></span>/<span class="controls--fragment-total"></span></p>
+
+        <p class="controls--slide">Slide <span class="controls--slide-current"></span>/<span class="controls--slide-total"></span></p>
+
+        <p class="controls--section">Section <span class="controls--section-current"></span>/<span class="controls--section-total"></span></p>
+
+      </div>
     </div>
+  </div>
+
+  <article class="_speaker-notes--notes">
     <div class="slide-notes">
       <h4 class="slide-notes--label">Notes</h4>
       <div class="slide-notes--content"></div>
     </div>
-  </div>
+  </article>
+
+</div>
 `;
   document.body.innerHTML = html;
   return html;
@@ -185,10 +127,23 @@ export function timing() {
   const hour = document.querySelector('.timer--hours');
   const minute = document.querySelector('.timer--minutes');
   const second = document.querySelector('.timer--seconds');
-  const start = new Date();
+  const timer = document.querySelector('.controls--time');
+  let start = new Date();
 
   update();
-  setInterval(update, 1000);
+  let runningClock = setInterval(update, 1000);
+
+  timer.addEventListener('click', e => {
+    start = new Date();
+
+    clearInterval(runningClock);
+
+    hour.textContent = timePad(0);
+    minute.textContent = `:${timePad(0)}`;
+    second.textContent = `:${timePad(0)}`;
+
+    runningClock = setInterval(update, 1000);
+  });
 
   function update() {
     const now = new Date();
@@ -199,7 +154,7 @@ export function timing() {
     const seconds = Math.floor((diff / (1000)) % 60);
 
     clock.textContent = now.toLocaleTimeString('en-US', {
-      hour12: true,
+      hour12: false,
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -252,6 +207,19 @@ export function slideMessage(matrix) {
 export function notesMessage() {
   const current = document.querySelector('.slide--current');
   const upcoming = document.querySelector('.slide--upcoming');
+
+
+  const fragments = document.querySelector('.controls--fragment');
+  const fragmentCurrent = document.querySelector('.controls--fragment-current');
+  const fragmentTotal = document.querySelector('.controls--fragment-total');
+
+  const slideCurrent = document.querySelector('.controls--slide-current');
+  const slideTotal = document.querySelector('.controls--slide-total');
+
+  const sectionCurrent = document.querySelector('.controls--section-current');
+  const sectionTotal = document.querySelector('.controls--section-total');
+
+
   const notes = document.querySelector('.slide-notes--content');
 
 
@@ -261,7 +229,28 @@ export function notesMessage() {
       return;
     }
 
-    // console.log(e);
+    if (e.data.position) {
+
+      slideCurrent.textContent = e.data.position.slide;
+      slideTotal.textContent = e.data.position.slideTotal;
+
+      sectionCurrent.textContent = e.data.position.section;
+      sectionTotal.textContent = e.data.position.sectionTotal;
+
+      if (Number.isInteger(e.data.position.fragmentTotal)) {
+        fragments.setAttribute('data-active', true);
+
+        let frag = e.data.position.fragment;
+
+        fragmentCurrent.textContent = e.data.position.fragment;
+        fragmentTotal.textContent = e.data.position.fragmentTotal;
+      }
+      else {
+        fragments.removeAttribute('data-active');
+        fragmentCurrent.textContent = 1;
+        fragmentTotal.textContent = 1;
+      }
+    }
 
     if (e.data.move) {
       sendMessage(current.contentWindow, {move: e.data.move});

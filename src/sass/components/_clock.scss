@@ -1,0 +1,23 @@
+%timing {
+  flex: 1;
+  font-family: sans-serif;
+  font-size: 2em;
+}
+
+.clock {
+  @extend %timing;
+  text-align: right;
+}
+
+.timer {
+  @extend %timing;
+  text-align: left;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+[data-mute] {
+  opacity: .5;
+}
