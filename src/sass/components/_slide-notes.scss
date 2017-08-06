@@ -12,5 +12,9 @@
   &--content {
     columns: 2;
     column-gap: 1rem;
+
+    * {
+      break-inside: avoid;
+    }
   }
 }

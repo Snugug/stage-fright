@@ -127,10 +127,23 @@ export function timing() {
   const hour = document.querySelector('.timer--hours');
   const minute = document.querySelector('.timer--minutes');
   const second = document.querySelector('.timer--seconds');
-  const start = new Date();
+  const timer = document.querySelector('.controls--time');
+  let start = new Date();
 
   update();
-  setInterval(update, 1000);
+  let runningClock = setInterval(update, 1000);
+
+  timer.addEventListener('click', e => {
+    start = new Date();
+
+    clearInterval(runningClock);
+
+    hour.textContent = timePad(0);
+    minute.textContent = `:${timePad(0)}`;
+    second.textContent = `:${timePad(0)}`;
+
+    runningClock = setInterval(update, 1000);
+  });
 
   function update() {
     const now = new Date();
