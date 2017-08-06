@@ -13,6 +13,7 @@ const rollup = require('rollup-stream');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const path = require('path');
 
 gulp.task('server', function () {
   browserSync.init({
@@ -28,7 +29,11 @@ gulp.task('server', function () {
 gulp.task('sass', () => {
   return gulp.src('src/sass/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass(eyeglass()))
+    .pipe(sass(eyeglass({
+      includePaths: [
+        path.join(process.cwd(), 'node_modules'),
+      ],
+    })))
     .pipe(prefix())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./docs/css'))
@@ -44,7 +49,7 @@ gulp.task('sass:watch', ['sass'], () => {
  */
 gulp.task('js', () => {
   return rollup({
-    entry: 'src/js/stage-fright.js',
+    entry: 'src/js/demo.js',
     sourceMap: true,
     preferConst: true,
     // format: 'iife',
@@ -52,7 +57,7 @@ gulp.task('js', () => {
       nodeResolve(),
     ],
   })
-    .pipe(source('stage-fright.js', './src/js/'))
+    .pipe(source('demo.js', './src/js/'))
     .pipe(buffer())
     .pipe(sourcemaps.init({
       loadMaps: true,
