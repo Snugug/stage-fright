@@ -24,11 +24,10 @@ export function openNotes(matrix) {
   };
   const locale = window.location;
 
-  // console.log(locale);
+  // Active navigation from speaker notes
+  slideMessage(matrix);
 
   const notes = window.open(`${locale.origin}${locale.pathname}?notes=true`, 'Stage Fright - Notes', 'width=1100,height=700');
-
-  console.log(position);
 
   setTimeout(() => {
     sendMessage(notes, active);
@@ -192,7 +191,6 @@ export function sendMessage(target, message) {
 
 export function slideMessage(matrix) {
   window.addEventListener('message', e => {
-    // console.log(e);
     const origin = e.origin || event.originalEvent.origin;
     if (origin !== window.location.origin) {
       return;
@@ -208,20 +206,35 @@ export function notesMessage() {
   const current = document.querySelector('.slide--current');
   const upcoming = document.querySelector('.slide--upcoming');
 
-
+  // Position
   const fragments = document.querySelector('.controls--fragment');
   const fragmentCurrent = document.querySelector('.controls--fragment-current');
   const fragmentTotal = document.querySelector('.controls--fragment-total');
-
   const slideCurrent = document.querySelector('.controls--slide-current');
   const slideTotal = document.querySelector('.controls--slide-total');
-
   const sectionCurrent = document.querySelector('.controls--section-current');
   const sectionTotal = document.querySelector('.controls--section-total');
 
-
+  // Notes
   const notes = document.querySelector('.slide-notes--content');
 
+  // Source
+  const source = window.opener;
+
+  sendMessage(source, 'Speaker Notes Opened');
+
+  document.addEventListener('keydown', e => {
+    // console.log(source);
+    // Up Arrow, Page Up
+    if (e.keyCode === 38 || e.keyCode === 33) {
+      sendMessage(source, {move: 'previous'});
+    }
+
+    // Down Arrow, Page Down, Spacebar
+    if (e.keyCode === 40 || e.keyCode === 34 || e.keyCode === 32) {
+      sendMessage(source, {move: 'next'});
+    }
+  });
 
   window.addEventListener('message', e => {
     const origin = e.origin || event.originalEvent.origin;
@@ -258,6 +271,7 @@ export function notesMessage() {
     }
 
     if (e.data.go) {
+      console.log(e.data.go);
       let hash = `#/${e.data.go.section}/${e.data.go.slide}`;
       if (e.data.go.fragment) {
         hash += `/${e.data.go.fragment}`;
