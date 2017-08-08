@@ -41,6 +41,13 @@ export default class {
         return [slide].concat(nodeMap(fragments, f => f));
       });
     });
+
+    // Rewrap stage
+    const wrapper = document.createElement('div');
+    const stage = this._raw.stage;
+    wrapper.classList.add('stage-fright');
+    stage.parentNode.replaceChild(wrapper, stage);
+    wrapper.appendChild(stage);
   }
 
   get slides() {

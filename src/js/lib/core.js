@@ -25,7 +25,6 @@ export default function () {
     slideMessage(matrix);
   }
 
-  document.body.classList.add('stage-fright');
   if (matrix.options.responsive) {
     document.body.style.fontSize = '1.5vw';
   }
