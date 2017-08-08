@@ -511,7 +511,7 @@ sup {
   opacity: .5; }
 
 .controls {
-  font-size: .8em; }
+  font-size: 1em; }
   .controls--time {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -532,7 +532,7 @@ sup {
     font-size: 1px; }
   .controls--position {
     text-transform: lowercase;
-    font-size: .75em;
+    font-size: 1em;
     padding: .5rem;
     display: -ms-grid;
     display: grid;
@@ -570,8 +570,7 @@ sup {
 .slide-notes {
   font-family: sans-serif;
   padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: .75em; }
+  padding-right: 1rem; }
   .slide-notes--label {
     font-size: 1px;
     color: transparent; }
