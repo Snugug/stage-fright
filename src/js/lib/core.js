@@ -26,6 +26,6 @@ export default function () {
   }
 
   if (matrix.options.responsive) {
-    document.body.style.fontSize = '1.5vw';
+    document.documentElement.style.fontSize = '1.5vw';
   }
 };
