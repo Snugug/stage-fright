@@ -2,6 +2,7 @@ import Matrix from './matrix';
 import init from './init';
 import progress from './progress';
 import keys from './keys';
+import touch from './touch';
 import overview from './overview';
 
 import {body, timing, notesMessage, slideMessage} from './notes';
@@ -13,6 +14,7 @@ export default function () {
     init();
     progress(matrix);
     keys(matrix);
+    touch(matrix);
     overview(matrix);
   }
   else {
