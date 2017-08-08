@@ -1,5 +1,5 @@
 import nav from './navigation';
-import {openNotes, sendMessage} from './notes';
+import { openNotes } from './notes';
 
 export default function(matrix) {
   document.addEventListener('keydown', (e) => {
