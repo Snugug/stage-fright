@@ -124,6 +124,31 @@
       </section>
     </article>
 
+    <article class="_stage--group">
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>You can configure how Stage Fright works by changing its import slightly</p>
+          <pre class="fragment"><code class="language-javascript">import stageFright from 'stage-fright';</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Then, initialize Stage Fright with an object of your configuration</p>
+          <pre class="fragment"><code class="language-javascript">stageFright({ options });</code></pre>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <p>Available configuration options are:</p>
+          <ul>
+            <li class="fragment"><strong>navigation.arrows</strong> - <code>{ Boolean }</code> Enable/Disable Arrow keys for navigation. Defaults to <code>true</code></li>
+            <li class="fragment"><strong>navigation.remote</strong> - <code>{ Boolean }</code> Enable/Disable Page Up/Page Down keys for navigation (used by handheld presentation remotes). Defaults to <code>true</code></li>
+            <li class="fragment"><strong>navigation.spacebar</strong> - <code>{ Boolean }</code> Enable/Disable Spacebar/Shift + Spacebar for navigation. Defaults to <code>true</code></li>
+          </ul>
+        </div>
+      </section>
+    </article>
+
     <!-- End -->
     <article class="_stage--group">
       <section class="_stage--slide" data-state="outro">
