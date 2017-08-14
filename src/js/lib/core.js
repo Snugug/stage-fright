@@ -1,3 +1,4 @@
+import Options from './options';
 import Matrix from './matrix';
 import init from './init';
 import progress from './progress';
@@ -6,13 +7,14 @@ import overview from './overview';
 
 import {body, timing, notesMessage, slideMessage} from './notes';
 
-export default function () {
+export default function (config) {
+  const opts = new Options(config);
   const matrix = new Matrix();
 
   if (!matrix.options.notes) {
     init();
     progress(matrix);
-    keys(matrix);
+    keys(matrix, opts);
     overview(matrix);
   }
   else {

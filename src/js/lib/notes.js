@@ -217,8 +217,8 @@ export function notesMessage() {
 
   document.addEventListener('keydown', e => {
     // console.log(source);
-    // Up Arrow, Page Up
-    if (e.keyCode === 38 || e.keyCode === 33) {
+    // Up Arrow, Page Up, Shift + Spacebar
+    if (e.keyCode === 38 || e.keyCode === 33 || (e.shiftKey === true && e.keyCode === 32)) {
       sendMessage(source, {move: 'previous'});
     }
 
