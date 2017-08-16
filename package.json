@@ -1,6 +1,6 @@
 {
   "name": "stage-fright",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Yet Another HTML5 Presentation Framework",
   "main": "src/js/lib/core.js",
   "eyeglass": {
