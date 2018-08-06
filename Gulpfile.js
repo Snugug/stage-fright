@@ -11,6 +11,7 @@ const browserSync = require('browser-sync');
 
 const rollup = require('rollup-stream');
 const nodeResolve = require('rollup-plugin-node-resolve');
+const replace = require('rollup-plugin-replace');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const path = require('path');
@@ -49,21 +50,24 @@ gulp.task('sass:watch', ['sass'], () => {
  */
 gulp.task('js', () => {
   return rollup({
-    entry: 'src/js/demo.js',
-    sourceMap: true,
+    input: 'src/js/stage-fright.js',
+    sourcemap: true,
     preferConst: true,
-    // format: 'iife',
+    format: 'es',
     plugins: [
       nodeResolve(),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('development')
+      }),
     ],
   })
-    .pipe(source('demo.js', './src/js/'))
+    .pipe(source('stage-fright.js', './src/js/'))
     .pipe(buffer())
     .pipe(sourcemaps.init({
       loadMaps: true,
     }))
     .pipe(babel({
-      presets: ['babili'],
+      presets: ['minify'],
       comments: false,
       minified: true,
       compact: true,
