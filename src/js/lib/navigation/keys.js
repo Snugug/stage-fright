@@ -8,7 +8,6 @@ export default function(store, opts = {}) {
 }
 
 function spaceMove(e) {
-  console.log(e)
   if (e.shiftKey === true && e.keyCode === 32) {
     return 'previous';
   }

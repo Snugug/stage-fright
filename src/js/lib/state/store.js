@@ -8,7 +8,8 @@ export default class Store {
     this.mutations = params.mutations || {};
     this.status = 'resting';
     this.events = new PubSub();
-    this.stage = params.stage || {}
+    this.stage = params.stage || {};
+    this.progress = params.progress || [];
 
     this.state = new Proxy((params.state || {}), {
       set: function(state, key, value) {

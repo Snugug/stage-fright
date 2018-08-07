@@ -12,7 +12,26 @@ export default {
 
     return state;
   },
-  updateIndex(state, payload) {
+  index(state, payload) {
     state.index = payload;
+
+    return state;
+  },
+  progress(state, payload) {
+    console.log(payload);
+    if (payload.progress[payload.index]) {
+      // Remove current active state
+      delete state.progress.dataset.active;
+
+      state.progress = payload.progress[payload.index];
+
+      state.progress.dataset.active = true;
+    }
+
+    if (payload.progress[payload.index + 1]) {
+      state.progress.style.opacity = 1;
+    }
+    
+    return state;
   }
 }

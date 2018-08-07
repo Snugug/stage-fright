@@ -1,52 +1,64 @@
-class MinimapNode {
-  constructor(item, section, depth, fragments) {
-    this.elem = item;
-    this.section = section;
-    this.depth = depth;
-    this.fragments = fragments
-    this.next = null;
-    this.previous = null;
-  }
-}
+// class MinimapNode {
+//   constructor(item, link, section, depth, fragments) {
+//     this.elem = item;
+//     this.section = section;
+//     this.depth = depth;
+//     this.fragments = fragments;
+//     this.link = link;
+//     this.next = null;
+//     this.previous = null;
+//   }
+// }
 
-class MinimapList {
-  constructor() {
-    this._head = null;
-    this._tail = null;
-  }
+// class MinimapList {
+//   constructor() {
+//     this._head = null;
+//     this._tail = null;
+//   }
 
-  add(item, section, depth, fragments) {
-    const node = new MinimapNode(item, section, depth, fragments);
-    let current = this._head;
+//   add(item, section, depth, fragments) {
+//     const node = new MinimapNode(item, section, depth, fragments);
+//     let current = this._head;
 
-    if (!current) {
-      this._head = node;
-      this._tail = node;
+//     if (!current) {
+//       this._head = node;
+//       this._tail = node;
 
-      return node;
-    }
+//       return node;
+//     }
 
-    node.previous = this._tail;
-    this._tail.next = node;
-    this._tail = node;
+//     node.previous = this._tail;
+//     this._tail.next = node;
+//     this._tail = node;
 
-    return node;
-  }
+//     return node;
+//   }
 
-  // find(section, depth) {
-  //   let current = this._head;
+//   forEach(cb) {
+//     let current = this._head;
 
-  //   if (current.section === section && current.depth === )
+//     while (current.next) {
+//       cb(current);
+//       current = current.next;
+//     }
 
-  //   let i = 0;
-  //   while (current.)
-  // }
-}
+//     cb(current);
+//   }
+
+//   // find(section, depth) {
+//   //   let current = this._head;
+
+//   //   if (current.section === section && current.depth === )
+
+//   //   let i = 0;
+//   //   while (current.)
+//   // }
+// }
 
 export default function(stage) {
   const minimap = document.createElement('nav');
   minimap.classList.add('minimap');
-  const minimapList = new MinimapList();
+  const minimapList = {};
 
   let i = 0;
 
@@ -63,7 +75,8 @@ export default function(stage) {
       }
 
       const link = createLink(i, item.section, item.depth, fragment);
-      minimapList.add(link, item.section, item.depth, fragment);
+
+      minimapList[i] = link;
 
       minimap.lastChild.appendChild(link);
     }

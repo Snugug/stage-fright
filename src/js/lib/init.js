@@ -8,6 +8,7 @@ import translate from './display/translate';
 import fragments from './display/fragments';
 
 import buildMinimap from './minimap/build';
+import minimapNav from './navigation/minimap';
 
 import navInit from './navigation/init';
 import updateHistory from './navigation/history';
@@ -15,10 +16,11 @@ import keys from './navigation/keys';
 
 export default class StageFright {
   constructor(root) {
+    const rootNode = document.querySelector(root);
     // Make the Stage Fright Stage
-    root.parentNode.classList.add('stage-fright');
+    rootNode.parentNode.classList.add('stage-fright');
 
-    const items = Array.from(root.querySelectorAll('._stage--slide, .fragment'));
+    const items = Array.from(rootNode.querySelectorAll('._stage--slide, .fragment'));
 
     // Stage
     const stage = new StageFrightList();
@@ -28,7 +30,7 @@ export default class StageFright {
 
     // Minimap
     const minimap = buildMinimap(stage);
-    root.parentNode.appendChild(minimap.map);
+    rootNode.parentNode.appendChild(minimap.map);
 
     // Starting Index
     const start = navInit(stage.length - 1);
@@ -37,22 +39,28 @@ export default class StageFright {
     this.store = new Store({
       actions,
       mutations,
+      progress: 'foo',
       state: {
         current: stage._head,
-        progress: minimap.list._head,
+        progress: minimap.list[start],
         index: start,
       },
       stage,
-      minimap: minimap.list,
+      progress: minimap.list,
     });
 
     this.store.events.subscribe('stateChange', (state) => {
-      translate(root, state.current);
+      translate(rootNode, state.current);
       fragments(state.current);
       updateHistory(state.index);
     });
 
     keys(this.store);
+
+    for (const item of Object.entries(minimap.list)) {
+      console.log(item);
+      item[1].addEventListener('click', minimapNav(this.store, item[0]));
+    }
 
     this.goto(start);
   }
