@@ -18,7 +18,7 @@ export default {
     return state;
   },
   progress(state, payload) {
-    console.log(payload);
+    // Only works going forward or direct, need to figure out different option for going backwards
     if (payload.progress[payload.index]) {
       // Remove current active state
       delete state.progress.dataset.active;
@@ -30,6 +30,9 @@ export default {
 
     if (payload.progress[payload.index + 1]) {
       state.progress.style.opacity = 1;
+    } else {
+      // Half works for backwards
+      state.progress.style.opacity = .5;
     }
     
     return state;
