@@ -87,7 +87,7 @@
   @include checkerboard(mix(black, $color, 50%), $color);
 
   h1 {
-    font-size: 3em;
+    font-size: 4em;
     color: $text;
     @include close-shade(mix($color, black, 16%), #111, 'bottom right', 15);
   }

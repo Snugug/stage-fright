@@ -1,7 +1,4 @@
-@import 'toolkit/reset';
-@import 'toolkit';
-@import 'breakpoint';
-@import 'letterform-shades';
+@import 'global';
 
 $background: #fdfdfd !default;
 $color: #323232 !default;
@@ -11,12 +8,6 @@ $accent: (
   dark: #003c32,
 ) !default;
 $transition: all .35s cubic-bezier(.77, .1, .22, 1) !default;
-$font-sizes: 1.618em 1em .618em !default;
 
-@import 'global';
 @import 'components';
 @import 'layouts';
-
-// [data-state='intro'] {
-//   @include heading(red);
-// }
