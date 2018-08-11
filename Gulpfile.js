@@ -31,6 +31,7 @@ gulp.task('sass', () => {
   return gulp.src('src/sass/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass(eyeglass({
+      outputStyle: 'compressed',
       includePaths: [
         path.join(process.cwd(), 'node_modules'),
       ],
