@@ -14,6 +14,8 @@ import navInit from './navigation/init';
 import updateHistory from './navigation/history';
 import keys from './navigation/keys';
 
+import lazyload from './lazyload';
+
 export default class StageFright {
   constructor(root) {
     const rootNode = document.querySelector(root);
@@ -63,6 +65,8 @@ export default class StageFright {
     }
 
     this.goto(start);
+
+    lazyload();
   }
 
   next() {
