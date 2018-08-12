@@ -4,16 +4,9 @@ const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass');
 const prefix = require('gulp-autoprefixer');
-const eslint = require('gulp-eslint');
-const babel = require('gulp-babel');
 const eyeglass = require('eyeglass');
 const browserSync = require('browser-sync');
 
-const rollup = require('rollup-stream');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const replace = require('rollup-plugin-replace');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
 const path = require('path');
 
 gulp.task('server', function () {
@@ -35,7 +28,9 @@ gulp.task('sass', () => {
       includePaths: [
         path.join(process.cwd(), 'node_modules'),
       ],
-    })))
+    }))).on('error', e => {
+      console.error(e.stack);
+    })
     .pipe(prefix())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./docs/css'))
@@ -47,39 +42,15 @@ gulp.task('sass:watch', ['sass'], () => {
 });
 
 /*
- * JavaScript
+ * JS 
  */
-gulp.task('js', () => {
-  return rollup({
-    input: 'src/js/stage-fright.js',
-    sourcemap: true,
-    preferConst: true,
-    format: 'es',
-    plugins: [
-      nodeResolve(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('development')
-      }),
-    ],
-  })
-    .pipe(source('stage-fright.js', './src/js/'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({
-      loadMaps: true,
-    }))
-    .pipe(babel({
-      presets: ['minify'],
-      comments: false,
-      minified: true,
-      compact: true,
-    }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./docs/js'))
+gulp.task('js:reload', () => {
+  return gulp.src('docs/js/**/*.js')
     .pipe(browserSync.stream());
 });
 
-gulp.task('js:watch', ['js'], () => {
-  return gulp.watch('src/js/**/*.js', ['js']);
+gulp.task('js:watch', ['js:reload'], () => {
+  return gulp.watch('docs/js/**/*.js', ['js:reload']);
 });
 
 /*

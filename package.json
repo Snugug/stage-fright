@@ -4,7 +4,10 @@
   "description": "Yet Another HTML5 Presentation Framework",
   "main": "src/js/lib/core.js",
   "scripts": {
-    "start": "gulp serve"
+    "start": "npm run dev",
+    "js": "rollup -c",
+    "js:watch": "rollup -c -w",
+    "dev": "gulp serve & npm run js:watch"
   },
   "eyeglass": {
     "needs": "^1.0.0",
@@ -30,21 +33,20 @@
     "eyeglass": "^1.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-eslint": "^5.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sass-lint": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "prismjs": "^1.15.0",
+    "rollup": "^0.64.1",
+    "rollup-plugin-babel-minify": "^5.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
-    "rollup-stream": "^1.24.1",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "sass": "^1.10.4"
   },
   "dependencies": {
     "breakpoint-sass": "^2.7.1",
     "letterform-shades": "^1.0.0",
+    "rollup-stream": "^1.24.1",
     "sass-toolkit": "^2.10.2"
   }
 }
