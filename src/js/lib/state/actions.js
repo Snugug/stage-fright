@@ -8,6 +8,11 @@ export default {
       context.commit('index', payload);
     }
 
-    context.commit('progress', { index: context.state.index, progress: context.progress, length: context.stage._length - 1 });
+    if (!context.embedded) {
+      context.commit('progress', { index: context.state.index, progress: context.progress, length: context.stage._length - 1 });  
+    }
+  },
+  notes(context, payload) {
+    context.commit('notes', context.root);
   },
 }

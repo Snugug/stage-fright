@@ -10,6 +10,7 @@ export default class Store {
     this.events = new PubSub();
     this.stage = params.stage || {};
     this.progress = params.progress || [];
+    this.root = params.root || document.body;
 
     this.state = new Proxy((params.state || {}), {
       set: function(state, key, value) {
@@ -19,6 +20,7 @@ export default class Store {
                     console.warn(`You should use a mutation to set ${key}`);
                 }
 
+        self.events.publish(`${key}Change`, self.state);
         self.events.publish('stateChange', self.state);
 
         return true;
@@ -54,24 +56,3 @@ export default class Store {
     return true;
   }
 }
-
-// export default class Store {
-//   constructor(root) {
-//     this.actions = {};
-//     this.mutations = {};
-//     this.state = {};
-//     this.status = 'resting';
-//     this.events = new PubSub();
-//   }
-
-//   update(key, value) {
-//     if (!this._state[key]) {
-//       this._state[key] = value;  
-//     } else {
-//       this._state[key] = value;
-//     }
-    
-//     const event = new CustomEvent(`${key} state change`, { detail: value });
-
-//   }
-// }

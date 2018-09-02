@@ -11,11 +11,10 @@
 
 .timer {
   @extend %timing;
+  background: none;
+  border: none;
+  cursor: pointer;
   text-align: left;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 [data-mute] {

@@ -1,4 +1,4 @@
-import lazyload from './lazyload';
+import lazyload from './lib/lazyload';
 
 window.addEventListener('DOMContentLoaded', () => {
   lazyload();

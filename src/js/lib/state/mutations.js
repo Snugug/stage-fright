@@ -1,3 +1,5 @@
+import { notesBody, buildNotesPreviewLink, updateNotes } from '../presentation';
+
 export default {
   navigate(state, payload) {
     if (payload === 'next' && state.current.next) {
@@ -35,6 +37,42 @@ export default {
       state.progress.style.opacity = .5;
     }
     
+    return state;
+  },
+  async notes(state, root) {
+    if (state.presentation.request) {
+      if (!state.presentation.connection) {
+        try {
+          const connection = await state.presentation.request.start();
+          state.presentation.connection = connection;
+
+          connection.addEventListener('message', e => {
+            console.log(`I Got Message`);
+            console.log(e.data);
+          });
+
+          // Need a way to reverse this
+          const builtNotes = notesBody();
+          root.parentNode.insertBefore(builtNotes._notes, root);
+          root.dataset.hidden = true;
+          root.parentNode.dataset.notes = true;
+
+          updateNotes(builtNotes, state.index, state.current);
+          state.presentation.notes = builtNotes;
+        } catch(e) {
+          console.log(e);
+          console.error('There was an error establishing a connection');
+        }  
+      } else {
+        root.parentNode.removeChild(state.presentation.notes._notes);
+        delete root.dataset.hidden;
+        delete root.parentNode.dataset.notes;
+        state.presentation.connection.terminate();
+        state.presentation.connection = null;
+        state.presentation.notes = null;
+      }
+    }
+
     return state;
   }
 }

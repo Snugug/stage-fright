@@ -20,8 +20,10 @@ export default {
   plugins,
 
   output: {
-    format: 'es',
+    format: 'esm',
     sourcemap: true,
-    file: 'docs/js/stage-fright.js',
+    dir: 'docs/js',
   },
+
+  experimentalCodeSplitting: true,
 };

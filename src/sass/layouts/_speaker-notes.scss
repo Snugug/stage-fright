@@ -38,15 +38,16 @@
     z-index: 100;
   }
 
-  &--current-slide {
+  &--slide-preview {
     width: 100%;
     border: 1px solid black;
-    height: calc((100vh - 2rem) / 7 * 3 + 1rem);
-  }
 
-  &--upcoming-slide {
-    width: 100%;
-    border: 1px solid black;
-    height: calc((100vh - 2rem) / 7 * 2);
+    ._speaker-notes--current & {
+      height: calc((100vh - 2rem) / 7 * 3 + 1rem);  
+    }
+    
+    ._speaker-notes--upcoming & {
+      height: calc((100vh - 2rem) / 7 * 2);
+    }
   }
 }

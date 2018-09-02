@@ -4,6 +4,7 @@ class StageFrightNode {
     this.previous = null;
     this.next = null;
     this.first = false;
+    this.notes = null;
 
     if (item.classList.contains('_stage--slide')) {
       this.type = 'slide';
@@ -14,6 +15,11 @@ class StageFrightNode {
     } else if (item.classList.contains('fragment')) {
       this.type = 'fragment';
 
+    }
+
+    const notes = item.querySelector('._stage--notes');
+    if (notes) {
+      this.notes = notes.innerHTML;
     }
   }
 }

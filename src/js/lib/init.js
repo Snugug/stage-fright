@@ -10,11 +10,15 @@ import fragments from './display/fragments';
 import buildMinimap from './minimap/build';
 import minimapNav from './navigation/minimap';
 
-import navInit from './navigation/init';
+import { updateNotes } from './presentation';
+
+import navHash from './navigation/hash';
 import updateHistory from './navigation/history';
 import keys from './navigation/keys';
 
 import lazyload from './lazyload';
+
+import { createPresentation, receivePresentationControls, advancePresentation } from './presentation';
 
 export default class StageFright {
   constructor(root) {
@@ -30,12 +34,25 @@ export default class StageFright {
       stage.add(item);
     });
 
+    const embedded = new URLSearchParams(window.location.search).get('embedded') === 'true';
+
+    if (embedded) {
+      rootNode.parentNode.classList.add('embedded');
+    }
+
     // Minimap
     const minimap = buildMinimap(stage);
-    rootNode.parentNode.appendChild(minimap.map);
+
+    if (!embedded) {
+      rootNode.parentNode.appendChild(minimap.map);  
+    }
+    
+
+    // Presentation Awesomeness
+    let presentation = false;
 
     // Starting Index
-    const start = navInit(stage.length - 1);
+    const start = navHash(stage.length - 1);
 
     // Set up state and store
     this.store = new Store({
@@ -46,27 +63,55 @@ export default class StageFright {
         current: stage._head,
         progress: minimap.list[start],
         index: start,
+        notes: false,
+        presentation: createPresentation(),
       },
       stage,
       progress: minimap.list,
+      embedded,
+      root: rootNode,
     });
 
-    this.store.events.subscribe('stateChange', (state) => {
+    this.store.events.subscribe('currentChange', (state) => {
       translate(rootNode, state.current);
       fragments(state.current);
+      if (state.presentation.notes) {
+        updateNotes(state.presentation.notes, state.index, state.current);  
+      }
+    });
+
+    this.store.events.subscribe('indexChange', (state) => {
       updateHistory(state.index);
+      if (state.presentation.notes) {
+        updateNotes(state.presentation.notes, state.index, state.current);  
+      }
+    });
+
+    this.store.events.subscribe('presentationChange', (state) => {
+      advancePresentation(state.presentation.connection, state.index);
+
+      if (state.presentation.notes) {
+        state.presentation.notes.total.textContent = stage._length - 1;
+      }
     });
 
     keys(this.store);
 
-    for (const item of Object.entries(minimap.list)) {
-      console.log(item);
-      item[1].addEventListener('click', minimapNav(this.store, item[0]));
+    if (!embedded) {
+      for (const item of Object.entries(minimap.list)) {
+        item[1].addEventListener('click', minimapNav(this.store, item[0]));
+      }  
     }
 
     this.goto(start);
 
     lazyload();
+    receivePresentationControls(this.store);
+
+    window.addEventListener('hashchange', () => {
+      const pos = navHash(stage.length - 1);
+      this.goto(pos);
+    });
   }
 
   next() {
