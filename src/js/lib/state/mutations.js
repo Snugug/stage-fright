@@ -20,21 +20,25 @@ export default {
     return state;
   },
   progress(state, payload) {
+    const previous = state.progress;
+
     // Only works going forward or direct, need to figure out different option for going backwards
     if (payload.progress[payload.index]) {
-      // Remove current active state
-      delete state.progress.dataset.active;
-
       state.progress = payload.progress[payload.index];
-
-      state.progress.dataset.active = true;
     }
 
-    if (payload.progress[payload.index + 1]) {
-      state.progress.style.opacity = 1;
-    } else {
-      // Half works for backwards
-      state.progress.style.opacity = .5;
+    if (previous && previous !== state.progress && previous.dataset.hasOwnProperty('active')) {
+      delete previous.dataset.active;
+    }
+
+    state.progress.dataset.active = true;
+
+    if (state.current.hasOwnProperty('fragment')) {
+      if (state.current.fragment === state.current.totalFragments) {
+        state.progress.dataset.fragments = false;
+      } else {
+        state.progress.dataset.fragments = true;
+      }
     }
     
     return state;

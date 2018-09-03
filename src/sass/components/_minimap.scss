@@ -40,5 +40,9 @@
     &[data-active] {
       background-color: map-get($accent, 'dark');
     }
+
+    &[data-fragments='true'] {
+      opacity: .5;
+    }
   }
 }
