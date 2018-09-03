@@ -67,6 +67,8 @@ export class StageFrightList {
   }
 
   find(index) {
+    index = parseInt(index);
+
     if (index > this._length - 1 || index < 0) {
       return false;
     }

@@ -18,8 +18,61 @@ export async function receivePresentationControls(state) {
   if (navigator.presentation && navigator.presentation.receiver) {
     const list = await navigator.presentation.receiver.connectionList;
 
-    list.connections.map(connection => addPresentationConnection(connection, state))
+    list.connections.map(connection => addPresentationConnection(connection, state));
   }
+}
+
+export function addPresentationConnection(connection, state) {
+  connection.send('Connected, from the other side!');
+
+  connection.addEventListener('message', e => {
+    const message = JSON.parse(e.data);
+
+    if (message.hasOwnProperty('goto')) {
+      state.dispatch('navigate', message.goto);
+    }
+  });
+}
+
+export function advancePresentation(connection, goto) {
+  if (connection) {
+    connection.send(JSON.stringify({
+      goto,
+    }));
+  }
+}
+
+export function buildNotesPreviewLink(index) {
+  const locale = window.location;
+  const search = new URLSearchParams();
+  const link = new URL(locale.origin + locale.pathname);
+  link.hash = `#/${index}`;
+  search.set('embedded', true);
+
+  link.search = search.toString();
+
+  return link.toString();
+}
+
+export function updateNotes(notes, index, current) {
+  // Update Notes preview URLs on index change;
+  notes.current.src = buildNotesPreviewLink(index);
+
+  let nextSlideIndex = index + 1;
+
+  if (!current.next) {
+    nextSlideIndex--;
+  }
+
+  notes.next.src = buildNotesPreviewLink(nextSlideIndex);
+
+  if (current.notes) {
+    notes.content.innerHTML = current.notes;
+  } else {
+    notes.content.innerHTML = '';
+  }
+
+  notes.index.textContent = index;
 }
 
 export function timing(parent) {
@@ -81,57 +134,6 @@ export function timing(parent) {
     const str = `00${parseInt(time)}`;
     return str.substring(str.length - 2);
   }
-}
-
-export function addPresentationConnection(connection, state) {
-  connection.addEventListener('message', e => {
-    const message = JSON.parse(e.data);
-
-    if (message.goto) {
-      state.dispatch('navigate', message.goto);
-    }
-  });
-}
-
-export function advancePresentation(connection, goto) {
-  if (connection) {
-    connection.send(JSON.stringify({
-      goto,
-    }));
-  }
-}
-
-export function buildNotesPreviewLink(index) {
-  const locale = window.location;
-  const search = new URLSearchParams();
-  const link = new URL(locale.origin + locale.pathname);
-  link.hash = `#/${index}`;
-  search.set('embedded', true);
-
-  link.search = search.toString();
-
-  return link.toString();
-}
-
-export function updateNotes(notes, index, current) {
-  // Update Notes preview URLs on index change;
-  notes.current.src = buildNotesPreviewLink(index);
-
-  let nextSlideIndex = index + 1;
-
-  if (!current.next) {
-    nextSlideIndex--;
-  }
-
-  notes.next.src = buildNotesPreviewLink(nextSlideIndex);
-
-  if (current.notes) {
-    notes.content.innerHTML = current.notes;
-  } else {
-    notes.content.innerHTML = '';
-  }
-
-  notes.index.textContent = index;
 }
 
 export function notesBody() {

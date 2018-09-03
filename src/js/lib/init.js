@@ -82,14 +82,17 @@ export default class StageFright {
 
     this.store.events.subscribe('indexChange', (state) => {
       updateHistory(state.index);
+
+      if (!embedded) {
+        advancePresentation(state.presentation.connection, state.index);  
+      }
+      
       if (state.presentation.notes) {
         updateNotes(state.presentation.notes, state.index, state.current);  
       }
     });
 
     this.store.events.subscribe('presentationChange', (state) => {
-      advancePresentation(state.presentation.connection, state.index);
-
       if (state.presentation.notes) {
         state.presentation.notes.total.textContent = stage._length - 1;
       }

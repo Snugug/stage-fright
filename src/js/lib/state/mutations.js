@@ -1,4 +1,4 @@
-import { notesBody, buildNotesPreviewLink, updateNotes } from '../presentation';
+import { notesBody, buildNotesPreviewLink, updateNotes, advancePresentation } from '../presentation';
 
 export default {
   navigate(state, payload) {
@@ -47,8 +47,8 @@ export default {
           state.presentation.connection = connection;
 
           connection.addEventListener('message', e => {
-            console.log(`I Got Message`);
             console.log(e.data);
+            advancePresentation(connection, state.index);
           });
 
           // Need a way to reverse this
@@ -59,6 +59,7 @@ export default {
 
           updateNotes(builtNotes, state.index, state.current);
           state.presentation.notes = builtNotes;
+
         } catch(e) {
           console.log(e);
           console.error('There was an error establishing a connection');
