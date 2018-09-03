@@ -73,6 +73,18 @@ export function updateNotes(notes, index, current) {
   }
 
   notes.index.textContent = index;
+
+  if (current.hasOwnProperty('fragment')) {
+    notes.fragments.dataset.active = true;
+    notes.currentFrag.textContent = current.fragment;
+    notes.totalFrag.textContent = current.totalFragments;
+  } else {
+    if (notes.fragments.dataset.hasOwnProperty('active')) {
+      delete notes.fragments.dataset.active;
+    }
+    notes.currentFrag.textContent = '';
+    notes.totalFrag.textContent = '';
+  }
 }
 
 export function timing(parent) {
@@ -151,5 +163,8 @@ export function notesBody() {
     content: notes.querySelector('.slide-notes--content'),
     index: notes.querySelector('.controls--slide-current'),
     total: notes.querySelector('.controls--slide-total'),
+    fragments: notes.querySelector('.controls--fragment'),
+    currentFrag: notes.querySelector('.controls--fragment-current'),
+    totalFrag: notes.querySelector('.controls--fragment-total'),
   }
 }

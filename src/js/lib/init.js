@@ -33,6 +33,7 @@ export default class StageFright {
     items.forEach(item => {
       stage.add(item);
     });
+    stage.updateFragments();
 
     const embedded = new URLSearchParams(window.location.search).get('embedded') === 'true';
 

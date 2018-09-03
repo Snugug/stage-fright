@@ -1,5 +1,6 @@
 .controls {
   font-size: 1em;
+  padding-right: 1em;
 
   p {
     margin-top: 0;
@@ -8,6 +9,7 @@
   &--time {
     display: flex;
     flex-wrap: wrap;
+    font-size: .75em;
   }
 
   &--label {
@@ -27,8 +29,10 @@
 
   &--position {
     text-transform: lowercase;
-    font-size: 1em;
-    padding: .5rem;
+    font-size: .8em;
+    color: rgba($color, .5);
+    // padding: .5rem;
+    // padding-top: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     // grid-template-rows: 1fr 1fr;
@@ -53,5 +57,14 @@
     text-align: right;
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
+  }
+
+  &--slide-current,
+  &--slide-total,
+  &--fragment-current,
+  &--fragment-total {
+    color: $color;
+    padding-left: .25em;
+    padding-right: .25em;
   }
 }

@@ -32,6 +32,8 @@ export class StageFrightList {
 
     this._sectionHolder = -1;
     this._depthHolder = 0;
+    this._fragmentHolder = 0;
+    this._fragmentDepth = [];
   }
 
   add(item) {
@@ -43,6 +45,16 @@ export class StageFrightList {
       this._depthHolder = 0;
     } else if (node.type !== 'fragment') {
       this._depthHolder++;
+    }
+
+    if (node.type !== 'fragment') {
+      if (this._fragmentHolder !== 0) {
+        this._fragmentDepth.push(this._fragmentHolder);
+        this._fragmentHolder = 0;  
+      }
+    } else {
+      this._fragmentHolder++;
+      node.fragment = this._fragmentHolder;
     }
 
     node.section = this._sectionHolder;
@@ -62,6 +74,10 @@ export class StageFrightList {
     this._tail.next = node;
     this._tail = node;
     this._length++;
+
+    if (node.type === 'fragment' && node.previous.type !== 'fragment') {
+      node.previous.fragment = 0;
+    }
 
     return node;
   }
@@ -116,5 +132,19 @@ export class StageFrightList {
     }
 
     cb(current);
+  }
+
+  updateFragments() {
+    const fragTotals = this._fragmentDepth.reverse();
+    let currentFrag = fragTotals.pop();
+    this.forEach(item => {
+      if (item.hasOwnProperty('fragment')) {
+        item.totalFragments = currentFrag;
+
+        if (item.next.type !== 'fragment') {
+          currentFrag = fragTotals.pop();
+        }
+      }
+    });
   }
 }
