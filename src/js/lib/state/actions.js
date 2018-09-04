@@ -15,4 +15,7 @@ export default {
   notes(context, payload) {
     context.commit('notes', context.root);
   },
+  display(context, payload) {
+    context.commit('display', payload);
+  }
 }

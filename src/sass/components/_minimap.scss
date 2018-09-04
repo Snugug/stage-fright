@@ -1,4 +1,8 @@
 .minimap {
+  display: none;
+}
+
+.stage-fright .minimap {
   position: fixed;
   bottom: 1rem;
   right: 1rem;

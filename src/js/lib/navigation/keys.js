@@ -1,12 +1,14 @@
 export default function(store, opts = {}) {
   document.addEventListener('keydown', (e) => {
-    const whereto = spaceMove(e);
-    if (whereto) {
-      if (whereto !== 'notes') {
-        store.dispatch('navigate', whereto);    
-      } else {
-        store.dispatch('notes', 'toggle');
-      }
+    if (store.state.display === 'presentation' && !e.target.classList.contains('btns--btn')) {
+      const whereto = spaceMove(e);
+      if (whereto) {
+        if (whereto !== 'notes') {
+          store.dispatch('navigate', whereto);    
+        } else {
+          store.dispatch('notes', 'toggle');
+        }
+      }  
     }
   });
 }

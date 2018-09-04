@@ -79,5 +79,14 @@ export default {
     }
 
     return state;
+  },
+  display(state, payload) {
+    if (state.display === 'presentation') {
+      state.display = 'article';
+    } else {
+      state.display = 'presentation';
+    }
+
+    return state;
   }
 }

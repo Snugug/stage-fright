@@ -20,6 +20,8 @@ import lazyload from './lazyload';
 
 import { createPresentation, receivePresentationControls, advancePresentation } from './presentation';
 
+import buttons from './buttons';
+
 export default class StageFright {
   constructor(root) {
     const rootNode = document.querySelector(root);
@@ -66,6 +68,7 @@ export default class StageFright {
         index: start,
         notes: false,
         presentation: createPresentation(),
+        display: 'presentation',
       },
       stage,
       progress: minimap.list,
@@ -99,6 +102,15 @@ export default class StageFright {
       }
     });
 
+    this.store.changes.subscribe('display', (state) => {
+      if (state.display === 'presentation') {
+        rootNode.parentNode.classList.add('stage-fright');
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      } else {
+        rootNode.parentNode.classList.remove('stage-fright');
+      }
+    })
+
     keys(this.store);
 
     if (!embedded) {
@@ -116,6 +128,8 @@ export default class StageFright {
       const pos = navHash(stage.length - 1);
       this.goto(pos);
     });
+
+    stage._head.elem.querySelector('._stage--content').insertAdjacentElement('beforebegin', buttons(this.store));
   }
 
   next() {
