@@ -44,14 +44,6 @@ export default class StageFright {
       rootNode.parentNode.classList.add('embedded');
     }
 
-    // Minimap
-    const minimap = buildMinimap(stage);
-
-    if (!embedded) {
-      rootNode.parentNode.appendChild(minimap.map);  
-    }
-    
-
     // Presentation Awesomeness
     let presentation = false;
 
@@ -65,14 +57,13 @@ export default class StageFright {
       progress: 'foo',
       state: {
         current: stage._head,
-        progress: minimap.list[start],
+        progress: null,
         index: start,
         notes: false,
         presentation: createPresentation(),
         display: 'presentation',
       },
       stage,
-      progress: minimap.list,
       embedded,
       root: rootNode,
     });
@@ -104,17 +95,19 @@ export default class StageFright {
       } else {
         rootNode.parentNode.classList.remove('stage-fright');
       }
-    })
-
-    keys(this.store);
-
+    });
+    
+    // Set up progress
     if (!embedded) {
-      for (const item of Object.entries(minimap.list)) {
-        item[1].addEventListener('click', minimapNav(this.store, item[0]));
-      }  
+      stage.buildProgress(this.store);
+      rootNode.parentNode.appendChild(buildMinimap(stage));
     }
 
+    // Go to first slide
     this.goto(start);
+
+    // Set up keyboard navigation
+    keys(this.store);
 
     lazyload();
 

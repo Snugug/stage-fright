@@ -1,3 +1,6 @@
+import { createLink } from './minimap/build';
+import minimapNav from './navigation/minimap';
+
 class StageFrightNode {
   constructor(item) {
     this.elem = item;
@@ -14,7 +17,6 @@ class StageFrightNode {
       }
     } else if (item.classList.contains('fragment')) {
       this.type = 'fragment';
-
     }
 
     const notes = item.querySelector('._stage--notes');
@@ -59,21 +61,20 @@ export class StageFrightList {
 
     node.section = this._sectionHolder;
     node.depth = this._depthHolder;
+    node.previous = this._tail;
+    this._length++;
 
     // If there isn't a head, make head, tail, and current our node! then increase the length;
     if (!current) {
       this._head = node;
       this._tail = node;
-      this._length++;
 
       return node;
     }
 
     // If there is a current, update the tail
-    node.previous = this._tail;
     this._tail.next = node;
     this._tail = node;
-    this._length++;
 
     if (node.type === 'fragment' && node.previous.type !== 'fragment') {
       node.previous.fragment = 0;
@@ -125,10 +126,11 @@ export class StageFrightList {
 
   forEach(cb) {
     let current = this._head;
-
+    let i = 0;
     while (current.next) {
-      cb(current);
+      cb(current, i);
       current = current.next;
+      i++;
     }
 
     cb(current);
@@ -144,6 +146,18 @@ export class StageFrightList {
         if (item.next.type !== 'fragment') {
           currentFrag = fragTotals.pop();
         }
+      }
+    });
+  }
+
+  buildProgress(store) {
+    this.forEach((item, i) => {
+      if (item.type === 'slide') {
+        item.progress = createLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
+
+        item.progress.addEventListener('click', minimapNav(store, i))
+      } else {
+        item.progress = item.previous.progress;
       }
     });
   }

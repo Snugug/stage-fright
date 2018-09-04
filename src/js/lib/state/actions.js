@@ -9,7 +9,7 @@ export default {
     }
 
     if (!context.embedded) {
-      context.commit('progress', { index: context.state.index, progress: context.progress, length: context.stage._length - 1 });  
+      context.commit('progress', 'toggle');  
     }
   },
   notes(context, payload) {

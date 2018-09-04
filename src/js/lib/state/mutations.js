@@ -22,10 +22,7 @@ export default {
   progress(state, payload) {
     const previous = state.progress;
 
-    // Only works going forward or direct, need to figure out different option for going backwards
-    if (payload.progress[payload.index]) {
-      state.progress = payload.progress[payload.index];
-    }
+    state.progress = state.current.progress;
 
     if (previous && previous !== state.progress && previous.dataset.hasOwnProperty('active')) {
       delete previous.dataset.active;

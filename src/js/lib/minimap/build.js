@@ -1,31 +1,16 @@
 export default function(stage) {
   const minimap = document.createElement('nav');
   minimap.classList.add('minimap');
-  const minimapList = [];
-
-  let i = 0;
 
   stage.forEach(item => {
     if (item.first) {
       minimap.appendChild(createSection());
     }
 
-    if (item.type === 'slide') {
-      const fragment = item.hasOwnProperty('fragment');
-
-      const link = createLink(i, item.section, item.depth, fragment);
-
-      minimapList[i] = link;
-
-      minimap.lastChild.appendChild(link);
-    } else {
-      minimapList[i] = minimapList[i - 1];
-    }
-
-    i++;
+    minimap.lastChild.appendChild(item.progress);
   });
 
-  return { map: minimap, list: minimapList };
+  return minimap;
 }
 
 function createSection() {
@@ -35,7 +20,7 @@ function createSection() {
   return section;
 }
 
-function createLink(to, section, depth, fragment = false) {
+export function createLink(to, section, depth, fragment = false) {
   const link = document.createElement('a');
   link.classList.add('minimap--slide');
   link.href = `#/${to}`;
