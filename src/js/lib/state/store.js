@@ -7,7 +7,7 @@ export default class Store {
     this.actions = params.actions || {};
     this.mutations = params.mutations || {};
     this.status = 'resting';
-    this.events = new PubSub();
+    this.changes = new PubSub();
     this.stage = params.stage || {};
     this.progress = params.progress || [];
     this.root = params.root || document.body;
@@ -20,8 +20,8 @@ export default class Store {
           console.warn(`You should use a mutation to set ${key}`);
         }
         
-        self.events.publish(`${key}Change`, self.state);
-        self.events.publish('stateChange', self.state);
+        self.changes.publish(`${key}`, self.state);
+        self.changes.publish('stateChange', self.state);
 
         return true;
       }

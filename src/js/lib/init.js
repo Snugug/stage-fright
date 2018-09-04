@@ -73,7 +73,7 @@ export default class StageFright {
       root: rootNode,
     });
 
-    this.store.events.subscribe('currentChange', (state) => {
+    this.store.changes.subscribe('current', (state) => {
       translate(rootNode, state.current);
       fragments(state.current);
       if (state.presentation.notes) {
@@ -81,7 +81,7 @@ export default class StageFright {
       }
     });
 
-    this.store.events.subscribe('indexChange', (state) => {
+    this.store.changes.subscribe('index', (state) => {
       updateHistory(state.index);
 
       if (!embedded) {
@@ -93,7 +93,7 @@ export default class StageFright {
       }
     });
 
-    this.store.events.subscribe('presentationChange', (state) => {
+    this.store.changes.subscribe('presentation', (state) => {
       if (state.presentation.notes) {
         state.presentation.notes.total.textContent = stage._length - 1;
       }
