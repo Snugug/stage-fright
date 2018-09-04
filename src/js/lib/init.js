@@ -17,6 +17,7 @@ import updateHistory from './navigation/history';
 import keys from './navigation/keys';
 
 import lazyload from './lazyload';
+import autoplay from './autoplay';
 
 import { createPresentation, receivePresentationControls, advancePresentation } from './presentation';
 
@@ -122,6 +123,11 @@ export default class StageFright {
     this.goto(start);
 
     lazyload();
+
+    if (!embedded) {
+      autoplay();  
+    }
+    
     receivePresentationControls(this.store);
 
     window.addEventListener('hashchange', () => {
