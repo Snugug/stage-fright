@@ -43,7 +43,7 @@ export default {
     
     return state;
   },
-  async notes(state, root) {
+  async notes(state, { root, length }) {
     if (state.presentation.request) {
       if (!state.presentation.connection) {
         try {
@@ -62,6 +62,7 @@ export default {
           root.parentNode.dataset.notes = true;
 
           updateNotes(builtNotes, state.index, state.current);
+          builtNotes.total.textContent = length - 1;
           state.presentation.notes = builtNotes;
 
         } catch(e) {

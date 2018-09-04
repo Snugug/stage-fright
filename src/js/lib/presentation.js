@@ -89,13 +89,16 @@ export function updateNotes(notes, index, current) {
 
 export function timing(parent) {
   const clock = parent.querySelector('.clock--value');
+  const timer = parent.querySelector('.timer');
   const hour = parent.querySelector('.timer--hours');
   const minute = parent.querySelector('.timer--minutes');
   const second = parent.querySelector('.timer--seconds');
-  const timer = parent.querySelector('.controls--time');
   let start = new Date();
 
+  // Update to begin
   update();
+
+  // Update every second
   let runningClock = setInterval(update, 1000);
 
   timer.addEventListener('click', e => {
@@ -127,19 +130,8 @@ export function timing(parent) {
     minute.textContent = `:${timePad(minutes)}`;
     second.textContent = `:${timePad(seconds)}`;
 
-    if (hours <= 0) {
-      hour.setAttribute('data-mute', true);
-    }
-    else {
-      hour.removeAttribute('data-mute');
-    }
-
-    if (minutes <= 0) {
-      minute.setAttribute('data-mute', true);
-    }
-    else {
-      minute.removeAttribute('data-mute');
-    }
+    hour.setAttribute('data-mute', hours <= 0);
+    minute.setAttribute('data-mute', minutes <= 0);
   }
 
   function timePad(time) {

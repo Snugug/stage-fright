@@ -97,12 +97,6 @@ export default class StageFright {
       }
     });
 
-    this.store.changes.subscribe('presentation', (state) => {
-      if (state.presentation.notes) {
-        state.presentation.notes.total.textContent = stage._length - 1;
-      }
-    });
-
     this.store.changes.subscribe('display', (state) => {
       if (state.display === 'presentation') {
         rootNode.parentNode.classList.add('stage-fright');

@@ -13,7 +13,7 @@ export default {
     }
   },
   notes(context, payload) {
-    context.commit('notes', context.root);
+    context.commit('notes', { root: context.root, length: context.stage._length });
   },
   display(context, payload) {
     context.commit('display', payload);

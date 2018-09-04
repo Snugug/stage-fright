@@ -15,8 +15,9 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  padding: 0;
 }
 
-[data-mute] {
+[data-mute='true'] {
   opacity: .5;
 }
