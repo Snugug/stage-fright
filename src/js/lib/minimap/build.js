@@ -24,7 +24,6 @@ export function createLink(to, section, depth, fragment = false) {
   const link = document.createElement('a');
   link.classList.add('minimap--slide');
   link.href = `#/${to}`;
-  link.setAttribute('tabindex', -1);
   link.innerText = `Section ${section}, Slide ${depth}`;
   link.dataset.fragments = fragment;
 

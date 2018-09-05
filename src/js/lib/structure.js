@@ -1,5 +1,4 @@
 import { createLink } from './minimap/build';
-import minimapNav from './navigation/minimap';
 
 class StageFrightNode {
   constructor(item) {
@@ -154,8 +153,6 @@ export class StageFrightList {
     this.forEach((item, i) => {
       if (item.type === 'slide') {
         item.progress = createLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
-
-        item.progress.addEventListener('click', minimapNav(store, i))
       } else {
         item.progress = item.previous.progress;
       }
