@@ -33,7 +33,9 @@ function downloadImages() {
 
   btn.addEventListener('click', () => {
     const images = document.querySelectorAll('picture', 'img');
-    images.forEach(image => loadImage(image));  
+    const media = document.querySelectorAll('video, audio');
+    images.forEach(image => loadImage(image));
+    media.forEach(item => item.preload = 'auto');
     btn.parentNode.removeChild(btn);
   });
 
