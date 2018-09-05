@@ -24,7 +24,7 @@ import { createPresentation, receivePresentationControls, advancePresentation } 
 import buttons from './buttons';
 
 export default class StageFright {
-  constructor(root) {
+  constructor(root, options = {spacebar: true, remote: true}) {
     const rootNode = document.querySelector(root);
     // Make the Stage Fright Stage
     rootNode.parentNode.classList.add('stage-fright');
@@ -107,7 +107,7 @@ export default class StageFright {
     this.goto(start);
 
     // Set up keyboard navigation
-    keys(this.store);
+    keys(this.store, options);
 
     lazyload();
 
