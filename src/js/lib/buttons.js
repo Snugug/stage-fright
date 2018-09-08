@@ -1,4 +1,4 @@
-import { loadImage } from './lazyload';
+import { loadImage, loadMedia } from './lazyload';
 
 export default function(store) {
   const holder = document.createElement('div');
@@ -32,10 +32,11 @@ function downloadImages() {
   const btn = buildButton('Download All Assets', icon);
 
   btn.addEventListener('click', () => {
-    const images = document.querySelectorAll('picture', 'img');
+    // Swap in
+    const images = document.querySelectorAll('picture, img');
     const media = document.querySelectorAll('video, audio');
     images.forEach(image => loadImage(image));
-    media.forEach(item => item.preload = 'auto');
+    media.forEach(item => loadMedia(item));
     btn.parentNode.removeChild(btn);
   });
 
