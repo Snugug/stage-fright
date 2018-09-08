@@ -66,7 +66,26 @@ gulp.task('html:watch', ['html'], () => {
   return gulp.watch(['src/html/**/*.html', '!node_modules/**/*', '!docs/**/*'], ['html'])
 });
 
-gulp.task('watch', ['js:watch', 'html:watch', 'sass:watch']);
+/*
+ * Media 
+ */
+gulp.task('images', () => {
+  return gulp.src('src/images/**/*')
+    .pipe(gulp.dest('./docs/images'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('videos', () => {
+  return gulp.src('src/videos/**/*')
+    .pipe(gulp.dest('./docs/videos'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('media:watch', ['images', 'videos'], () => {
+  return gulp.watch(['src/images/**/*', 'src/videos/**/*'], ['images', 'videos']);
+});
+
+gulp.task('watch', ['js:watch', 'html:watch', 'media:watch', 'sass:watch']);
 
 gulp.task('serve', ['watch', 'server']);
 

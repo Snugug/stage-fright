@@ -10,8 +10,6 @@ export function loadImage(elem) {
     const sets = elem.querySelectorAll('[data-srcset]');
     const srcs = elem.querySelectorAll('[data-src]');
 
-    loading = elem.querySelector('img');
-
     sets.forEach((set) => {
       load = true;
       set.srcset = set.dataset.srcset; // eslint-disable-line no-param-reassign
@@ -37,21 +35,58 @@ export function loadImage(elem) {
   }
 }
 
-export function loadImageObserver(entries) {
+export function loadMedia(elem) {
+  let loading = elem;
+  let load = false;
+
+  if (elem.dataset.src) {
+    load = true;
+    loading.src = loading.dataset.src;
+    delete loading.dataset.src;
+  } else {
+    const srcs = elem.querySelectorAll('[data-src]');
+    srcs.forEach((src) => {
+      load = true;
+      src.src = src.dataset.src;
+      delete src.dataset.src;
+    });
+  }
+
+  loading.preload = 'auto';
+
+  if (load) {
+    loading.setAttribute('data-lazy-loading', true);
+    loading.addEventListener('loadeddata', removeLazyLoading);
+  }
+}
+
+export function loadMultimediaObserver(entries) {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      loadImage(entry.target);
+      const target = entry.target;
+
+      if (target.tagName === 'IMG' || target.targetName === 'PICTURE') {
+        loadImage(target);  
+      } else {
+        loadMedia(target);
+      }
     }
   });
 }
 
 export default function () {
-  const images = document.querySelectorAll('picture', 'img');
+  const multimedia = document.querySelectorAll('picture, img, video, audio');
 
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(loadImageObserver);
-    images.forEach(image => observer.observe(image));
+    const observer = new IntersectionObserver(loadMultimediaObserver);
+    multimedia.forEach(m => observer.observe(m));
   } else {
-    images.forEach(img => loadImage(img));
+    multimedia.forEach((m) => {
+      if (m.tagName === 'IMG' || m.tagName === 'PICTURE') {
+        loadImage(m);
+      } else {
+        loadMedia(m)
+      }
+    });
   }
 }

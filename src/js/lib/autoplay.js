@@ -1,17 +1,24 @@
+import { loadMedia } from './lazyload';
+
 export function playVideo(entry) {
+  const elem = entry.target;
   elem.pause();
   elem.currentTime = 0;
 
   if (entry.isIntersecting) {
+    if (!elem.src) {
+      loadMedia(elem);
+    }
+    
     window.setTimeout(() => {
       elem.play();
-    }, 2000);  
+    }, 200);  
   }
 }
 
 export function playVideoObserver(entries) {
   entries.forEach((entry) => {
-    toggleVideoPlay(entry);
+    playVideo(entry);
   });
 }
 
