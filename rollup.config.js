@@ -1,6 +1,6 @@
 const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
-const minify = require('rollup-plugin-babel-minify');
+const babel = require('rollup-plugin-babel');
 
 const plugins = [];
 
@@ -8,12 +8,8 @@ plugins.push(nodeResolve());
 plugins.push(replace({
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 }));
+plugins.push(babel());
 
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(minify({
-    comments: false,
-  }));
-}
 
 export default {
   input: 'src/js/stage-fright.js',
