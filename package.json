@@ -33,7 +33,7 @@
     "babel-core": "^6.26.3",
     "babel-minify": "^0.4.3",
     "babel-preset-minify": "^0.4.3",
-    "browser-sync": "^2.24.6",
+    "browser-sync": "^2.24.7",
     "eyeglass": "^1.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
@@ -42,10 +42,10 @@
     "gulp-sourcemaps": "^2.6.4",
     "prismjs": "^1.15.0",
     "rollup": "^0.64.1",
-    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-replace": "^2.0.0",
-    "sass": "^1.10.4"
+    "sass": "^1.13.4"
   },
   "dependencies": {
     "breakpoint-sass": "^2.7.1",
