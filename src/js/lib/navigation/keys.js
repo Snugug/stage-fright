@@ -14,10 +14,11 @@ export default function(store, opts = {}) {
 }
 
 function spaceMove(e, opts) {
-  const modifiers = {         // ⇧
-    ctrl: e.ctrlKey === true, // ⌃
-    alt: e.altKey === true,   // ⌥
-    meta: e.metaKey === true, // ⌘
+  const modifiers = {         
+    ctrl: e.ctrlKey === true,   // ⌃
+    alt: e.altKey === true,     // ⌥
+    meta: e.metaKey === true,   // ⌘
+    shift: e.shiftKey === true, // ⇧
   }
 
   let previous = false;
@@ -26,7 +27,7 @@ function spaceMove(e, opts) {
   // Set up Spacebar nav, with or without modifiers
   if (opts.spacebar !== false) {
     let spacebar = e.keyCode === 32;
-    let shiftSpacebar = spacebar && e.shiftKey === true;
+    let shiftSpacebar = spacebar && modifiers['shift'];
 
     if (opts.spacebar !== true) {
       spacebar = spacebar && modifiers[opts.spacebar];
@@ -62,7 +63,7 @@ function spaceMove(e, opts) {
   
 
   // S + CMD + Shift key
-  if (e.keyCode === 83 && modifiers['alt'] && e.shiftKey === true) {
+  if (e.keyCode === 83 && modifiers['alt'] && modifiers['shift']) {
     return 'notes';
   }
 
