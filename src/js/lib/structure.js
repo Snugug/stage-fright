@@ -1,5 +1,3 @@
-import { createLink } from './minimap/build';
-
 class StageFrightNode {
   constructor(item) {
     this.elem = item;
@@ -149,10 +147,10 @@ export class StageFrightList {
     });
   }
 
-  buildProgress(store) {
+  buildProgress(store, createMinimapLink) {
     this.forEach((item, i) => {
       if (item.type === 'slide') {
-        item.progress = createLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
+        item.progress = createMinimapLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
       } else {
         item.progress = item.previous.progress;
       }

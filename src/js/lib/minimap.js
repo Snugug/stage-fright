@@ -1,10 +1,12 @@
-export default function(stage) {
+export function buildMinimap(stage) {
   const minimap = document.createElement('nav');
   minimap.classList.add('minimap');
 
   stage.forEach(item => {
     if (item.first) {
-      minimap.appendChild(createSection());
+      const section = document.createElement('div');
+      section.classList.add('minimap--section');
+      minimap.appendChild(section);
     }
 
     minimap.lastChild.appendChild(item.progress);
@@ -13,14 +15,7 @@ export default function(stage) {
   return minimap;
 }
 
-function createSection() {
-  const section = document.createElement('div');
-  section.classList.add('minimap--section');
-
-  return section;
-}
-
-export function createLink(to, section, depth, fragment = false) {
+export function createMinimapLink(to, section, depth, fragment = false) {
   const link = document.createElement('a');
   link.classList.add('minimap--slide');
   link.href = `#/${to}`;

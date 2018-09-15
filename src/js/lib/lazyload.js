@@ -75,7 +75,7 @@ export function loadMultimediaObserver(entries) {
 }
 
 export default function () {
-  const multimedia = document.querySelectorAll('picture, img, video, audio');
+  const multimedia = document.querySelectorAll('picture, img, video, audio, iframe');
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(loadMultimediaObserver);

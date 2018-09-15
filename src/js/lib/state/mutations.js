@@ -1,5 +1,3 @@
-import { notesBody, buildNotesPreviewLink, updateNotes, advancePresentation } from '../presentation';
-
 export default {
   navigate(state, payload) {
     if (payload === 'next' && state.current.next) {
@@ -21,21 +19,22 @@ export default {
   },
   progress(state, payload) {
     const previous = state.progress;
-
     state.progress = state.current.progress;
 
-    if (previous && previous !== state.progress && previous.dataset.hasOwnProperty('active')) {
-      delete previous.dataset.active;
-    }
-
-    state.progress.dataset.active = true;
-
-    if (state.current.hasOwnProperty('fragment')) {
-      if (state.current.fragment === state.current.totalFragments) {
-        state.progress.dataset.fragments = false;
-      } else {
-        state.progress.dataset.fragments = true;
+    if (state.progress) {
+      if (previous && previous !== state.progress && previous.dataset.hasOwnProperty('active')) {
+        delete previous.dataset.active;
       }
+
+      state.progress.dataset.active = true;
+
+      if (state.current.hasOwnProperty('fragment')) {
+        if (state.current.fragment === state.current.totalFragments) {
+          state.progress.dataset.fragments = false;
+        } else {
+          state.progress.dataset.fragments = true;
+        }
+      }  
     }
     
     return state;
@@ -53,6 +52,7 @@ export default {
           });
 
           // Need a way to reverse this
+          const { notesBody, updateNotes, advancePresentation } = await import('../presentation');
           const builtNotes = notesBody();
           root.parentNode.insertBefore(builtNotes._notes, root);
           root.dataset.hidden = true;

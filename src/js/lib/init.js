@@ -7,21 +7,10 @@ import actions from './state/actions';
 import translate from './display/translate';
 import fragments from './display/fragments';
 
-import buildMinimap from './minimap/build';
-import minimapNav from './navigation/minimap';
-
-import { updateNotes } from './presentation';
-
 import navHash from './navigation/hash';
 import updateHistory from './navigation/history';
-import keys from './navigation/keys';
 
-import lazyload from './lazyload';
-import autoplay from './autoplay';
-
-import { createPresentation, receivePresentationControls, advancePresentation } from './presentation';
-
-import buttons from './buttons';
+import { createPresentation } from './presentation';
 
 export default class StageFright {
   constructor(root, options = {spacebar: true, remote: true}) {
@@ -68,22 +57,25 @@ export default class StageFright {
       root: rootNode,
     });
 
-    this.store.changes.subscribe('current', (state) => {
+    this.store.changes.subscribe('current', async (state) => {
       translate(rootNode, state.current);
       fragments(state.current);
       if (state.presentation.notes) {
+        const { updateNotes } = await import('./presentation');
         updateNotes(state.presentation.notes, state.index, state.current);  
       }
     });
 
-    this.store.changes.subscribe('index', (state) => {
+    this.store.changes.subscribe('index', async (state) => {
       updateHistory(state.index);
 
       if (!embedded) {
+        const { advancePresentation } = await import('./presentation');
         advancePresentation(state.presentation.connection, state.index);  
       }
       
       if (state.presentation.notes) {
+        const { updateNotes } = await import('./presentation');
         updateNotes(state.presentation.notes, state.index, state.current);  
       }
     });
@@ -96,33 +88,24 @@ export default class StageFright {
         rootNode.parentNode.classList.remove('stage-fright');
       }
     });
+
+    requestIdleCallback(() => {
+      if (!embedded) {
+        import('./upgrade').then(({upgrade}) => {
+          upgrade.bind(this)(stage, rootNode, start, options);
+        });
+      } else {
+        this.goto(start);
+      }
+    }, { timeout: 500 });
     
     // Set up progress
-    if (!embedded) {
-      stage.buildProgress(this.store);
-      rootNode.parentNode.appendChild(buildMinimap(stage));
-    }
-
-    // Go to first slide
-    this.goto(start);
-
-    // Set up keyboard navigation
-    keys(this.store, options);
-
-    lazyload();
-
-    if (!embedded) {
-      autoplay();  
-    }
-    
-    receivePresentationControls(this.store);
-
     window.addEventListener('hashchange', () => {
       const pos = navHash(stage.length - 1);
       this.goto(pos);
     });
-
-    stage._head.elem.querySelector('._stage--content').insertAdjacentElement('beforebegin', buttons(this.store));
+    
+    import('./lazyload').then(({default: lazyload}) => lazyload());
   }
 
   next() {
