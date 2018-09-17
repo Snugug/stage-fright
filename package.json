@@ -2,7 +2,7 @@
   "name": "stage-fright",
   "version": "2.0.0",
   "description": "Yet Another HTML5 Presentation Framework",
-  "main": "src/js/lib/core.js",
+  "main": "src/js/lib/init.js",
   "scripts": {
     "start": "npm run dev",
     "js": "rollup -c",
@@ -23,15 +23,13 @@
     "eyeglass-module",
     "presentation"
   ],
-  "module": "src/js/stage-fright.js",
-  "modules.root": "src/js",
+  "module": "src/js/lib/init.js",
+  "modules.root": "src/js/lib",
   "author": "Sam Richard <sam@snug.ug>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.0.1",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "babel-core": "^6.26.3",
-    "babel-minify": "^0.4.3",
     "babel-preset-minify": "^0.4.3",
     "browser-sync": "^2.24.7",
     "eyeglass": "^1.5.0",
@@ -50,7 +48,6 @@
   "dependencies": {
     "breakpoint-sass": "^2.7.1",
     "letterform-shades": "^1.0.0",
-    "rollup-stream": "^1.24.1",
     "sass-toolkit": "^2.10.2"
   }
 }
