@@ -14,23 +14,31 @@ export function createPresentation() {
   return presentation;
 }
 
-export async function receivePresentationControls(state) {
+export async function receivePresentationControls(store) {
   if (navigator.presentation && navigator.presentation.receiver) {
     const list = await navigator.presentation.receiver.connectionList;
 
-    list.connections.map(connection => addPresentationConnection(connection, state));
+    list.connections.map(connection => addPresentationConnection(connection, store));
   }
 }
 
-export function addPresentationConnection(connection, state) {
-  connection.send('Connected, from the other side!');
+export function addPresentationConnection(connection, store) {
+  connection.send(JSON.stringify({
+    start: true,
+  }));
 
   connection.addEventListener('message', e => {
     const message = JSON.parse(e.data);
 
     if (message.hasOwnProperty('goto')) {
-      state.dispatch('navigate', message.goto);
+      store.dispatch('navigate', message.goto);  
     }
+  });
+
+  store.changes.subscribe('index', (state) => {
+    connection.send(JSON.stringify({
+      goto: state.index,
+    }));
   });
 }
 

@@ -41,7 +41,7 @@ export default class Store {
     return true;
   }
 
-  commit(mutation, payload) {
+  async commit(mutation, payload) {
     if (typeof this.mutations[mutation] !== 'function') {
       console.error(`Mutation "${mutation}" doesn't exist`);
       return false;
@@ -49,9 +49,14 @@ export default class Store {
 
     this.status = 'mutation';
 
-    const newState = this.mutations[mutation](Object.assign({}, this.state), payload);
+    let newState = this.mutations[mutation](Object.assign({}, this.state), payload);
 
-    this.state = Object.assign(this.state, newState);
+    if ('then' in newState) {
+      newState = await newState;
+      this.state = Object.assign(this.state, newState);
+    } else {
+      this.state = Object.assign(this.state, newState);  
+    }
 
     return true;
   }

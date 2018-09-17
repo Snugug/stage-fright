@@ -89,6 +89,25 @@ export default class StageFright {
       }
     });
 
+    this.store.changes.subscribe('presentation', async (state) => {
+      
+      if (state.presentation.connection) {
+        const { advancePresentation } = await import('./presentation');
+        
+        state.presentation.connection.addEventListener('message', e => {
+          const message = JSON.parse(e.data);
+
+          if (message.start) {
+            advancePresentation(state.presentation.connection, state.index);
+          }
+
+          if (message.goto !== state.index) {
+            this.goto(message.goto);  
+          }
+        });
+      }
+    })
+
     requestIdleCallback(() => {
       if (!embedded) {
         import('./upgrade').then(({upgrade}) => {

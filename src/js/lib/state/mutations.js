@@ -46,11 +46,6 @@ export default {
           const connection = await state.presentation.request.start();
           state.presentation.connection = connection;
 
-          connection.addEventListener('message', e => {
-            console.log(e.data);
-            advancePresentation(connection, state.index);
-          });
-
           // Need a way to reverse this
           const { notesBody, updateNotes, advancePresentation } = await import('../presentation');
           const builtNotes = notesBody();
