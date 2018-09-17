@@ -77,6 +77,10 @@ export class StageFrightList {
       node.previous.fragment = 0;
     }
 
+    if (node.type === 'fragment' && node.previous.notes) {
+      node.notes = node.previous.notes;
+    }
+
     return node;
   }
 
