@@ -19,6 +19,10 @@
   &--controls {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
+
+    @media (min-width: 525px) {
+      font-size: calc(16px + .5vw);
+    }
   }
 
   &--notes {

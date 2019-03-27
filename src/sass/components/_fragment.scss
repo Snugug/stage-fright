@@ -4,8 +4,16 @@
     transition: $transition;
     transition-duration: .25s;
 
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
     &[data-active] {
       opacity: 1;
     }
+  }
+
+  .reduce-motion & {
+    transition: none;
   }
 }
