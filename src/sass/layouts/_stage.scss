@@ -1,8 +1,13 @@
+body {
+  margin: 0;
+}
+
 .stage-fright {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 
   &.embedded {
     font-size: 1.75vw;
@@ -10,50 +15,22 @@
 }
 
 ._stage {
+  box-sizing: border-box;
+  
   &--slide {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    
     position: relative;
+    box-sizing: border-box;
 
-    &[data-state="intro"],
-    &[data-state="outro"] {
+    .stage-fright & {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       height: 100vh;
       width: 100vw;
+      overflow: hidden;
     }
-  }
-
-  &--content {
-    max-width: 80ch;
-    width: 100%;
-    padding: 0 1rem;
-  }
-
-  &--notes {
-    font-size: .75em;
-    margin-top: 1rem;
-    border: 1px solid rgba(black, .25);
-    border-left-width: .5em;
-    padding: 1rem;
-    max-width: calc(80ch);
-    width: calc(100% - 2rem);
-  }
-
-  &--group &--slide:last-of-type {
-    border-bottom: 1px solid rgba(black, .25);
-    padding-bottom: 1em;
-    margin-bottom: 1em;
-  }
-
-  &--group:last-of-type {
-    margin-top: -1em;
-  }
-
-  &--group:last-of-type &--slide:last-of-type {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: 0;
   }
 
   .stage-fright & {
@@ -63,6 +40,10 @@
     transition: $transition;
     display: flex;
 
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
     &[data-hidden="true"] {
       display: none;
     }
@@ -70,27 +51,12 @@
     &--group {
       width: 100vw;
       flex-shrink: 0;
-    }
-
-    &--group:last-of-type {
-      margin-top: 0;
-    }
-
-    &--slide {
-      padding: 1em 2em;
-      align-items: center;
-      border: 0;
-      display: flex;
-      justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      padding: 0;
+      box-sizing: border-box;
     }
 
     &--content {
-      // max-width: 67vw;
       max-height: 100vh;
+      box-sizing: border-box;
     }
 
     &--notes {
@@ -104,7 +70,12 @@
       border: none;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
+  }
+
+  .reduce-motion & {
+    transition: none;
   }
 }
 

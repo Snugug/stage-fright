@@ -30,7 +30,8 @@
   &--position {
     text-transform: lowercase;
     font-size: .8em;
-    color: rgba($color, .5);
+    // opacity: .5;
+    // color: rgba($color, .5);
     // padding: .5rem;
     // padding-top: 0;
     display: grid;
@@ -63,7 +64,6 @@
   &--slide-total,
   &--fragment-current,
   &--fragment-total {
-    color: $color;
     padding-left: .25em;
     padding-right: .25em;
   }

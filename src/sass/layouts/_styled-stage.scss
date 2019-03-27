@@ -1,0 +1,51 @@
+._stage {
+  &--content {
+    max-width: 80ch;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  &--slide {
+    padding: 1em 2em;
+
+    &[data-state="intro"],
+    &[data-state="outro"] {
+      height: 100vh;
+      width: 100vw;
+    }
+  }
+
+  &--content {
+    max-height: 100vh;
+  }
+
+  &--notes {
+    font-size: .75em;
+    margin-top: 1rem;
+    border: 1px solid rgba(black, .25);
+    border-left-width: .5em;
+    padding: 1rem;
+    max-width: calc(80ch);
+    width: calc(100% - 2rem);
+  }
+
+  &--group &--slide:last-of-type {
+    border-bottom: 1px solid rgba(black, .25);
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+  }
+
+  &--group:last-of-type {
+    margin-top: -1em;
+  }
+
+  &--group:last-of-type &--slide:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  &--group:last-of-type {
+    margin-top: 0;
+  }
+}
