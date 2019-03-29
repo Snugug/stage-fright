@@ -7,6 +7,9 @@
 
   &--slide {
     padding: 1em 2em;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     &[data-state="intro"],
     &[data-state="outro"] {
@@ -25,14 +28,12 @@
     border: 1px solid rgba(black, .25);
     border-left-width: .5em;
     padding: 1rem;
-    max-width: calc(80ch);
+    max-width: 80ch;
     width: calc(100% - 2rem);
   }
 
   &--group &--slide:last-of-type {
     border-bottom: 1px solid rgba(black, .25);
-    padding-bottom: 1em;
-    margin-bottom: 1em;
   }
 
   &--group:last-of-type {

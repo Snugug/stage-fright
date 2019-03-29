@@ -3,6 +3,7 @@
   top: 0;
   right: 0;
   padding: .5em;
+  z-index: 900;
 
   &--btn {
     $size: 2.5em;
@@ -15,7 +16,6 @@
     cursor: pointer;
 
     fill: currentColor;
-    // stroke: rgba(black, .25);
   }
 
   &--hidden {
