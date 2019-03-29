@@ -7,6 +7,7 @@ $accent: (
   neutral: #008571,
   dark: #003c32,
 ) !default;
+$transition: all .35s cubic-bezier(.77, .1, .22, 1) !default;
 
 @import 'components';
 @import 'layouts/styled-stage';
