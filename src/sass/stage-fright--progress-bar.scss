@@ -1,0 +1,12 @@
+@import 'global';
+
+$background: #fdfdfd !default;
+$color: #323232 !default;
+$accent: (
+  light: #6eedd8,
+  neutral: #008571,
+  dark: #003c32,
+) !default;
+$transition: all .35s cubic-bezier(.77, .1, .22, 1) !default;
+
+@import 'components/progress';
