@@ -154,6 +154,10 @@ export class StageFrightList {
   buildProgress(store, createMinimapLink) {
     this.forEach((item, i) => {
       if (item.type === 'slide') {
+        if (typeof i === 'undefined') {
+          i = this._length - 1;
+        }
+
         item.progress = createMinimapLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
       } else {
         item.progress = item.previous.progress;
