@@ -1,0 +1,34 @@
+@import 'minimap-core';
+
+.stage-fright .minimap {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  &--section {
+    flex-direction: row;
+    flex-grow: 1;
+
+    &:last-of-type {
+      border-right: 0;
+
+      .minimap--slide {
+        border-right: 0;
+      }
+    }
+  }
+
+  &--slide {
+    flex-grow: 1;
+    width: 100%;
+    height: .25rem;
+    border: 0;
+    border-right: 3px solid $background;
+    transition-property: background-color, border-color;
+
+    &[data-fragments='true'] {
+      opacity: 1;
+      border-bottom: 2px solid $background;
+    }
+  }
+}

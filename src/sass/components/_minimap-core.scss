@@ -1,0 +1,47 @@
+.minimap {
+  display: none;
+
+  .stage-fright & {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    transition: $transition;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
+  &--section {
+    display: flex;
+  }
+
+  &--slide {
+    display: block;
+    box-sizing: border-box;
+    background-color: map-get($accent, 'neutral');
+    border: 1px solid map-get($accent, 'neutral');
+    transition: $transition;
+    color: transparent;
+    text-shadow: none;
+    font-size: 1px;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      background-color: map-get($accent, 'light');
+      color: transparent;
+      text-shadow: none;
+    }
+
+    &[data-active] {
+      background-color: map-get($accent, 'dark');
+    }
+
+    &[data-fragments='true'] {
+      opacity: .5;
+    }
+  }
+}
