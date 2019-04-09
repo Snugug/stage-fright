@@ -85,6 +85,13 @@ function buildHelp(store) {
     },
   ];
 
+  if (store.state.presentation.request) {
+    iconography.push({
+      desc: 'Toggle speaker notes/presentation view (requires external monitor)',
+      icon: icons.speaker,
+    });
+  }
+
   innerHTML += `<div class="sf-dialog--iconography"><h3>Iconography</h3><p>Icons used throughout the presentation.</p><dl>${iconography
     .map(i => `<dt>${i.icon}</dt><dd>${i.desc}</dd>`)
     .join('')}</dl></div>`;

@@ -7,8 +7,12 @@ export default function(store) {
   holder.classList.add('btns');
 
   holder.appendChild(downloadImages());
-  holder.appendChild(getHelp(store));
+
+  if (store.state.presentation.request) {
+    holder.appendChild(toggleSpeaker(store));
+  }
   holder.appendChild(toggleDisplay(store));
+  holder.appendChild(getHelp(store));
 
   holder.appendChild(hiddenPresButton());
 
@@ -64,6 +68,16 @@ function toggleDisplay(store) {
     } else {
       btn.innerHTML = presentation;
     }
+  });
+
+  return btn;
+}
+
+function toggleSpeaker(store) {
+  const btn = buildButton('Toggle Speaker Note/Presentation Display', icons.speaker);
+
+  btn.addEventListener('click', () => {
+    store.dispatch('notes', 'toggle');
   });
 
   return btn;
