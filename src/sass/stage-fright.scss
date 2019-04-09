@@ -1,6 +1,7 @@
 // Core Stage Fright components and layout
-$transition: all .35s cubic-bezier(.77, .1, .22, 1) !default;
+$transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1) !default;
 @import 'components/btns';
+@import 'components/sf-dialog';
 @import 'components/fragment';
 @import 'layouts/stage';
 

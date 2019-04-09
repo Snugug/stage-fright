@@ -1,12 +1,18 @@
 import { loadImage, loadMedia } from './lazyload';
+import help from './help';
+import icons from './icons';
 
 export default function(store) {
   const holder = document.createElement('div');
   holder.classList.add('btns');
 
   holder.appendChild(downloadImages());
+  holder.appendChild(getHelp(store));
   holder.appendChild(toggleDisplay(store));
+
   holder.appendChild(hiddenPresButton());
+
+  help(store);
 
   return holder;
 }
@@ -28,7 +34,7 @@ function hiddenPresButton() {
 }
 
 function downloadImages() {
-  const icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M24.708 13.207l-1.414-1.415L17 18.087V1.5h-2v16.585l-6.292-6.293-1.414 1.415 8.707 8.707z"/><path d="M29 18.5v8H3v-8H1v12h30v-12z"/></svg>';
+  const icon = icons.download;
   const btn = buildButton('Download All Assets', icon);
 
   btn.addEventListener('click', () => {
@@ -44,20 +50,31 @@ function downloadImages() {
 }
 
 function toggleDisplay(store) {
-  const presentation = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 3h10v10H19z"/><path d="M17 3H3v26h26V15H17V3zm-2 24H5V17h10v10zm12-10v10H17V17h10zM5 15V5h10v10H5z"/></svg>';
-  const article = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M3 6h22v2H3zM3 12h14v2H3zM3 18h26v2H3zM3 24h14v2H3z"/></svg>';
+  const presentation = icons.presentation;
+  const article = icons.article;
   const btn = buildButton('Toggle Article/Presentation Display', article);
 
   btn.addEventListener('click', () => {
     store.dispatch('display', 'toggle');
   });
 
-  store.changes.subscribe('display', (state) => {
+  store.changes.subscribe('display', state => {
     if (state.display === 'presentation') {
       btn.innerHTML = article;
     } else {
       btn.innerHTML = presentation;
     }
+  });
+
+  return btn;
+}
+
+function getHelp(store) {
+  const icon = icons.help;
+  const btn = buildButton('Help', icon);
+
+  btn.addEventListener('click', e => {
+    store.dispatch('toggle', 'help');
   });
 
   return btn;

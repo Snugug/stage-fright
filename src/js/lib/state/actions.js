@@ -17,5 +17,8 @@ export default {
   },
   display(context, payload) {
     context.commit('display', payload);
-  }
-}
+  },
+  toggle(context, payload) {
+    context.commit('toggle', payload);
+  },
+};

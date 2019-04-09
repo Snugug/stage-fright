@@ -80,5 +80,10 @@ export default {
     }
 
     return state;
-  }
-}
+  },
+  toggle(state, payload) {
+    state[payload] = !state[payload];
+
+    return state;
+  },
+};
