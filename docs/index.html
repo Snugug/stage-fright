@@ -5,7 +5,6 @@
   <title>Stage Fright</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/demo.js" defer></script>
 </head>
 <body>
   <main class="_stage">
@@ -32,6 +31,19 @@
       <section class="_stage--slide">
         <div class="_stage--content">
           <p>It's tiny, about <strong>14KB minified</strong> and around <strong>4KB gzipped</strong></p>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <picture>
+            <source data-srcset="https://fwi-wp-assets-live.s3-eu-west-1.amazonaws.com/sites/1/2018/02/140218-highland-cow-c-tim-scrivener.jpg" type="image/jpg">
+            <img data-src="https://fwi-wp-assets-live.s3-eu-west-1.amazonaws.com/sites/1/2018/02/140218-highland-cow-c-tim-scrivener.jpg" alt="Cow">
+          </picture>
+        </div>
+      </section>
+      <section class="_stage--slide">
+        <div class="_stage--content">
+          <video data-src="videos/pandas.mp4" data-autoplay preload="none" loop>
         </div>
       </section>
       <section class="_stage--slide">
@@ -162,5 +174,7 @@
     </article>
 
   </main>
+
+  <script type="module" src='./js/stage-fright.js'></script>
 </body>
 </html>
