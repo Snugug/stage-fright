@@ -1,7 +1,7 @@
 export default {
   navigate(context, payload) {
     if (payload === 'next' || payload === 'previous') {
-      context.commit('navigate', payload);  
+      context.commit('navigate', payload);
     } else {
       const found = context.stage.find(payload);
       context.commit('navigate', found);
@@ -9,7 +9,7 @@ export default {
     }
 
     if (!context.embedded) {
-      context.commit('progress', 'toggle');  
+      context.commit('progress', 'toggle');
     }
   },
   notes(context, payload) {

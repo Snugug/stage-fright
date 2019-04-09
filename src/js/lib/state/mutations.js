@@ -34,9 +34,9 @@ export default {
         } else {
           state.progress.dataset.fragments = true;
         }
-      }  
+      }
     }
-    
+
     return state;
   },
   async notes(state, { root, length }) {
@@ -56,11 +56,10 @@ export default {
           updateNotes(builtNotes, state.index, state.current);
           builtNotes.total.textContent = length - 1;
           state.presentation.notes = builtNotes;
-
-        } catch(e) {
+        } catch (e) {
           console.log(e);
           console.error('There was an error establishing a connection');
-        }  
+        }
       } else {
         root.parentNode.removeChild(state.presentation.notes._notes);
         delete root.dataset.hidden;
