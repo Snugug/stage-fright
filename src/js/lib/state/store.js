@@ -11,20 +11,21 @@ export default class Store {
     this.stage = params.stage || {};
     this.progress = params.progress || [];
     this.root = params.root || document.body;
+    this.help = params.help || false;
 
-    this.state = new Proxy((params.state || {}), {
+    this.state = new Proxy(params.state || {}, {
       set: function(state, key, value) {
         state[key] = value;
 
-        if(self.status !== 'mutation') {
+        if (self.status !== 'mutation') {
           console.warn(`You should use a mutation to set ${key}`);
         }
-        
+
         self.changes.publish(`${key}`, self.state);
         self.changes.publish('stateChange', self.state);
 
         return true;
-      }
+      },
     });
   }
 
@@ -55,7 +56,7 @@ export default class Store {
       newState = await newState;
       this.state = Object.assign(this.state, newState);
     } else {
-      this.state = Object.assign(this.state, newState);  
+      this.state = Object.assign(this.state, newState);
     }
 
     return true;

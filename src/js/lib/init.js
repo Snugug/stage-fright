@@ -13,7 +13,7 @@ import updateHistory from './navigation/history';
 import { createPresentation } from './presentation';
 
 export default class StageFright {
-  constructor(root, options = {spacebar: true, remote: true}) {
+  constructor(root, options = { spacebar: true, remote: true }) {
     const rootNode = document.querySelector(root);
     // Make the Stage Fright Stage
     rootNode.parentNode.classList.add('stage-fright');
@@ -51,36 +51,37 @@ export default class StageFright {
         notes: false,
         presentation: createPresentation(),
         display: 'presentation',
+        help: false,
       },
       stage,
       embedded,
       root: rootNode,
     });
 
-    this.store.changes.subscribe('current', async (state) => {
+    this.store.changes.subscribe('current', async state => {
       translate(rootNode, state.current);
       fragments(state.current);
       if (state.presentation.notes) {
         const { updateNotes } = await import('./presentation');
-        updateNotes(state.presentation.notes, state.index, state.current);  
+        updateNotes(state.presentation.notes, state.index, state.current);
       }
     });
 
-    this.store.changes.subscribe('index', async (state) => {
+    this.store.changes.subscribe('index', async state => {
       updateHistory(state.index);
 
       if (!embedded) {
         const { advancePresentation } = await import('./presentation');
-        advancePresentation(state.presentation.connection, state.index);  
+        advancePresentation(state.presentation.connection, state.index);
       }
-      
+
       if (state.presentation.notes) {
         const { updateNotes } = await import('./presentation');
-        updateNotes(state.presentation.notes, state.index, state.current);  
+        updateNotes(state.presentation.notes, state.index, state.current);
       }
     });
 
-    this.store.changes.subscribe('display', (state) => {
+    this.store.changes.subscribe('display', state => {
       if (state.display === 'presentation') {
         rootNode.parentNode.classList.add('stage-fright');
         document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -89,11 +90,10 @@ export default class StageFright {
       }
     });
 
-    this.store.changes.subscribe('presentation', async (state) => {
-      
+    this.store.changes.subscribe('presentation', async state => {
       if (state.presentation.connection) {
         const { advancePresentation } = await import('./presentation');
-        
+
         state.presentation.connection.addEventListener('message', e => {
           const message = JSON.parse(e.data);
 
@@ -102,29 +102,32 @@ export default class StageFright {
           }
 
           if (message.goto !== state.index) {
-            this.goto(message.goto);  
+            this.goto(message.goto);
           }
         });
       }
-    })
+    });
 
-    requestIdleCallback(() => {
-      if (!embedded) {
-        import('./upgrade').then(({upgrade}) => {
-          upgrade.bind(this)(stage, rootNode, start, options);
-        });
-      } else {
-        this.goto(start);
-      }
-    }, { timeout: 500 });
-    
+    requestIdleCallback(
+      () => {
+        if (!embedded) {
+          import('./upgrade').then(({ upgrade }) => {
+            upgrade.bind(this)(stage, rootNode, start, options);
+          });
+        } else {
+          this.goto(start);
+        }
+      },
+      { timeout: 500 },
+    );
+
     // Set up progress
     window.addEventListener('hashchange', () => {
       const pos = navHash(stage.length - 1);
       this.goto(pos);
     });
-    
-    import('./lazyload').then(({default: lazyload}) => lazyload());
+
+    import('./lazyload').then(({ default: lazyload }) => lazyload());
   }
 
   next() {
