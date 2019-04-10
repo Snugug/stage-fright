@@ -4,6 +4,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 0.25rem;
 
   &--section {
     flex-direction: row;
@@ -21,7 +22,7 @@
   &--slide {
     flex-grow: 1;
     width: 100%;
-    height: .25rem;
+    height: 100%;
     border: 0;
     border-right: 3px solid $background;
     transition-property: background-color, border-color;
