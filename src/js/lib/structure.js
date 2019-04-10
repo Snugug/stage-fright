@@ -49,7 +49,7 @@ export class StageFrightList {
     if (node.type !== 'fragment') {
       if (this._fragmentHolder !== 0) {
         this._fragmentDepth.push(this._fragmentHolder);
-        this._fragmentHolder = 0;  
+        this._fragmentHolder = 0;
       }
     } else {
       this._fragmentHolder++;
@@ -65,7 +65,6 @@ export class StageFrightList {
     if (!current) {
       this._head = node;
       this._tail = node;
-
       return node;
     }
 
@@ -106,13 +105,12 @@ export class StageFrightList {
     let current = this._head;
     let i = 1;
 
-    if (headToTail) {      
+    if (headToTail) {
       do {
         current = current.next;
         i++;
       } while (i <= index);
-    }
-    else {
+    } else {
       current = this._tail;
       i = this._length - 2;
 
@@ -158,7 +156,12 @@ export class StageFrightList {
           i = this._length - 1;
         }
 
-        item.progress = createMinimapLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
+        item.progress = createMinimapLink(
+          i,
+          item.section,
+          item.depth,
+          item.hasOwnProperty('fragment'),
+        );
       } else {
         item.progress = item.previous.progress;
       }
