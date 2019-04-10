@@ -37,7 +37,7 @@ body {
     height: 100vh;
     width: 100vw;
     will-change: transform;
-    transition: $transition;
+    transition: var(--sf-transition);
     display: flex;
 
     @media (prefers-reduced-motion: reduce) {
@@ -81,7 +81,7 @@ body {
 
 //     [data-overlay] & {
 //       filter: blur(20px);
-//       transition: $transition;
+//       transition: var(--sf-transition);
 
 //       &:hover,
 //       &:focus {

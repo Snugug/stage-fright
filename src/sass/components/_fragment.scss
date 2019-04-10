@@ -1,7 +1,7 @@
 .fragment {
   .stage-fright & {
     opacity: 0;
-    transition: $transition;
+    transition: var(--sf-transition);
     transition-duration: .25s;
 
     @media (prefers-reduced-motion: reduce) {
