@@ -12,6 +12,7 @@ export default class Store {
     this.progress = params.progress || [];
     this.root = params.root || document.body;
     this.help = params.help || false;
+    this.overview = params.overview || false;
 
     this.state = new Proxy(params.state || {}, {
       set: function(state, key, value) {

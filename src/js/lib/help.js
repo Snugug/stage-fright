@@ -52,6 +52,9 @@ function buildHelp(store) {
       desc: 'Navigate presentation backward',
       opts: ['<kbd>shift</kbd>+<kbd>space</kbd>', '<kbd>page down</kbd> (presenter remote back)'],
     },
+    {
+      desc: 'Presentation overview',
+      opts: ['<kbd>esc</kbd>'],
     },
   ];
 

@@ -28,6 +28,7 @@ export class StageFrightList {
     this._head = null;
     this._tail = null;
     this._length = 0;
+    this._depth = 0;
 
     this._sectionHolder = -1;
     this._depthHolder = 0;
@@ -41,6 +42,9 @@ export class StageFrightList {
 
     if (node.first) {
       this._sectionHolder++;
+      if (this._depthHolder > this._depth) {
+        this._depth = this._depthHolder;
+      }
       this._depthHolder = 0;
     } else if (node.type !== 'fragment') {
       this._depthHolder++;
@@ -60,6 +64,10 @@ export class StageFrightList {
     node.depth = this._depthHolder;
     node.previous = this._tail;
     this._length++;
+
+    if (node.type === 'slide') {
+      node.number = this._length - 1;
+    }
 
     // If there isn't a head, make head, tail, and current our node! then increase the length;
     if (!current) {

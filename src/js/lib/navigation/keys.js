@@ -3,12 +3,14 @@ export default function(store, opts = {}) {
     if (store.state.display === 'presentation' && !e.target.classList.contains('btns--btn')) {
       const whereto = spaceMove(e, opts);
       if (whereto) {
-        if (whereto !== 'notes') {
-          store.dispatch('navigate', whereto);    
-        } else {
+        if (whereto !== 'notes' && whereto !== 'esc') {
+          store.dispatch('navigate', whereto);
+        } else if (whereto === 'notes') {
           store.dispatch('notes', 'toggle');
+        } else if (whereto === 'esc') {
+          store.dispatch('toggle', 'overview');
         }
-      }  
+      }
     }
   });
 }
@@ -64,6 +66,11 @@ function spaceMove(e, opts) {
   // S + CMD + Shift key
   if (e.keyCode === 83 && modifiers['alt'] && modifiers['shift']) {
     return 'notes';
+  }
+
+  // Escape Key
+  if (e.keyCode === 27) {
+    return 'esc';
   }
 
   return false;
