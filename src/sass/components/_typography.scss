@@ -5,43 +5,45 @@
 body {
   font-family: sans-serif;
   line-height: 1.58;
-  letter-spacing: -.003em;
+  letter-spacing: -0.003em;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: 600;
   font-size: 2em;
   line-height: 1.05;
-  letter-spacing: -.015em;
+  letter-spacing: -0.015em;
 }
 
 h3 {
   font-size: 1.619047619em;
   line-height: 1.15;
-  letter-spacing: -.015em
+  letter-spacing: -0.015em;
 }
 
 h4 {
   font-size: 1.142857143em;
   line-height: 1.22;
-  letter-spacing: -.012em;
+  letter-spacing: -0.012em;
 }
 
 p {
-  margin-top: .476190476em;
+  margin-top: 0.476190476em;
   line-height: 1.58;
-  letter-spacing: -.003em;
+  letter-spacing: -0.003em;
 }
 
 p + p {
   margin-top: 1.380952381em;
 }
 
-pre, code {
-  padding: .2em .4em;
+pre,
+code {
+  padding: 0.2em 0.4em;
   margin: 0;
-  font-size: .85em;
-  background-color: rgba(grey, .15);
+  font-size: 0.85em;
+  background-color: rgba(grey, 0.15);
   border-radius: 3px;
   vertical-align: text-bottom;
   font-family: monospace;
@@ -61,7 +63,7 @@ pre {
   tab-size: 2;
   overflow-y: overlay;
   overflow: auto;
-  border: 1px solid rgba($background, .25);
+  border: 1px solid rgba(#fdfdfd, 0.25);
   height: auto;
   padding: 1rem;
 }
@@ -76,23 +78,24 @@ pre code {
 }
 
 blockquote {
-  font-size: .857142857em;
+  font-size: 0.857142857em;
   line-height: 1.58;
-  letter-spacing: -.0004em;
+  letter-spacing: -0.0004em;
 }
 
-ul, ol {
+ul,
+ol {
   padding: 0;
-  margin-top: .571428571em;
+  margin-top: 0.571428571em;
 }
 
 li {
   margin-left: 1.428571429em;
-  margin-bottom: .666666667em;
+  margin-bottom: 0.666666667em;
 }
 
 dl {
-  padding: .25em 1em;
+  padding: 0.25em 1em;
   display: grid;
   grid-template-columns: minmax(auto, 200px) 1fr;
   grid-template-columns: minmax(auto, max-content) 1fr;
@@ -110,15 +113,15 @@ dd {
 
 kbd {
   border-radius: 3px;
-  box-shadow: 0 1px 0 rgba(black, .2), 0 0 0 2px white inset;
+  box-shadow: 0 1px 0 rgba(#323232, 0.2), 0 0 0 2px #fdfdfd inset;
   background-color: #f7f7f7;
   border: 1px solid #ccc;
   color: #333;
   display: inline-block;
   font-family: monospace;
   line-height: 1;
-  margin: 0 .1em;
-  padding: .25em .5em;
+  margin: 0 0.1em;
+  padding: 0.25em 0.5em;
   text-shadow: 0 1px 0 white;
 }
 

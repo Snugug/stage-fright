@@ -6,7 +6,7 @@
     z-index: 1000;
     display: flex;
     flex-direction: row;
-    transition: $transition;
+    transition: var(--sf-transition);
   }
 
   &:hover,
@@ -21,9 +21,9 @@
   &--slide {
     display: block;
     box-sizing: border-box;
-    background-color: map-get($accent, 'neutral');
-    border: 1px solid map-get($accent, 'neutral');
-    transition: $transition;
+    background-color: var(--sf-accent-neutral);
+    border: 1px solid var(--sf-accent-neutral);
+    transition: var(--sf-transition);
     color: transparent;
     text-shadow: none;
     font-size: 1px;
@@ -31,17 +31,17 @@
 
     &:hover,
     &:focus {
-      background-color: map-get($accent, 'light');
+      background-color: var(--sf-accent-light);
       color: transparent;
       text-shadow: none;
     }
 
     &[data-active] {
-      background-color: map-get($accent, 'dark');
+      background-color: var(--sf-accent-dark);
     }
 
     &[data-fragments='true'] {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 }
