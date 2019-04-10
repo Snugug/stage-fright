@@ -19,10 +19,13 @@
   }
 
   &--slide {
+    --minimap-fragments: var(--sf-accent-neutral);
+    --minimap-dark: var(--sf-accent-dark);
+    --minimap-light: var(--sf-accent-light);
     display: block;
     box-sizing: border-box;
-    background-color: var(--sf-accent-neutral);
-    border: 1px solid var(--sf-accent-neutral);
+    background-color: var(--minimap-fragments);
+    border: 1px solid var(--minimap-fragments);
     transition: var(--sf-transition);
     color: transparent;
     text-shadow: none;
@@ -31,13 +34,13 @@
 
     &:hover,
     &:focus {
-      background-color: var(--sf-accent-light);
+      background-color: var(--minimap-light);
       color: transparent;
       text-shadow: none;
     }
 
     &[data-active] {
-      background-color: var(--sf-accent-dark);
+      background-color: var(--minimap-dark);
     }
 
     &[data-fragments='true'] {
