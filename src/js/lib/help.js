@@ -46,11 +46,12 @@ function buildHelp(store) {
   const keyboard = [
     {
       desc: 'Navigate presentation forward',
-      opts: ['<kbd>space</kbd>', '<kbd>page up</kbd>'],
+      opts: ['<kbd>space</kbd>', '<kbd>page up</kbd> (presenter remote forward)'],
     },
     {
       desc: 'Navigate presentation backward',
-      opts: ['<kbd>shift</kbd>+<kbd>space</kbd>', '<kbd>page down</kbd>'],
+      opts: ['<kbd>shift</kbd>+<kbd>space</kbd>', '<kbd>page down</kbd> (presenter remote back)'],
+    },
     },
   ];
 
@@ -61,7 +62,7 @@ function buildHelp(store) {
     });
   }
 
-  innerHTML += `<div class="sf-dialog--keyboard"><h3>Keyboard Navigation</h3><p>Most presentation remotes map <kbd>page up</kbd> and <kbd>page down</kbd> to their forward and backward keys respectively.</p><dl>${keyboard
+  innerHTML += `<div class="sf-dialog--keyboard"><h3>Keyboard Navigation</h3><p>Keyboard shortcuts to use the presentation.</p><dl>${keyboard
     .map(i => `<dt>${i.desc}</dt>${i.opts.map(opt => `<dd>${opt}</dd>`).join('')}`)
     .join('')}</dl></div>`;
 
@@ -73,7 +74,8 @@ function buildHelp(store) {
     },
     {
       icon: icons.article,
-      desc: 'Toggle from presentation view to article view.',
+      desc:
+        'Toggle from presentation view to article view. Article view includes visible speaker notes',
     },
     {
       icon: icons.presentation,
