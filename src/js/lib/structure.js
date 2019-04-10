@@ -28,6 +28,7 @@ export class StageFrightList {
     this._head = null;
     this._tail = null;
     this._length = 0;
+    this._depth = 0;
 
     this._sectionHolder = -1;
     this._depthHolder = 0;
@@ -41,6 +42,9 @@ export class StageFrightList {
 
     if (node.first) {
       this._sectionHolder++;
+      if (this._depthHolder > this._depth) {
+        this._depth = this._depthHolder;
+      }
       this._depthHolder = 0;
     } else if (node.type !== 'fragment') {
       this._depthHolder++;
@@ -49,7 +53,7 @@ export class StageFrightList {
     if (node.type !== 'fragment') {
       if (this._fragmentHolder !== 0) {
         this._fragmentDepth.push(this._fragmentHolder);
-        this._fragmentHolder = 0;  
+        this._fragmentHolder = 0;
       }
     } else {
       this._fragmentHolder++;
@@ -61,11 +65,14 @@ export class StageFrightList {
     node.previous = this._tail;
     this._length++;
 
+    if (node.type === 'slide') {
+      node.number = this._length - 1;
+    }
+
     // If there isn't a head, make head, tail, and current our node! then increase the length;
     if (!current) {
       this._head = node;
       this._tail = node;
-
       return node;
     }
 
@@ -106,13 +113,12 @@ export class StageFrightList {
     let current = this._head;
     let i = 1;
 
-    if (headToTail) {      
+    if (headToTail) {
       do {
         current = current.next;
         i++;
       } while (i <= index);
-    }
-    else {
+    } else {
       current = this._tail;
       i = this._length - 2;
 
@@ -158,7 +164,12 @@ export class StageFrightList {
           i = this._length - 1;
         }
 
-        item.progress = createMinimapLink(i, item.section, item.depth, item.hasOwnProperty('fragment'));
+        item.progress = createMinimapLink(
+          i,
+          item.section,
+          item.depth,
+          item.hasOwnProperty('fragment'),
+        );
       } else {
         item.progress = item.previous.progress;
       }

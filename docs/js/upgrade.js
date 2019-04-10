@@ -50,10 +50,13 @@ function buildHelp(store) {
 
   const keyboard = [{
     desc: 'Navigate presentation forward',
-    opts: ['<kbd>space</kbd>', '<kbd>page up</kbd>']
+    opts: ['<kbd>space</kbd>', '<kbd>page up</kbd> (presenter remote forward)']
   }, {
     desc: 'Navigate presentation backward',
-    opts: ['<kbd>shift</kbd>+<kbd>space</kbd>', '<kbd>page down</kbd>']
+    opts: ['<kbd>shift</kbd>+<kbd>space</kbd>', '<kbd>page down</kbd> (presenter remote back)']
+  }, {
+    desc: 'Presentation overview',
+    opts: ['<kbd>esc</kbd>']
   }];
 
   if (store.state.presentation.request) {
@@ -63,14 +66,14 @@ function buildHelp(store) {
     });
   }
 
-  innerHTML += `<div class="sf-dialog--keyboard"><h3>Keyboard Navigation</h3><p>Most presentation remotes map <kbd>page up</kbd> and <kbd>page down</kbd> to their forward and backward keys respectively.</p><dl>${keyboard.map(i => `<dt>${i.desc}</dt>${i.opts.map(opt => `<dd>${opt}</dd>`).join('')}`).join('')}</dl></div>`; // Icons
+  innerHTML += `<div class="sf-dialog--keyboard"><h3>Keyboard Navigation</h3><p>Keyboard shortcuts to use the presentation.</p><dl>${keyboard.map(i => `<dt>${i.desc}</dt>${i.opts.map(opt => `<dd>${opt}</dd>`).join('')}`).join('')}</dl></div>`; // Icons
 
   const iconography = [{
     icon: icons.download,
     desc: 'Download all images and videos that would otherwise be lazyloaded.'
   }, {
     icon: icons.article,
-    desc: 'Toggle from presentation view to article view.'
+    desc: 'Toggle from presentation view to article view. Article view includes visible speaker notes'
   }, {
     icon: icons.presentation,
     desc: 'Toggle from article view to presentation view.'
@@ -218,10 +221,12 @@ function keys (store, opts = {}) {
       const whereto = spaceMove(e, opts);
 
       if (whereto) {
-        if (whereto !== 'notes') {
+        if (whereto !== 'notes' && whereto !== 'esc') {
           store.dispatch('navigate', whereto);
-        } else {
+        } else if (whereto === 'notes') {
           store.dispatch('notes', 'toggle');
+        } else if (whereto === 'esc') {
+          store.dispatch('toggle', 'overview');
         }
       }
     }
@@ -281,6 +286,11 @@ function spaceMove(e, opts) {
 
   if (e.keyCode === 83 && modifiers['alt'] && modifiers['shift']) {
     return 'notes';
+  } // Escape Key
+
+
+  if (e.keyCode === 27) {
+    return 'esc';
   }
 
   return false;

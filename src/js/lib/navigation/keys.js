@@ -1,25 +1,27 @@
 export default function(store, opts = {}) {
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (store.state.display === 'presentation' && !e.target.classList.contains('btns--btn')) {
       const whereto = spaceMove(e, opts);
       if (whereto) {
-        if (whereto !== 'notes') {
-          store.dispatch('navigate', whereto);    
-        } else {
+        if (whereto !== 'notes' && whereto !== 'esc') {
+          store.dispatch('navigate', whereto);
+        } else if (whereto === 'notes') {
           store.dispatch('notes', 'toggle');
+        } else if (whereto === 'esc') {
+          store.dispatch('toggle', 'overview');
         }
-      }  
+      }
     }
   });
 }
 
 function spaceMove(e, opts) {
-  const modifiers = {         
-    ctrl: e.ctrlKey === true,   // ⌃
-    alt: e.altKey === true,     // ⌥
-    meta: e.metaKey === true,   // ⌘
+  const modifiers = {
+    ctrl: e.ctrlKey === true, // ⌃
+    alt: e.altKey === true, // ⌥
+    meta: e.metaKey === true, // ⌘
     shift: e.shiftKey === true, // ⇧
-  }
+  };
 
   let previous = false;
   let next = false;
@@ -35,7 +37,7 @@ function spaceMove(e, opts) {
     }
 
     previous = shiftSpacebar;
-    next = spacebar; 
+    next = spacebar;
   }
 
   // Set up Remote nav, with or without modifiers
@@ -60,11 +62,15 @@ function spaceMove(e, opts) {
   if (next) {
     return 'next';
   }
-  
 
   // S + CMD + Shift key
   if (e.keyCode === 83 && modifiers['alt'] && modifiers['shift']) {
     return 'notes';
+  }
+
+  // Escape Key
+  if (e.keyCode === 27) {
+    return 'esc';
   }
 
   return false;

@@ -10,6 +10,8 @@ export default {
       state.current = payload;
     }
 
+    state.overview = false;
+
     return state;
   },
   index(state, payload) {

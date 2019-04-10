@@ -108,6 +108,38 @@ export default class StageFright {
       }
     });
 
+    this.store.changes.subscribe('overview', state => {
+      const scale = stage._sectionHolder > stage._depth ? stage._sectionHolder : stage._depth;
+
+      let transform = `scale(${1 / (scale + 1)})`;
+      const diff = Math.abs(stage._depth - stage._sectionHolder);
+
+      if (scale === stage._depth) {
+        transform += `translateX(-${50 * (scale - diff)}vw) translateY(-${50 * scale}vh)`;
+      } else {
+        transform += `translateX(-${50 * scale}vw) translateY(-${50 * (scale - diff)}vh)`;
+      }
+
+      if (state.overview) {
+        // TODO: Make keyboard accessible
+        rootNode.style.transform = transform;
+        stage.forEach(item => {
+          if (item.type === 'slide') {
+            item.elem.style.cursor = 'pointer';
+            item.elem.addEventListener('click', e => {
+              e.preventDefault();
+              e.stopPropagation();
+              this.goto(item.number);
+            });
+          }
+        });
+      } else {
+        stage.forEach(item => {
+          item.elem.style.cursor = 'initial';
+        });
+      }
+    });
+
     requestIdleCallback(
       () => {
         if (!embedded) {

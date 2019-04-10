@@ -32,6 +32,7 @@ class StageFrightList {
     this._head = null;
     this._tail = null;
     this._length = 0;
+    this._depth = 0;
     this._sectionHolder = -1;
     this._depthHolder = 0;
     this._fragmentHolder = 0;
@@ -44,6 +45,11 @@ class StageFrightList {
 
     if (node.first) {
       this._sectionHolder++;
+
+      if (this._depthHolder > this._depth) {
+        this._depth = this._depthHolder;
+      }
+
       this._depthHolder = 0;
     } else if (node.type !== 'fragment') {
       this._depthHolder++;
@@ -63,7 +69,12 @@ class StageFrightList {
     node.section = this._sectionHolder;
     node.depth = this._depthHolder;
     node.previous = this._tail;
-    this._length++; // If there isn't a head, make head, tail, and current our node! then increase the length;
+    this._length++;
+
+    if (node.type === 'slide') {
+      node.number = this._length - 1;
+    } // If there isn't a head, make head, tail, and current our node! then increase the length;
+
 
     if (!current) {
       this._head = node;
@@ -204,6 +215,7 @@ class Store {
     this.progress = params.progress || [];
     this.root = params.root || document.body;
     this.help = params.help || false;
+    this.overview = params.overview || false;
     this.state = new Proxy(params.state || {}, {
       set: function (state, key, value) {
         state[key] = value;
@@ -263,6 +275,7 @@ var mutations = {
       state.current = payload;
     }
 
+    state.overview = false;
     return state;
   },
 
@@ -524,6 +537,36 @@ class StageFright {
           if (message.goto !== state.index) {
             this.goto(message.goto);
           }
+        });
+      }
+    });
+    this.store.changes.subscribe('overview', state => {
+      const scale = stage._sectionHolder > stage._depth ? stage._sectionHolder : stage._depth;
+      let transform = `scale(${1 / (scale + 1)})`;
+      const diff = Math.abs(stage._depth - stage._sectionHolder);
+
+      if (scale === stage._depth) {
+        transform += `translateX(-${50 * (scale - diff)}vw) translateY(-${50 * scale}vh)`;
+      } else {
+        transform += `translateX(-${50 * scale}vw) translateY(-${50 * (scale - diff)}vh)`;
+      }
+
+      if (state.overview) {
+        // TODO: Make keyboard accessible
+        rootNode.style.transform = transform;
+        stage.forEach(item => {
+          if (item.type === 'slide') {
+            item.elem.style.cursor = 'pointer';
+            item.elem.addEventListener('click', e => {
+              e.preventDefault();
+              e.stopPropagation();
+              this.goto(item.number);
+            });
+          }
+        });
+      } else {
+        stage.forEach(item => {
+          item.elem.style.cursor = 'initial';
         });
       }
     });
