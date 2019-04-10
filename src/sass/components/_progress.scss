@@ -26,6 +26,7 @@
     border: 0;
     border-right: 3px solid var(--sf-background);
     transition-property: background-color, border-color;
+    text-decoration-color: transparent;
 
     &[data-fragments='true'] {
       opacity: 1;

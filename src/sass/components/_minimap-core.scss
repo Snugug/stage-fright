@@ -1,5 +1,10 @@
 .minimap {
+  --minimap-highlight: var(--grey-300, #{map-get($googleColors, "grey-300")});
+  --minimap-fragments: var(--sf-accent-neutral);
+  --minimap-dark: var(--sf-accent-dark);
+  --minimap-light: var(--sf-accent-light);
   display: none;
+
 
   .stage-fright & {
     position: fixed;
@@ -19,13 +24,10 @@
   }
 
   &--slide {
-    --minimap-fragments: var(--sf-accent-neutral);
-    --minimap-dark: var(--sf-accent-dark);
-    --minimap-light: var(--sf-accent-light);
     display: block;
     box-sizing: border-box;
-    background-color: var(--minimap-fragments);
-    border: 1px solid var(--minimap-fragments);
+    background-color: var(--minimap-light);
+    border: 1px solid var(--minimap-light);
     transition: var(--sf-transition);
     color: transparent;
     text-shadow: none;
@@ -34,7 +36,7 @@
 
     &:hover,
     &:focus {
-      background-color: var(--minimap-light);
+      background-color: var(--minimap-highlight);
       color: transparent;
       text-shadow: none;
     }
