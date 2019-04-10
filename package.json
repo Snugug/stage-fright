@@ -1,6 +1,6 @@
 {
   "name": "stage-fright",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Yet Another HTML5 Presentation Framework",
   "main": "src/js/lib/init.js",
   "scripts": {
