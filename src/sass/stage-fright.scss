@@ -1,0 +1,16 @@
+// Core Stage Fright components and layout
+
+:root {
+  --sf-transition: all 0.35s cubic-bezier(0.77, 0.1, 0.22, 1);
+}
+
+@import 'components/btns';
+@import 'components/sf-dialog';
+@import 'components/fragment';
+@import 'layouts/stage';
+
+// Speaker Notes and Speaker Note components
+@import 'components/clock';
+@import 'components/controls';
+@import 'components/slide-notes';
+@import 'layouts/speaker-notes';

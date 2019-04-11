@@ -2,15 +2,21 @@
   font-family: sans-serif;
   padding-left: 1rem;
   padding-right: 1rem;
+  font-size: .75em;
+  box-sizing: border-box;
 
   &--label {
     font-size: 1px;
     color: transparent;
+    box-sizing: border-box;
   }
 
   &--content {
     columns: 2;
     column-gap: 1rem;
+    column-fill: auto;
+    height: calc(100vh * 4 / 7 - 2rem - 1px); // Manual Grid height calculation in order to make column-fill: auto work
+    box-sizing: border-box;
 
     * {
       break-inside: avoid;

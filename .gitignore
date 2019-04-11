@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+.DS_Store
 
 # Runtime data
 pids
@@ -32,6 +33,7 @@ jspm_packages
 
 # Optional npm cache directory
 .npm
+package-lock.json
 
 # Optional REPL history
 .node_repl_history

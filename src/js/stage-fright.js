@@ -1,3 +1,6 @@
-import stageFright from './lib/core.js'
+import StageFright from './lib/init.js';
 
-stageFright();
+window.addEventListener('DOMContentLoaded', () => {
+  const stage = new StageFright('._stage');
+  window.stage = stage;
+});

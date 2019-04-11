@@ -1,19 +1,25 @@
 .controls {
   font-size: 1em;
+  padding-right: 1em;
+
+  p {
+    margin-top: 0;
+  }
 
   &--time {
     display: flex;
     flex-wrap: wrap;
+    font-size: 0.75em;
   }
 
   &--label {
     font-family: sans-serif;
-    opacity: .5;
+    opacity: 0.5;
     text-transform: lowercase;
     margin: 0;
     flex-shrink: 0;
     width: 100%;
-    font-size: .75em;
+    font-size: 0.75em;
   }
 
   &--reset {
@@ -23,11 +29,9 @@
 
   &--position {
     text-transform: lowercase;
-    font-size: 1em;
-    padding: .5rem;
+    font-size: 0.8em;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
   }
 
   &--fragment {
@@ -49,5 +53,13 @@
     text-align: right;
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
+  }
+
+  &--slide-current,
+  &--slide-total,
+  &--fragment-current,
+  &--fragment-total {
+    padding-left: 0.25em;
+    padding-right: 0.25em;
   }
 }

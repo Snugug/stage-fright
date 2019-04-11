@@ -1,59 +1,92 @@
+body {
+  margin: 0;
+}
+
 .stage-fright {
-  overflow: hidden;
-  font-size: 150%;
-  font-weight: 400;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
   position: relative;
+  box-sizing: border-box;
+
+  &.embedded {
+    font-size: 1.75vw;
+  }
 }
 
 ._stage {
-  width: 100vw;
-  height: 100vh;
-  will-change: transform;
-  transition: $transition;
-  display: flex;
-
-  &--group {
-    width: 100vw;
-    flex-shrink: 0;
-  }
-
+  box-sizing: border-box;
+  
   &--slide {
-    align-items: center;
-    background-color: transparent;
-    border: 0;
     display: flex;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    
+    position: relative;
+    box-sizing: border-box;
 
-    [data-overlay] & {
-      filter: blur(20px);
-      transition: $transition;
-
-      &:hover,
-      &:focus {
-        filter: none;
-        cursor: pointer;
-      }
+    .stage-fright & {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
     }
   }
 
-  &--content {
-    max-width: 67vw;
-    max-height: 100vh;
-    width: 100%;
+  .stage-fright & {
+    height: 100vh;
+    width: 100vw;
+    will-change: transform;
+    transition: var(--sf-transition);
+    display: flex;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    &[data-hidden="true"] {
+      display: none;
+    }
+
+    &--group {
+      width: 100vw;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    &--content {
+      max-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    &--notes {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 1px;
+      width: 1px;
+      color: transparent;
+      overflow: hidden;
+      border: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
   }
 
-  &--notes {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 1px;
-    width: 1px;
-    color: transparent;
-    overflow: hidden;
+  .reduce-motion & {
+    transition: none;
   }
 }
+
+//     [data-overlay] & {
+//       filter: blur(20px);
+//       transition: var(--sf-transition);
+
+//       &:hover,
+//       &:focus {
+//         filter: none;
+//         cursor: pointer;
+//       }
+//     }
+//   }

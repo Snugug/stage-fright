@@ -1,37 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Stage Fright</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/demo.js" defer></script>
-</head>
-<body>
-  <main class="_stage">
-    <article class="_stage--group">
-      <section class="_stage--slide" data-state="intro">
-        <div class="_stage--content">
-          <h1>Stage Fright</h1>
-        </div>
-      </section>
-    </article>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stage Fright</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="_stage">
+      <article class="_stage--group">
+        <section class="_stage--slide" data-state="intro">
+          <div class="_stage--content">
+            <h1>Stage Fright</h1>
+          </div>
+        </section>
+      </article>
 
-    <!-- Basics -->
-    <article class="_stage--group">
-      <section class="_stage--slide">
+      <!-- Basics -->
+      <article class="_stage--group">
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>Stage Fright is a JavaScript powered presentation framework</p>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              Stage Fright takes inspiration from
+              <a href="https://github.com/marcolago/flowtime.js">Flowtime.js</a> and
+              <a href="https://github.com/hakimel/reveal.js/">reveal.js</a>
+            </p>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              It's tiny, about <strong>14KB minified</strong> and around
+              <strong>4KB gzipped</strong>
+            </p>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <picture>
+              <source
+                data-srcset="https://fwi-wp-assets-live.s3-eu-west-1.amazonaws.com/sites/1/2018/02/140218-highland-cow-c-tim-scrivener.jpg"
+                type="image/jpg"
+              />
+              <img
+                data-src="https://fwi-wp-assets-live.s3-eu-west-1.amazonaws.com/sites/1/2018/02/140218-highland-cow-c-tim-scrivener.jpg"
+                alt="Cow"
+              />
+            </picture>
+          </div>
+        </section>
+        <section class="_stage--slide">
         <div class="_stage--content">
-          <p>Stage Fright is a JavaScript powered presentation framework</p>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Stage Fright takes inspiration from <a href="https://github.com/marcolago/flowtime.js">Flowtime.js</a> and <a href="https://github.com/hakimel/reveal.js/">reveal.js</a></p>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>It's tiny, about <strong>14KB minified</strong> and around <strong>4KB gzipped</strong></p>
+          <video data-src="videos/pandas.mp4" data-autoplay preload="none" loop>
         </div>
       </section>
       <section class="_stage--slide">
@@ -55,31 +80,46 @@
           <p><em>Try it now!</em> Go to the next slide to see progress change, fragment progress update, and speaker notes change</p>
         </aside>
       </section>
-    </article>
+      </article>
 
-    <!-- HTML -->
-    <article class="_stage--group">
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>The markup is designed to be semantic</p>
-        </div>
-        <aside class="_stage--notes">
-          <p>Even the notes use semantic markup!</p>
-        </aside>
-      </section>
+      <!-- HTML -->
+      <article class="_stage--group">
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>The markup is designed to be semantic</p>
+          </div>
+          <aside class="_stage--notes">
+            <p>Even the notes use semantic markup!</p>
+          </aside>
+        </section>
 
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>A vertical grouping of slides is a <code>._stage--group</code>. While marked up with an <code>article</code>, they are referred to as your presentation's <em>Sections</em></p>
-          <pre class="fragment"><code class="language-markup">&lt;article class="_stage--group"&gt;
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              A vertical grouping of slides is a <code>._stage--group</code>. While marked up with
+              an <code>article</code>, they are referred to as your presentation's <em>Sections</em>
+            </p>
+            <pre
+              class="fragment"
+            ><code class="language-markup">&lt;article class="_stage--group"&gt;
   &lt;!-- Slides Will Go Here --&gt;
 &lt;/article&gt;</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Each slide is a <code>section</code> inside the article, with a <code>._stage--content</code> class. Inside is the content wrapper, <code>._stage--content</code>. <span class="span fragment">Notes can be added by including an <code>aside</code> with the <code>._stage--notes</code> class as a sibling of the content</span></p>
-          <pre class="fragment"><code class="language-markup">&lt;section class="_stage--slide"&gt;
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              Each slide is a <code>section</code> inside the article, with a
+              <code>._stage--content</code> class. Inside is the content wrapper,
+              <code>._stage--content</code>.
+              <span class="span fragment"
+                >Notes can be added by including an <code>aside</code> with the
+                <code>._stage--notes</code> class as a sibling of the content</span
+              >
+            </p>
+            <pre
+              class="fragment"
+            ><code class="language-markup">&lt;section class="_stage--slide"&gt;
   &lt;div class="_stage--content"&gt;
     &lt;!-- Slides Content Goes Here --&gt;
   &lt;/div&gt;
@@ -87,80 +127,129 @@
     &lt;!-- Slide Notes Go Here --&gt;
   &lt;/aside&gt;
 &lt;/section&gt;</code></pre>
-        </div>
-      </section>
-    </article>
+          </div>
+        </section>
+      </article>
 
-    <article class="_stage--group">
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Installing and using is fairly straight-forward using modern tooling</p>
-          <pre class="fragment"><code class="language-bash">$ npm install stage-fright</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Stage Fright is written using ES Module syntax, and therefore can be imported using your favorite bundler as follows:</p>
-          <pre class="fragment"><code class="language-javascript">import 'stage-fright';</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Styling is distributed as an <a href="https://github.com/sass-eyeglass/eyeglass">Eyeglass module</a> for <a href="https://github.com/sass/node-sass">Sass</a>. Presuming that is all set up, you can import Stage Fright's styling in to your project as follows:</p>
-          <pre class="fragment"><code class="language-scss">@import 'stage-fright';</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>There are five Sass variables you can set before importing Stage Fright that will automatically style your deck:</p>
-          <ul class="fragment">
-            <li><code>$background</code> - Background color</li>
-            <li><code>$color</code> - Text color</li>
-            <li><code>$accent</code> - Accent colors to use for minimap and checkerboard. This is a Sass <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Maps">map</a> that has three properties: <code>light</code>, <code>neutral</code>, <code>dark</code></li>
-            <li><code>$transition</code> - Default transition to apply to slide deck</li>
-            <li><code>$font-sizes</code> - Header font sizes as a Sass <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Lists">list</a></li>
-          </ul>
-        </div>
-      </section>
-    </article>
+      <article class="_stage--group">
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>Installing and using is fairly straight-forward using modern tooling</p>
+            <pre
+              class="fragment"
+            ><code class="language-bash">$ npm install stage-fright</code></pre>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              Stage Fright is written using ES Module syntax, and therefore can be imported using
+              your favorite bundler as follows:
+            </p>
+            <pre
+              class="fragment"
+            ><code class="language-javascript">import 'stage-fright';</code></pre>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              Styling is distributed as an
+              <a href="https://github.com/sass-eyeglass/eyeglass">Eyeglass module</a> for
+              <a href="https://github.com/sass/node-sass">Sass</a>. Presuming that is all set up,
+              you can import Stage Fright's styling in to your project as follows:
+            </p>
+            <pre class="fragment"><code class="language-scss">@import 'stage-fright';</code></pre>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              There are five Sass variables you can set before importing Stage Fright that will
+              automatically style your deck:
+            </p>
+            <ul class="fragment">
+              <li><code>$background</code> - Background color</li>
+              <li><code>$color</code> - Text color</li>
+              <li>
+                <code>$accent</code> - Accent colors to use for minimap and checkerboard. This is a
+                Sass
+                <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Maps">map</a>
+                that has three properties: <code>light</code>, <code>neutral</code>,
+                <code>dark</code>
+              </li>
+              <li><code>$transition</code> - Default transition to apply to slide deck</li>
+              <li>
+                <code>$font-sizes</code> - Header font sizes as a Sass
+                <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#Lists">list</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </article>
 
-    <article class="_stage--group">
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>You can configure how Stage Fright works by changing its import slightly</p>
-          <pre class="fragment"><code class="language-javascript">import stageFright from 'stage-fright';</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>Then, initialize Stage Fright with an object of your configuration</p>
-          <pre class="fragment"><code class="language-javascript">stageFright({ options });</code></pre>
-        </div>
-      </section>
-      <section class="_stage--slide">
-        <div class="_stage--content">
-          <p>All configurations can be set to <code>true</code> to enable, <code>false</code> to disable, <code>'alt'</code> to enable but require the alt key pressed, <code>'ctrl'</code> to enable but require the control key pressed, or <code>meta</code> to enable but require the meta key (Windows/command) pressed. All default to <code>true</code></p>
-          <p>Available configuration options are:</p>
-          <ul>
-            <li class="fragment"><strong>navigation.arrows</strong> - Use arrow keys for navigation</li>
-            <li class="fragment"><strong>navigation.remote</strong> - Use Page Up/Page Down keys for previous/next navigation (used by handheld presentation remotes)
-            <li class="fragment"><strong>navigation.spacebar</strong> - Use Spacebar/Shift + Spacebar for previous/next navigation</li>
-            <li class="fragment"><strong>notes</strong> - Use s key to open speaker notes</li>
-          </ul>
-        </div>
-      </section>
-    </article>
+      <article class="_stage--group">
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>You can configure how Stage Fright works by changing its import slightly</p>
+            <pre
+              class="fragment"
+            ><code class="language-javascript">import stageFright from 'stage-fright';</code></pre>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>Then, initialize Stage Fright with an object of your configuration</p>
+            <pre
+              class="fragment"
+            ><code class="language-javascript">stageFright({ options });</code></pre>
+          </div>
+        </section>
+        <section class="_stage--slide">
+          <div class="_stage--content">
+            <p>
+              All configurations can be set to <code>true</code> to enable, <code>false</code> to
+              disable, <code>'alt'</code> to enable but require the alt key pressed,
+              <code>'ctrl'</code> to enable but require the control key pressed, or
+              <code>meta</code> to enable but require the meta key (Windows/command) pressed. All
+              default to <code>true</code>
+            </p>
+            <p>Available configuration options are:</p>
+            <ul>
+              <li class="fragment">
+                <strong>navigation.arrows</strong> - Use arrow keys for navigation
+              </li>
+              <li class="fragment">
+                <strong>navigation.remote</strong> - Use Page Up/Page Down keys for previous/next
+                navigation (used by handheld presentation remotes)
+              </li>
+              <li class="fragment">
+                <strong>navigation.spacebar</strong> - Use Spacebar/Shift + Spacebar for
+                previous/next navigation
+              </li>
+              <li class="fragment"><strong>notes</strong> - Use s key to open speaker notes</li>
+            </ul>
+          </div>
+        </section>
+      </article>
 
-    <!-- End -->
-    <article class="_stage--group">
-      <section class="_stage--slide" data-state="outro">
-        <div class="_stage--content">
-          <h1>Code, Issues, License, etc…</h1>
-          <h2><strong><a href="https://github.com/snugug/stage-fright">https://github.com/snugug/stage-fright</a></strong></h2>
-        </div>
-      </section>
-    </article>
+      <!-- End -->
+      <article class="_stage--group">
+        <section class="_stage--slide" data-state="outro">
+          <div class="_stage--content">
+            <h1>Code, Issues, License, etc…</h1>
+            <h2>
+              <strong
+                ><a href="https://github.com/snugug/stage-fright"
+                  >https://github.com/snugug/stage-fright</a
+                ></strong
+              >
+            </h2>
+          </div>
+        </section>
+      </article>
+    </main>
 
-  </main>
-</body>
+    <script type="module" src="./js/stage-fright.js"></script>
+  </body>
 </html>

@@ -1,0 +1,52 @@
+.minimap {
+  --minimap-highlight: var(--grey-300, #{map-get($googleColors, "grey-300")});
+  --minimap-fragments: var(--sf-accent-neutral);
+  --minimap-dark: var(--sf-accent-dark);
+  --minimap-light: var(--sf-accent-light);
+  display: none;
+
+
+  .stage-fright & {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    transition: var(--sf-transition);
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
+  &--section {
+    display: flex;
+  }
+
+  &--slide {
+    display: block;
+    box-sizing: border-box;
+    background-color: var(--minimap-light);
+    border: 1px solid var(--minimap-light);
+    transition: var(--sf-transition);
+    color: transparent;
+    text-shadow: none;
+    font-size: 1px;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      background-color: var(--minimap-highlight);
+      color: transparent;
+      text-shadow: none;
+    }
+
+    &[data-active] {
+      background-color: var(--minimap-dark);
+    }
+
+    &[data-fragments='true'] {
+      opacity: 0.5;
+    }
+  }
+}

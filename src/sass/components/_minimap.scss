@@ -1,0 +1,17 @@
+@import 'minimap-core';
+
+.stage-fright .minimap {
+  bottom: 1rem;
+  right: 1rem;
+  flex-direction: row;
+  opacity: .3;
+
+  &--section {
+    flex-direction: column;
+  }
+
+  &--slide {
+    width: 1rem;
+    height: .75rem;
+  }
+}

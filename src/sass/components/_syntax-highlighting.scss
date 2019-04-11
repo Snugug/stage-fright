@@ -1,0 +1,114 @@
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  background: none;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  font-family: 'IBM Plex Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre-wrap;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  padding: 1rem;
+  margin: .5rem 0;
+  overflow: hidden;
+  border-radius: 0.3em;
+  height: 100%;
+}
+
+:not(pre)>code[class*="language-"],
+pre[class*="language-"] {
+  background: #272822;
+}
+
+:not(pre)>code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+}
+
+.token {
+  &.comment,
+  &.prolog,
+  &.doctype,
+  &.cdata {
+    color: slategray;
+  }
+
+  &.punctuation {
+    color: #f8f8f2;
+  }
+
+  &.property,
+  &.tag,
+  &.constant,
+  &.symbol,
+  &.deleted {
+    color: #f92672;
+  }
+
+  &.boolean,
+  &.number {
+    color: #ae81ff;
+  }
+
+  &.selector,
+  &.attr-name,
+  &.string,
+  &.char,
+  &.builtin,
+  &.inserted {
+    color: #a6e22e;
+  }
+
+  &.operator,
+  &.entity,
+  &.url,
+  .language-css &.string,
+  .style &.string,
+  &.variable {
+    color: #f8f8f2;
+  }
+
+  &.atrule,
+  &.attr-value,
+  &.function {
+    color: #e6db74;
+  }
+
+  &.keyword {
+    color: #66d9ef;
+  }
+
+  &.regex,
+  &.important {
+    color: #fd971f;
+  }
+
+  &.important,
+  &.bold {
+    font-weight: bold;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+
+  &.entity {
+    cursor: help;
+  }
+}
+
+.namespace {
+  opacity: .7;
+}

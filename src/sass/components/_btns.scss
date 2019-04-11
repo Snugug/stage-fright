@@ -1,0 +1,30 @@
+.btns {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .5em;
+  z-index: 900;
+
+  &--btn {
+    $size: 2.5em;
+    height: $size;
+    width: $size;
+    padding: 0;
+    border: 0;
+    margin: 0 1em;
+    background: none;
+    cursor: pointer;
+
+    fill: currentColor;
+  }
+
+  &--hidden {
+    height: 0;
+    width: 0;
+    color: transparent;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+}

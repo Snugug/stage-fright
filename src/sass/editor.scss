@@ -1,0 +1,49 @@
+@import 'components/syntax-highlighting';
+
+.editor {
+  overflow: hidden;
+  position: relative;
+
+  &--textarea,
+  &--pre,
+  &--code {
+    background: transparent;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+    font-size: 1.1rem !important;
+    left: 0;
+    line-height: 1.4 !important;
+    padding: 1rem !important;
+    top: 0;
+    white-space: pre-wrap !important;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  &--textarea {
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-fill-color: transparent;
+    background: transparent;
+    border: 0;
+    caret-color: #fff;
+    color: transparent;
+    outline: 0;
+    padding: 2rem !important;
+    position: absolute;
+    resize: 0;
+    transform: translateY(0.5rem);
+  }
+
+  &--textarea,
+  &--pre {
+    min-height: 100%;
+  }
+
+  &--code {
+    color: inherit;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+  }
+}

@@ -95,3 +95,8 @@ A basic example of this all in place looks something like this:
 </body>
 </html>
 ```
+
+---
+Attribution:
+
+* Icons from <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.ibm.com/us/en/" property="cc:attributionName" rel="cc:attributionURL">International Business Machines Corporation</a> under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/IBM-Design/icons" rel="dct:source">https://github.com/IBM-Design/icons</a>
