@@ -6,7 +6,7 @@ import { receivePresentationControls } from './presentation';
 
 export function upgrade(stage, rootNode, start, options) {
   // Add Buttons
-  stage._head.elem.querySelector('._stage--content').prepend(buttons(this.store));
+  stage._head.elem.prepend(buttons(this.store));
 
   stage.buildProgress(this.store, createMinimapLink);
   rootNode.parentNode.appendChild(buildMinimap(stage));
