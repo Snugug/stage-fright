@@ -140,18 +140,12 @@ export default class StageFright {
       }
     });
 
-    requestIdleCallback(
-      () => {
-        if (!embedded) {
-          import('./upgrade').then(({ upgrade }) => {
-            upgrade.bind(this)(stage, rootNode, start, options);
-          });
-        } else {
-          this.goto(start);
-        }
-      },
-      { timeout: 500 },
-    );
+    // Look how awesome this upgrade is now
+    if (!embedded) {
+      this.upgrade(stage, rootNode, start, options);
+    } else {
+      this.goto(start);
+    }
 
     // Set up progress
     window.addEventListener('hashchange', () => {
@@ -160,6 +154,24 @@ export default class StageFright {
     });
 
     import('./lazyload').then(({ default: lazyload }) => lazyload());
+  }
+
+  async upgrade(stage, rootNode, start, options) {
+    if (!('requestIdleCallback' in window)) {
+      await import('requestidlecallback');
+    }
+
+    requestIdleCallback(
+      async () => {
+        try {
+          const { upgrade } = await import('./upgrade');
+          upgrade.bind(this)(stage, rootNode, start, options);
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      { timeout: 500 },
+    );
   }
 
   next() {
