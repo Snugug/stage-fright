@@ -569,20 +569,14 @@ class StageFright {
           item.elem.style.cursor = 'initial';
         });
       }
-    });
-    requestIdleCallback(() => {
-      if (!embedded) {
-        import("./upgrade.js").then(({
-          upgrade
-        }) => {
-          upgrade.bind(this)(stage, rootNode, start, options);
-        });
-      } else {
-        this.goto(start);
-      }
-    }, {
-      timeout: 500
-    }); // Set up progress
+    }); // Look how awesome this upgrade is now
+
+    if (!embedded) {
+      this.upgrade(stage, rootNode, start, options);
+    } else {
+      this.goto(start);
+    } // Set up progress
+
 
     window.addEventListener('hashchange', () => {
       const pos = navHash(stage.length - 1);
@@ -591,6 +585,25 @@ class StageFright {
     import("./lazyload.js").then(({
       default: lazyload
     }) => lazyload());
+  }
+
+  async upgrade(stage, rootNode, start, options) {
+    if (!('requestIdleCallback' in window)) {
+      await import("./requestidlecallback.js");
+    }
+
+    requestIdleCallback(async () => {
+      try {
+        const {
+          upgrade
+        } = await import("./upgrade.js");
+        upgrade.bind(this)(stage, rootNode, start, options);
+      } catch (e) {
+        console.error(e);
+      }
+    }, {
+      timeout: 500
+    });
   }
 
   next() {
