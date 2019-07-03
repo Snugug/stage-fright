@@ -13,9 +13,10 @@ export default class Store {
     this.root = params.root || document.body;
     this.help = params.help || false;
     this.overview = params.overview || false;
+    this.broadcast = params.broadcast || true;
 
     this.state = new Proxy(params.state || {}, {
-      set: function(state, key, value) {
+      set(state, key, value) {
         state[key] = value;
 
         if (self.status !== 'mutation') {
@@ -30,7 +31,7 @@ export default class Store {
     });
   }
 
-  dispatch(action, payload) {
+  dispatch(action, payload, ...options) {
     if (typeof this.actions[action] !== 'function') {
       console.error(`Action "${action}" doesn't exist`);
       return false;
@@ -38,12 +39,12 @@ export default class Store {
 
     this.status = 'action';
 
-    this.actions[action](this, payload);
+    this.actions[action](this, payload, options);
 
     return true;
   }
 
-  async commit(mutation, payload) {
+  async commit(mutation, payload, ...options) {
     if (typeof this.mutations[mutation] !== 'function') {
       console.error(`Mutation "${mutation}" doesn't exist`);
       return false;
@@ -51,7 +52,7 @@ export default class Store {
 
     this.status = 'mutation';
 
-    let newState = this.mutations[mutation](Object.assign({}, this.state), payload);
+    let newState = this.mutations[mutation](Object.assign({}, this.state), payload, options);
 
     if ('then' in newState) {
       newState = await newState;

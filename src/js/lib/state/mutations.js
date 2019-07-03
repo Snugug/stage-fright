@@ -1,16 +1,23 @@
 export default {
-  navigate(state, payload) {
+  navigate(state, payload, options) {
+    // console.log(options);
     if (payload === 'next' && state.current.next) {
       state.current = state.current.next;
-      state.index = state.index + 1;
+      state.index += 1;
     } else if (payload === 'previous' && state.current.previous) {
       state.current = state.current.previous;
-      state.index = state.index - 1;
+      state.index -= 1;
     } else if (payload !== 'next' && payload !== 'previous') {
       state.current = payload;
     }
 
     state.overview = false;
+
+    if (options[0] === false) {
+      state.broadcast = false;
+    } else {
+      state.broadcast = true;
+    }
 
     return state;
   },
@@ -42,33 +49,43 @@ export default {
     return state;
   },
   async notes(state, { root, length }) {
-    if (state.presentation.request) {
-      if (!state.presentation.connection) {
-        try {
-          const connection = await state.presentation.request.start();
-          state.presentation.connection = connection;
+    if (state.presentation.channel) {
+      if (!state.presentation.notes) {
+        const url = new URL(window.location.toString());
+        const params = new URLSearchParams(url.search.slice(1));
+        params.append('display', true);
+        url.search = `?${params}`;
 
-          // Need a way to reverse this
-          const { notesBody, updateNotes, advancePresentation } = await import('../presentation');
-          const builtNotes = notesBody();
-          root.parentNode.insertBefore(builtNotes._notes, root);
-          root.dataset.hidden = true;
-          root.parentNode.dataset.notes = true;
+        state.presentation.window = window.open(
+          url.toString(),
+          null,
+          'menubar=0,toolbar=0,location=0,dependent=1,fullscreen=1,left-0,top=0',
+        );
 
-          updateNotes(builtNotes, state.index, state.current);
-          builtNotes.total.textContent = length - 1;
-          state.presentation.notes = builtNotes;
-        } catch (e) {
-          console.log(e);
-          console.error('There was an error establishing a connection');
-        }
+        const { notesBody, updateNotes } = await import('../presentation');
+        const builtNotes = notesBody(state.index, state.current);
+        root.parentNode.insertBefore(builtNotes._notes, root);
+        root.dataset.hidden = true;
+        root.parentNode.dataset.notes = true;
+        updateNotes(builtNotes, state.index, state.current);
+        builtNotes.total.textContent = length - 1;
+        state.presentation.notes = builtNotes;
+
+        // TODO reset notes when popup closed
+        // state.presentation.window.addEventListener('unload', () => {
+        //   setTimeout(() => {
+        //     if (state.presentation.window.closed) {
+        //       console.log('Closed!');
+        //     }
+        //   }, 500);
+        //   // store.dispatch('notes', 'toggle');
+        // });
       } else {
         root.parentNode.removeChild(state.presentation.notes._notes);
         delete root.dataset.hidden;
         delete root.parentNode.dataset.notes;
-        state.presentation.connection.terminate();
-        state.presentation.connection = null;
         state.presentation.notes = null;
+        state.presentation.window.close();
       }
     }
 

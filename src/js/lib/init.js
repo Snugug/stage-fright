@@ -29,12 +29,20 @@ export default class StageFright {
 
     const embedded = new URLSearchParams(window.location.search).get('embedded') === 'true';
 
+    const upcoming = new URLSearchParams(window.location.search).get('upcoming') === 'true';
+
+    const display = new URLSearchParams(window.location.search).get('display') === 'true';
+
     if (embedded) {
       rootNode.parentNode.classList.add('embedded');
     }
 
-    // Presentation Awesomeness
-    let presentation = false;
+    if (display) {
+      rootNode.parentNode.classList.add('display');
+      options._display = true;
+    } else {
+      options._display = false;
+    }
 
     // Starting Index
     const start = navHash(stage.length - 1);
@@ -52,27 +60,23 @@ export default class StageFright {
         presentation: createPresentation(),
         display: 'presentation',
         help: false,
+        broadcast: true,
       },
       stage,
       embedded,
+      display,
       root: rootNode,
     });
 
     this.store.changes.subscribe('current', async state => {
       translate(rootNode, state.current);
       fragments(state.current);
-      if (state.presentation.notes) {
-        const { updateNotes } = await import('./presentation');
-        updateNotes(state.presentation.notes, state.index, state.current);
-      }
     });
 
     this.store.changes.subscribe('index', async state => {
       updateHistory(state.index);
-
-      if (!embedded) {
-        const { advancePresentation } = await import('./presentation');
-        advancePresentation(state.presentation.connection, state.index);
+      if (state.broadcast && state.presentation.channel) {
+        state.presentation.channel.postMessage(state.index);
       }
 
       if (state.presentation.notes) {
@@ -107,6 +111,16 @@ export default class StageFright {
         });
       }
     });
+
+    if (this.store.state.presentation.channel) {
+      this.store.state.presentation.channel.onmessage = e => {
+        if (upcoming) {
+          this.goto(e.data + 1, false);
+        } else {
+          this.goto(e.data, false);
+        }
+      };
+    }
 
     this.store.changes.subscribe('overview', state => {
       const scale = stage._sectionHolder > stage._depth ? stage._sectionHolder : stage._depth;
@@ -182,7 +196,7 @@ export default class StageFright {
     this.store.dispatch('navigate', 'previous');
   }
 
-  goto(slide) {
-    this.store.dispatch('navigate', slide);
+  goto(slide, broadcast = true) {
+    this.store.dispatch('navigate', slide, broadcast);
   }
 }

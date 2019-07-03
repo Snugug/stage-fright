@@ -8,7 +8,7 @@ export default function(store) {
 
   holder.appendChild(downloadImages());
 
-  if (store.state.presentation.request) {
+  if (store.state.presentation.channel) {
     holder.appendChild(toggleSpeaker(store));
   }
   holder.appendChild(toggleDisplay(store));
@@ -54,8 +54,8 @@ function downloadImages() {
 }
 
 function toggleDisplay(store) {
-  const presentation = icons.presentation;
-  const article = icons.article;
+  const { presentation } = icons;
+  const { article } = icons;
   const btn = buildButton('Toggle Article/Presentation Display', article);
 
   btn.addEventListener('click', () => {
