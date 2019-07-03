@@ -58,9 +58,9 @@ function buildHelp(store) {
     },
   ];
 
-  if (store.state.presentation.request) {
+  if (store.state.presentation.channel) {
     keyboard.push({
-      desc: 'Toggle speaker notes/presentation view (requires external monitor)',
+      desc: 'Toggle speaker notes/presentation view',
       opts: ['<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>s</kbd>'],
     });
   }
@@ -90,9 +90,9 @@ function buildHelp(store) {
     },
   ];
 
-  if (store.state.presentation.request) {
+  if (store.state.presentation.channel) {
     iconography.push({
-      desc: 'Toggle speaker notes/presentation view (requires external monitor)',
+      desc: 'Toggle speaker notes/presentation view',
       icon: icons.speaker,
     });
   }
