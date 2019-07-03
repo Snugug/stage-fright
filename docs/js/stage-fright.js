@@ -216,8 +216,9 @@ class Store {
     this.root = params.root || document.body;
     this.help = params.help || false;
     this.overview = params.overview || false;
+    this.broadcast = params.broadcast || true;
     this.state = new Proxy(params.state || {}, {
-      set: function (state, key, value) {
+      set(state, key, value) {
         state[key] = value;
 
         if (self.status !== 'mutation') {
@@ -228,28 +229,29 @@ class Store {
         self.changes.publish('stateChange', self.state);
         return true;
       }
+
     });
   }
 
-  dispatch(action, payload) {
+  dispatch(action, payload, ...options) {
     if (typeof this.actions[action] !== 'function') {
       console.error(`Action "${action}" doesn't exist`);
       return false;
     }
 
     this.status = 'action';
-    this.actions[action](this, payload);
+    this.actions[action](this, payload, options);
     return true;
   }
 
-  async commit(mutation, payload) {
+  async commit(mutation, payload, ...options) {
     if (typeof this.mutations[mutation] !== 'function') {
       console.error(`Mutation "${mutation}" doesn't exist`);
       return false;
     }
 
     this.status = 'mutation';
-    let newState = this.mutations[mutation](Object.assign({}, this.state), payload);
+    let newState = this.mutations[mutation](Object.assign({}, this.state), payload, options);
 
     if ('then' in newState) {
       newState = await newState;
@@ -264,18 +266,26 @@ class Store {
 }
 
 var mutations = {
-  navigate(state, payload) {
+  navigate(state, payload, options) {
+    // console.log(options);
     if (payload === 'next' && state.current.next) {
       state.current = state.current.next;
-      state.index = state.index + 1;
+      state.index += 1;
     } else if (payload === 'previous' && state.current.previous) {
       state.current = state.current.previous;
-      state.index = state.index - 1;
+      state.index -= 1;
     } else if (payload !== 'next' && payload !== 'previous') {
       state.current = payload;
     }
 
     state.overview = false;
+
+    if (options[0] === false) {
+      state.broadcast = false;
+    } else {
+      state.broadcast = true;
+    }
+
     return state;
   },
 
@@ -311,35 +321,38 @@ var mutations = {
     root,
     length
   }) {
-    if (state.presentation.request) {
-      if (!state.presentation.connection) {
-        try {
-          const connection = await state.presentation.request.start();
-          state.presentation.connection = connection; // Need a way to reverse this
-
-          const {
-            notesBody,
-            updateNotes,
-            advancePresentation
-          } = await import("./presentation.js");
-          const builtNotes = notesBody();
-          root.parentNode.insertBefore(builtNotes._notes, root);
-          root.dataset.hidden = true;
-          root.parentNode.dataset.notes = true;
-          updateNotes(builtNotes, state.index, state.current);
-          builtNotes.total.textContent = length - 1;
-          state.presentation.notes = builtNotes;
-        } catch (e) {
-          console.log(e);
-          console.error('There was an error establishing a connection');
-        }
+    if (state.presentation.channel) {
+      if (!state.presentation.notes) {
+        const url = new URL(window.location.toString());
+        const params = new URLSearchParams(url.search.slice(1));
+        params.append('display', true);
+        url.search = `?${params}`;
+        state.presentation.window = window.open(url.toString(), null, 'menubar=0,toolbar=0,location=0,dependent=1,fullscreen=1,left-0,top=0');
+        const {
+          notesBody,
+          updateNotes
+        } = await import("./presentation.js");
+        const builtNotes = notesBody(state.index, state.current);
+        root.parentNode.insertBefore(builtNotes._notes, root);
+        root.dataset.hidden = true;
+        root.parentNode.dataset.notes = true;
+        updateNotes(builtNotes, state.index, state.current);
+        builtNotes.total.textContent = length - 1;
+        state.presentation.notes = builtNotes; // TODO reset notes when popup closed
+        // state.presentation.window.addEventListener('unload', () => {
+        //   setTimeout(() => {
+        //     if (state.presentation.window.closed) {
+        //       console.log('Closed!');
+        //     }
+        //   }, 500);
+        //   // store.dispatch('notes', 'toggle');
+        // });
       } else {
         root.parentNode.removeChild(state.presentation.notes._notes);
         delete root.dataset.hidden;
         delete root.parentNode.dataset.notes;
-        state.presentation.connection.terminate();
-        state.presentation.connection = null;
         state.presentation.notes = null;
+        state.presentation.window.close();
       }
     }
 
@@ -364,13 +377,14 @@ var mutations = {
 };
 
 var actions = {
-  navigate(context, payload) {
+  navigate(context, payload, options) {
+    // console.log(options);
     if (payload === 'next' || payload === 'previous') {
-      context.commit('navigate', payload);
+      context.commit('navigate', payload, options[0]);
     } else {
-      const found = context.stage.find(payload);
-      context.commit('navigate', found);
-      context.commit('index', payload);
+      const found = context.stage.find(payload, options[0]);
+      context.commit('navigate', found, options[0]);
+      context.commit('index', payload, options[0]);
     }
 
     if (!context.embedded) {
@@ -379,6 +393,8 @@ var actions = {
   },
 
   notes(context, payload) {
+    // console.log('Notes');
+    // console.log(payload);
     context.commit('notes', {
       root: context.root,
       length: context.stage._length
@@ -462,10 +478,20 @@ class StageFright {
     });
     stage.updateFragments();
     const embedded = new URLSearchParams(window.location.search).get('embedded') === 'true';
+    const upcoming = new URLSearchParams(window.location.search).get('upcoming') === 'true';
+    const display = new URLSearchParams(window.location.search).get('display') === 'true';
 
     if (embedded) {
       rootNode.parentNode.classList.add('embedded');
-    } // Presentation Awesomeness
+    }
+
+    if (display) {
+      rootNode.parentNode.classList.add('display');
+      options._display = true;
+    } else {
+      options._display = false;
+    } // Starting Index
+
 
     const start = navHash(stage.length - 1); // Set up state and store
 
@@ -480,31 +506,23 @@ class StageFright {
         notes: false,
         presentation: createPresentation(),
         display: 'presentation',
-        help: false
+        help: false,
+        broadcast: true
       },
       stage,
       embedded,
+      display,
       root: rootNode
     });
     this.store.changes.subscribe('current', async state => {
       translate(rootNode, state.current);
       fragments(state.current);
-
-      if (state.presentation.notes) {
-        const {
-          updateNotes
-        } = await import("./presentation.js");
-        updateNotes(state.presentation.notes, state.index, state.current);
-      }
     });
     this.store.changes.subscribe('index', async state => {
       updateHistory(state.index);
 
-      if (!embedded) {
-        const {
-          advancePresentation
-        } = await import("./presentation.js");
-        advancePresentation(state.presentation.connection, state.index);
+      if (state.broadcast && state.presentation.channel) {
+        state.presentation.channel.postMessage(state.index);
       }
 
       if (state.presentation.notes) {
@@ -540,6 +558,17 @@ class StageFright {
         });
       }
     });
+
+    if (this.store.state.presentation.channel) {
+      this.store.state.presentation.channel.onmessage = e => {
+        if (upcoming) {
+          this.goto(e.data + 1, false);
+        } else {
+          this.goto(e.data, false);
+        }
+      };
+    }
+
     this.store.changes.subscribe('overview', state => {
       const scale = stage._sectionHolder > stage._depth ? stage._sectionHolder : stage._depth;
       let transform = `scale(${1 / (scale + 1)})`;
@@ -614,8 +643,8 @@ class StageFright {
     this.store.dispatch('navigate', 'previous');
   }
 
-  goto(slide) {
-    this.store.dispatch('navigate', slide);
+  goto(slide, broadcast = true) {
+    this.store.dispatch('navigate', slide, broadcast);
   }
 
 }

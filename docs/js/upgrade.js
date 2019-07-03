@@ -1,5 +1,4 @@
 import { loadImage, loadMedia } from './lazyload.js';
-import { receivePresentationControls } from './presentation.js';
 
 var icons = {
   download: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10 10-10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg>',
@@ -117,7 +116,7 @@ function buttons (store) {
   holder.classList.add('btns');
   holder.appendChild(downloadImages());
 
-  if (store.state.presentation.request) {
+  if (store.state.presentation.channel) {
     holder.appendChild(toggleSpeaker(store));
   }
 
@@ -159,8 +158,12 @@ function downloadImages() {
 }
 
 function toggleDisplay(store) {
-  const presentation = icons.presentation;
-  const article = icons.article;
+  const {
+    presentation
+  } = icons;
+  const {
+    article
+  } = icons;
   const btn = buildButton('Toggle Article/Presentation Display', article);
   btn.addEventListener('click', () => {
     store.dispatch('display', 'toggle');
@@ -327,7 +330,10 @@ function autoplay () {
 
 function upgrade(stage, rootNode, start, options) {
   // Add Buttons
-  stage._head.elem.querySelector('._stage--content').prepend(buttons(this.store));
+  // console.log(options._display);
+  if (!options._display) {
+    stage._head.elem.prepend(buttons(this.store));
+  }
 
   stage.buildProgress(this.store, createMinimapLink);
   rootNode.parentNode.appendChild(buildMinimap(stage));
@@ -335,9 +341,7 @@ function upgrade(stage, rootNode, start, options) {
 
   keys(this.store, options); // Set up Autoplay
 
-  autoplay(); // Make sure Presentation Controls work
-
-  receivePresentationControls(this.store);
+  autoplay();
 }
 
 export { upgrade };

@@ -1,67 +1,24 @@
 function createPresentation() {
-  const request = window.PresentationRequest ? new PresentationRequest([window.location.origin + window.location.pathname]) : null;
-  const presentation = {
-    request,
-    connection: null
+  return {
+    channel: window.BroadcastChannel ? new BroadcastChannel('presentation') : null
   };
-
-  if (request) {
-    // Make the default presentation request our presentation request
-    navigator.presentation.defaultRequest = presentation.request;
-  }
-
-  return presentation;
 }
-async function receivePresentationControls(store) {
-  if (navigator.presentation && navigator.presentation.receiver) {
-    const list = await navigator.presentation.receiver.connectionList;
-    list.connections.map(connection => addPresentationConnection(connection, store));
-  }
-}
-function addPresentationConnection(connection, store) {
-  connection.send(JSON.stringify({
-    start: true
-  }));
-  connection.addEventListener('message', e => {
-    const message = JSON.parse(e.data);
-
-    if (message.hasOwnProperty('goto')) {
-      store.dispatch('navigate', message.goto);
-    }
-  });
-  store.changes.subscribe('index', state => {
-    connection.send(JSON.stringify({
-      goto: state.index
-    }));
-  });
-}
-function advancePresentation(connection, goto) {
-  if (connection) {
-    connection.send(JSON.stringify({
-      goto
-    }));
-  }
-}
-function buildNotesPreviewLink(index) {
+function buildNotesPreviewLink(index, upcoming = false) {
   const locale = window.location;
   const search = new URLSearchParams();
   const link = new URL(locale.origin + locale.pathname);
   link.hash = `#/${index}`;
   search.set('embedded', true);
+
+  if (upcoming) {
+    search.set('upcoming', true);
+  }
+
   link.search = search.toString();
   return link.toString();
 }
 function updateNotes(notes, index, current) {
   // Update Notes preview URLs on index change;
-  notes.current.src = buildNotesPreviewLink(index);
-  let nextSlideIndex = index + 1;
-
-  if (!current.next) {
-    nextSlideIndex--;
-  }
-
-  notes.next.src = buildNotesPreviewLink(nextSlideIndex);
-
   if (current.notes) {
     notes.content.innerHTML = current.notes;
   } else {
@@ -126,10 +83,18 @@ function timing(parent) {
     return str.substring(str.length - 2);
   }
 }
-function notesBody() {
+function notesBody(index, current) {
   const notes = document.createElement('section');
   notes.classList.add('_speaker-notes');
-  notes.innerHTML = '<div class="_speaker-notes--current"> <iframe class="_speaker-notes--slide-preview" frameborder="0" height="1024" width="1280"></iframe> </div><div class="_speaker-notes--upcoming"> <span class="_speaker-notes--label">Upcoming:</span> <iframe class="_speaker-notes--slide-preview" frameborder="0" height="1024" width="1280"></iframe> </div><div class="_speaker-notes--controls"> <div class="controls"> <div class="controls--time"> <h4 class="controls--label">Time <span class="controls--reset">Click to Reset</span></h4> <button class="timer"> <span class="timer--hours">00</span><span class="timer--minutes">:00</span><span class="timer--seconds">:00</span> </button><div class="clock"> <span class="clock--value">0:00 AM</span> </div></div><div class="controls--position"> <p class="controls--fragment">Fragment <span class="controls--fragment-current"></span>/<span class="controls--fragment-total"></span></p><p class="controls--slide">Step <span class="controls--slide-current"></span>/<span class="controls--slide-total"></span></p></div></div></div><article class="_speaker-notes--notes"> <div class="slide-notes"> <h4 class="slide-notes--label">Notes</h4> <div class="slide-notes--content"></div></div></article>';
+  const currentSrc = buildNotesPreviewLink(index);
+  let nextSlideIndex = index + 1;
+
+  if (!current.next) {
+    nextSlideIndex--;
+  }
+
+  const nextSrc = buildNotesPreviewLink(nextSlideIndex, true);
+  notes.innerHTML = `<div class="_speaker-notes--current"> <iframe src="${currentSrc}" class="_speaker-notes--slide-preview" frameborder="0" height="1024" width="1280"></iframe> </div><div class="_speaker-notes--upcoming"> <span class="_speaker-notes--label">Upcoming:</span> <iframe src="${nextSrc}" class="_speaker-notes--slide-preview" frameborder="0" height="1024" width="1280"></iframe> </div><div class="_speaker-notes--controls"> <div class="controls"> <div class="controls--time"> <h4 class="controls--label">Time <span class="controls--reset">Click to Reset</span></h4> <button class="timer"> <span class="timer--hours">00</span><span class="timer--minutes">:00</span><span class="timer--seconds">:00</span> </button><div class="clock"> <span class="clock--value">0:00 AM</span> </div></div><div class="controls--position"> <p class="controls--fragment">Fragment <span class="controls--fragment-current"></span>/<span class="controls--fragment-total"></span></p><p class="controls--slide">Step <span class="controls--slide-current"></span>/<span class="controls--slide-total"></span></p></div></div></div><article class="_speaker-notes--notes"> <div class="slide-notes"> <h4 class="slide-notes--label">Notes</h4> <div class="slide-notes--content"></div></div></article>`;
   timing(notes);
   return {
     _notes: notes,
@@ -144,5 +109,5 @@ function notesBody() {
   };
 }
 
-export { createPresentation, receivePresentationControls, addPresentationConnection, advancePresentation, buildNotesPreviewLink, updateNotes, timing, notesBody };
+export { createPresentation, buildNotesPreviewLink, updateNotes, timing, notesBody };
 //# sourceMappingURL=presentation.js.map
